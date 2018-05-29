@@ -158,7 +158,11 @@ urlpatterns = [  # '',
     url(r'^api/roles', roles, name='roles'),
     url(r'^api/adminRole', admin_role, name='adminRole'),
     url(r'^api/users', users, name='users'),
-    url(r'', include(api.urls)), ]
+    url(r'', include(api.urls)), 
+    
+    #OpenSensorHub - OSH_INTEG
+#    url(r'^opensensorhub/', include('geonode.contrib.opensensorhub.urls', namespace='opensensorhub')),
+     ]
 
 urlpatterns += i18n_patterns(
     url("^admin/", include(admin.site.urls)),
