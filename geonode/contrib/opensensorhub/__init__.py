@@ -17,29 +17,3 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 #########################################################################
-from django.conf.urls import url, include
-from tastypie.api import Api
-
-from api import HubResource
-from api import ObservationResource
-from api import OshLayerResource
-from api import VideoViewResource
-from api import ChartStylerResource
-from api import LocationIndicatorResource
-from api import TextStylerResource
-from api import ViewResource
-
-app_name = 'opensensorhub'
-osh_api = Api(api_name='OpenSensorHub')
-osh_api.register(HubResource())
-osh_api.register(ObservationResource())
-osh_api.register(OshLayerResource())
-osh_api.register(VideoViewResource())
-osh_api.register(ChartStylerResource())
-osh_api.register(LocationIndicatorResource())
-osh_api.register(TextStylerResource())
-osh_api.register(ViewResource())
-
-urlpatterns = [
-        url(r'^api/', include(osh_api.urls), name='osh'),
-    ]
