@@ -18,6 +18,9 @@
 #
 #########################################################################
 from tastypie.resources import ModelResource
+from tastypie.authentication import OAuthAuthentication
+from tastypie.authorization import DjangoAuthorization
+from tastypie.serializers import Serializer
 from models import *
 
 
@@ -25,62 +28,150 @@ class HubResource(ModelResource):
     class Meta:
         queryset = Hub.objects.all()
         resource_name = 'hub'
-        # Note: These are fields to exclude from being exposed by the API
+        # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
+        # WhiteList: These are fields to include for being exposed by the API
+        fields = []
+        # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
+        #   Empty set denotes inability to access API through HTTP requests
+        allowed_methods = ['get', 'post']
+        # Authentication
+        authentication = OAuthAuthentication()
+        # Authorization
+        authorization = DjangoAuthorization()
+        # Serializer: Allow only JSON serialization
+        serializer = Serializer(formats=['json'])
 
 
 class ObservationResource(ModelResource):
     class Meta:
         queryset = Observation.objects.all()
         resource_name = 'observation'
-        # Note: These are fields to exclude from being exposed by the API
+        # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
+        # WhiteList: These are fields to include for being exposed by the API
+        fields = []
+        # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
+        #   Empty set denotes inability to access API through HTTP requests
+        allowed_methods = ['get', 'post']
+        # Authentication
+        authentication = OAuthAuthentication()
+        # Authorization
+        authorization = DjangoAuthorization()
+        # Serializer: Allow only JSON serialization
+        serializer = Serializer(formats=['json'])
 
 
 class OshLayerResource(ModelResource):
     class Meta:
         queryset = OSHLayer.objects.all()
         resource_name = 'osh_layer'
-        # Note: These are fields to exclude from being exposed by the API
+        # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
+        # WhiteList: These are fields to include for being exposed by the API
+        fields = []
+        # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
+        #   Empty set denotes inability to access API through HTTP requests
+        allowed_methods = ['get', 'post']
+        # Authentication
+        authentication = OAuthAuthentication()
+        # Authorization
+        authorization = DjangoAuthorization()
+        # Serializer: Allow only JSON serialization
+        serializer = Serializer(formats=['json'])
 
 
 class VideoViewResource(ModelResource):
     class Meta:
         queryset = VideoView.objects.all()
         resource_name = 'video_view'
-        # Note: These are fields to exclude from being exposed by the API
+        # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
+        # WhiteList: These are fields to include for being exposed by the API
+        fields = []
+        # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
+        #   Empty set denotes inability to access API through HTTP requests
+        allowed_methods = ['get', 'post']
+        # Authentication
+        authentication = OAuthAuthentication()
+        # Authorization
+        authorization = DjangoAuthorization()
+        # Serializer: Allow only JSON serialization
+        serializer = Serializer(formats=['json'])
 
 
 class ChartStylerResource(ModelResource):
     class Meta:
         queryset = ChartStyler.objects.all()
         resource_name = 'chart_styler'
-        # Note: These are fields to exclude from being exposed by the API
+        # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
+        # WhiteList: These are fields to include for being exposed by the API
+        fields = []
+        # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
+        #   Empty set denotes inability to access API through HTTP requests
+        allowed_methods = ['get', 'post']
+        # Authentication
+        authentication = OAuthAuthentication()
+        # Authorization
+        authorization = DjangoAuthorization()
+        # Serializer: Allow only JSON serialization
+        serializer = Serializer(formats=['json'])
 
 
 class LocationIndicatorResource(ModelResource):
     class Meta:
         queryset = LocationIndicator.objects.all()
         resource_name = 'location_indicator'
-        # Note: These are fields to exclude from being exposed by the API
+        # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
+        # WhiteList: These are fields to include for being exposed by the API
+        fields = []
+        # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
+        #   Empty set denotes inability to access API through HTTP requests
+        allowed_methods = ['get', 'post']
+        # Authentication
+        authentication = OAuthAuthentication()
+        # Authorization
+        authorization = DjangoAuthorization()
+        # Serializer: Allow only JSON serialization
+        serializer = Serializer(formats=['json'])
 
 
 class TextStylerResource(ModelResource):
     class Meta:
         queryset = TextStyler.objects.all()
         resource_name = 'text_styler'
-        # Note: These are fields to exclude from being exposed by the API
+        # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
+        # WhiteList: These are fields to include for being exposed by the API
+        fields = []
+        # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
+        #   Empty set denotes inability to access API through HTTP requests
+        allowed_methods = ['get', 'post']
+        # Authentication
+        authentication = OAuthAuthentication()
+        # Authorization
+        authorization = DjangoAuthorization()
+        # Serializer: Allow only JSON serialization
+        serializer = Serializer(formats=['json'])
 
 
 class ViewResource(ModelResource):
     class Meta:
         queryset = View.objects.all()
         resource_name = 'view'
-        # Note: These are fields to exclude from being exposed by the API
+        # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
+        # WhiteList: These are fields to include for being exposed by the API
+        fields = []
+        # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
+        #   Empty set denotes inability to access API through HTTP requests
+        allowed_methods = ['get', 'post']
+        # Authentication
+        authentication = OAuthAuthentication()
+        # Authorization
+        authorization = DjangoAuthorization()
+        # Serializer: Allow only JSON serialization
+        serializer = Serializer(formats=['json'])
 
