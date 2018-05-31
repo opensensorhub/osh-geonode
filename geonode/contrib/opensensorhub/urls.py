@@ -18,7 +18,6 @@
 #
 #########################################################################
 from django.conf.urls import url, include
-from opensensorhub import views
 from tastypie.api import Api
 
 from api import HubResource
@@ -29,6 +28,8 @@ from api import ChartStylerResource
 from api import LocationIndicatorResource
 from api import TextStylerResource
 from api import ViewResource
+
+import views
 
 app_name = 'opensensorhub'
 osh_api = Api(api_name='OpenSensorHub')

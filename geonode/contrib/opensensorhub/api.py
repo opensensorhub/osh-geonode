@@ -36,7 +36,7 @@ class HubResource(ModelResource):
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
         # Authentication
-        authentication = OAuthAuthentication()
+        # authentication = OAuthAuthentication()
         # Authorization
         authorization = DjangoAuthorization()
         # Serializer: Allow only JSON serialization
@@ -55,7 +55,7 @@ class ObservationResource(ModelResource):
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
         # Authentication
-        authentication = OAuthAuthentication()
+        # authentication = OAuthAuthentication()
         # Authorization
         authorization = DjangoAuthorization()
         # Serializer: Allow only JSON serialization
@@ -74,7 +74,7 @@ class OshLayerResource(ModelResource):
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
         # Authentication
-        authentication = OAuthAuthentication()
+        # authentication = OAuthAuthentication()
         # Authorization
         authorization = DjangoAuthorization()
         # Serializer: Allow only JSON serialization
@@ -93,7 +93,7 @@ class VideoViewResource(ModelResource):
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
         # Authentication
-        authentication = OAuthAuthentication()
+        # authentication = OAuthAuthentication()
         # Authorization
         authorization = DjangoAuthorization()
         # Serializer: Allow only JSON serialization
@@ -112,7 +112,7 @@ class ChartStylerResource(ModelResource):
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
         # Authentication
-        authentication = OAuthAuthentication()
+        # authentication = OAuthAuthentication()
         # Authorization
         authorization = DjangoAuthorization()
         # Serializer: Allow only JSON serialization
@@ -131,7 +131,7 @@ class LocationIndicatorResource(ModelResource):
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
         # Authentication
-        authentication = OAuthAuthentication()
+        # authentication = OAuthAuthentication()
         # Authorization
         authorization = DjangoAuthorization()
         # Serializer: Allow only JSON serialization
@@ -150,7 +150,7 @@ class TextStylerResource(ModelResource):
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
         # Authentication
-        authentication = OAuthAuthentication()
+        # authentication = OAuthAuthentication()
         # Authorization
         authorization = DjangoAuthorization()
         # Serializer: Allow only JSON serialization
@@ -169,7 +169,7 @@ class ViewResource(ModelResource):
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
         # Authentication
-        authentication = OAuthAuthentication()
+        # authentication = OAuthAuthentication()
         # Authorization
         authorization = DjangoAuthorization()
         # Serializer: Allow only JSON serialization
