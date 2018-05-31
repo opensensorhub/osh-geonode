@@ -28,9 +28,9 @@ COLOR_MODE_CHOICES = (
 
 
 # ------------------------------------------------------------------------------
-# View
+# OshModel
 #
-# Model representing an OSH View
+# Model representing an OSH the base OSH Model
 # ------------------------------------------------------------------------------
 class OshModel(models.Model):
     id = models.AutoField(primary_key=True)
@@ -61,7 +61,7 @@ class Styler(OshModel):
     styler_type = models.CharField(max_length=200)
     view = models.ForeignKey(
         View,
-        models.SET_NULL,
+#        models.SET_NULL,
         blank=True,
         null=True
     )
@@ -203,7 +203,7 @@ class Observation(OshModel, SweService):
     layer = models.ForeignKey(OSHLayer)
     view = models.ForeignKey(
         View,
-        models.SET_NULL,
+#        models.SET_NULL,
         blank=True,
         null=True
     )
@@ -219,5 +219,5 @@ class Observation(OshModel, SweService):
     source_type = models.CharField(max_length=200)
     replay_speed = models.CharField(max_length=1, choices=REPLAY_SPEED_CHOICES, default='2')
     service = models.IntegerField(default=SweService.SOS, validators=[validators.MinValueValidator(SweService.SOS),
-                                                                      validators.MaxValueValidator(SweService.SOS)])
+                                                                     validators.MaxValueValidator(SweService.SOS)])
     protocol = models.CharField(max_length=1, choices=PROTOCOL_TYPE_CHOICES, default='2')
