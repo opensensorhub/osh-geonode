@@ -41,5 +41,6 @@ osh_api.register(TextStylerResource())
 osh_api.register(ViewResource())
 
 urlpatterns = [
+#        url(r'^sensors_browse', sensors_explore, name='sensors_browse'),
         url(r'^api/', include(osh_api.urls), name='osh'),
     ]
