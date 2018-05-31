@@ -18,6 +18,7 @@
 #
 #########################################################################
 from django.conf.urls import url, include
+from opensensorhub import views
 from tastypie.api import Api
 
 from api import HubResource
@@ -42,4 +43,6 @@ osh_api.register(ViewResource())
 
 urlpatterns = [
         url(r'^api/', include(osh_api.urls), name='osh'),
+    # To allow for an easy to follow test link, delete when api is implemented
+        url(r'^add-hub', views.index,name='index'),
     ]

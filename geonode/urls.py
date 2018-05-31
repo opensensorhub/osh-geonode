@@ -231,6 +231,12 @@ if 'geonode.contrib.ows_api' in settings.INSTALLED_APPS:
         url('^', include('geonode.contrib.ows_api.urls')),
     ]
 
+# OSH_INTEG
+if 'geonode.contrib.opensensorhub' in settings.INSTALLED_APPS:
+    urlpatterns += [  # '',
+        url(r'^osh/', include('geonode.contrib.opensensorhub.urls')),
+    ]
+
 # Set up proxy
 urlpatterns += geonode.proxy.urls.urlpatterns
 

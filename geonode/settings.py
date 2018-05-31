@@ -325,7 +325,7 @@ GEONODE_CONTRIB_APPS = (
     'geonode.contrib.ows_api',
 
     # OpenSensorHub
-#    'geonode.contrib.opensensorhub',
+    'geonode.contrib.opensensorhub',
 )
 
 # Uncomment the following line to enable contrib apps
