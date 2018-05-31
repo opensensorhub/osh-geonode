@@ -32,17 +32,34 @@ from api import ViewResource
 import views
 
 app_name = 'opensensorhub'
-osh_api = Api(api_name='OpenSensorHub')
-osh_api.register(HubResource())
-osh_api.register(ObservationResource())
-osh_api.register(OshLayerResource())
-osh_api.register(VideoViewResource())
-osh_api.register(ChartStylerResource())
-osh_api.register(LocationIndicatorResource())
-osh_api.register(TextStylerResource())
-osh_api.register(ViewResource())
+
+core_resources = [HubResource(), ObservationResource(), OshLayerResource()]
+view_resources = [ViewResource(), VideoViewResource(), LocationIndicatorResource()]
+styler_resources = [ChartStylerResource(), TextStylerResource()]
+
+all_resources = core_resources + view_resources + styler_resources
+
+core_api = Api(api_name='core')
+for resource in core_resources:
+    core_api.register(resource)
+
+views_api = Api(api_name='views')
+for resource in view_resources:
+    views_api.register(resource)
+
+stylers_api = Api(api_name='stylers')
+for resource in styler_resources:
+    stylers_api.register(resource)
+
+osh_api = Api(api_name='api')
+for resource in all_resources:
+    osh_api.register(resource)
 
 urlpatterns = [
+        url(r'^', include(osh_api.urls), name='api'),
+        url(r'^api/', include(core_api.urls), name='core'),
+        url(r'^api/', include(views_api.urls), name='views'),
+        url(r'^api/', include(stylers_api.urls), name='stylers'),
         url(r'^api/', include(osh_api.urls), name='osh'),
     # To allow for an easy to follow test link, delete when api is implemented
         url(r'^add-hub', views.index,name='index'),

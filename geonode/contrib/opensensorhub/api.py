@@ -18,7 +18,7 @@
 #
 #########################################################################
 from tastypie.resources import ModelResource
-from tastypie.authentication import OAuthAuthentication
+# from tastypie.authentication import OAuthAuthentication
 from tastypie.authorization import DjangoAuthorization
 from tastypie.serializers import Serializer
 from models import *
@@ -65,7 +65,7 @@ class ObservationResource(ModelResource):
 class OshLayerResource(ModelResource):
     class Meta:
         queryset = OSHLayer.objects.all()
-        resource_name = 'osh_layer'
+        resource_name = 'layer'
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
@@ -84,7 +84,7 @@ class OshLayerResource(ModelResource):
 class VideoViewResource(ModelResource):
     class Meta:
         queryset = VideoView.objects.all()
-        resource_name = 'video_view'
+        resource_name = 'video'
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
@@ -103,7 +103,7 @@ class VideoViewResource(ModelResource):
 class ChartStylerResource(ModelResource):
     class Meta:
         queryset = ChartStyler.objects.all()
-        resource_name = 'chart_styler'
+        resource_name = 'chart'
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
@@ -122,7 +122,7 @@ class ChartStylerResource(ModelResource):
 class LocationIndicatorResource(ModelResource):
     class Meta:
         queryset = LocationIndicator.objects.all()
-        resource_name = 'location_indicator'
+        resource_name = 'point'
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
@@ -141,7 +141,7 @@ class LocationIndicatorResource(ModelResource):
 class TextStylerResource(ModelResource):
     class Meta:
         queryset = TextStyler.objects.all()
-        resource_name = 'text_styler'
+        resource_name = 'text'
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
