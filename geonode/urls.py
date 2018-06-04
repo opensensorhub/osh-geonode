@@ -159,9 +159,6 @@ urlpatterns = [  # '',
     url(r'^api/adminRole', admin_role, name='adminRole'),
     url(r'^api/users', users, name='users'),
     url(r'', include(api.urls)), 
-    
-    # OpenSensorHub - OSH_INTEG
-    url(r'^osh/', include('geonode.contrib.opensensorhub.urls')),
 ]
 
 urlpatterns += i18n_patterns(
@@ -171,6 +168,11 @@ urlpatterns += i18n_patterns(
 urlpatterns += [
     url(r'^i18n/', include(django.conf.urls.i18n))
 ]
+
+if "geonode.contrib.opensensorhub" in settings.INSTALLED_APPS:
+    urlpatterns += [  # OpenSensorHub - OSH_INTEG
+        url(r'^osh/', include('geonode.contrib.opensensorhub.urls')),
+    ]
 
 if "geonode.contrib.dynamic" in settings.INSTALLED_APPS:
     urlpatterns += [  # '',
