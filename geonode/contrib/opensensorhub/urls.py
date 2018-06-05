@@ -63,6 +63,6 @@ urlpatterns = [
     url(r'^api/', include(osh_api.urls), name='osh'),
 
     # To allow for an easy to follow test link, delete when api is implemented
-    url(r'^add-hub', views.index, name='index'),
-    url(r'^test', views.create_user),
+    url(r'^add-hub', views.BaseWizard.as_view(), name='base'),
+    # url(r'^test', views.create_user),
 ]
