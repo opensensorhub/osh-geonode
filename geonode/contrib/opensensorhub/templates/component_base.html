@@ -1,11 +1,14 @@
 {% extends "geonode_base.html" %}
 {% load i18n %}
+{% load staticfiles %}
+
+{% block extra_head %}
+      <link href="{{ STATIC_URL }}css/osh_bootstrap.css" rel="stylesheet" />
+{% endblock %}
 
 {% block title %} {{ block.super }} {% endblock %}
 
-{% block body_class %}data{% endblock body_class %}
-
 {% block body_outer %}
-  {% block body %}{% endblock body %}
+  {% block body %}{% include "explorer/explorer.html" %}{% endblock body %}
   {% block sidebar %}{% endblock sidebar %}
 {% endblock body_outer %}
