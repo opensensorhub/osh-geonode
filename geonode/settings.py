@@ -384,7 +384,7 @@ INSTALLED_APPS = (
     'announcements',
     'actstream',
     'user_messages',
-    # 'tastypie',
+    #'tastypie',
     'polymorphic',
     'guardian',
     'oauth2_provider',

@@ -56,11 +56,11 @@ for resource in all_resources:
     osh_api.register(resource)
 
 urlpatterns = [
-    url(r'^', include(osh_api.urls), name='api'),
-    url(r'^api/', include(core_api.urls), name='core'),
-    url(r'^api/', include(views_api.urls), name='views'),
-    url(r'^api/', include(stylers_api.urls), name='stylers'),
-    url(r'^api/', include(osh_api.urls), name='osh'),
+        url(r'^', include(osh_api.urls), name='api'),
+        url(r'^api/', include(core_api.urls), name='core'),
+        url(r'^api/', include(views_api.urls), name='views'),
+        url(r'^api/', include(stylers_api.urls), name='stylers'),
+    ]
 
     # To allow for an easy to follow test link, delete when api is implemented
     url(r'^add-hub', views.BaseWizard.as_view(), name='base'),
