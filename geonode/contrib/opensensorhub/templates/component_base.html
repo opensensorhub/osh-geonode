@@ -9,6 +9,6 @@
 {% block title %} {{ block.super }} {% endblock %}
 
 {% block body_outer %}
-  {% block body %}{% include "explorer/explorer.html" %}{% endblock body %}
+  {% block body %}{% include html_body %}{% endblock body %}
   {% block sidebar %}{% endblock sidebar %}
 {% endblock body_outer %}

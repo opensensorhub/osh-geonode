@@ -45,7 +45,7 @@ class ExplorerView(View):
         hubs_bundle = hubs.build_bundle(request=request)
         hubs_json = hubs.serialize(None, hubs.full_hydrate(hubs_bundle), "application/json")
 
-        return render(request, self.template_name, dict({'hubs': hubs_json}))
+        return render(request, self.template_name, dict({'html_body': 'explorer/explorer.html', 'hubs': hubs_json}))
 
     def post(self):
         pass
