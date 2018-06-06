@@ -18,6 +18,8 @@
 #
 #########################################################################
 from django.conf.urls import url, include
+from django.views.generic import TemplateView
+
 from tastypie.api import Api
 
 from api import HubResource
@@ -28,6 +30,8 @@ from api import ChartStylerResource
 from api import LocationIndicatorResource
 from api import TextStylerResource
 from api import ViewResource
+
+from components.explorer.explorer_view import ExplorerView
 
 app_name = 'opensensorhub'
 
@@ -54,6 +58,7 @@ for resource in all_resources:
     osh_api.register(resource)
 
 urlpatterns = [
+        url(r'^sensors_browse', ExplorerView.as_view(), name='sensors_browse'),
         url(r'^', include(osh_api.urls), name='api'),
         url(r'^api/', include(core_api.urls), name='core'),
         url(r'^api/', include(views_api.urls), name='views'),
