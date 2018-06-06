@@ -64,5 +64,6 @@ urlpatterns = [
 
     # To allow for an easy to follow test link, delete when api is implemented
     url(r'^add-hub', views.BaseWizard.as_view(), name='base'),
+    url(r'^add-obs', views.ObservationWizard.as_view(), name='obs-wiz'),
     # url(r'^test', views.create_user),
 ]

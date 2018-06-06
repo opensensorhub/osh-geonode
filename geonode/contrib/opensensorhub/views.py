@@ -10,3 +10,7 @@ def index(request):
 
 class BaseWizard(TemplateView):
     template_name = 'components/wizards/wizard_add_hub.html'
+
+
+class ObservationWizard(TemplateView):
+    template_name = 'components/wizards/wizard_add_observation.html'

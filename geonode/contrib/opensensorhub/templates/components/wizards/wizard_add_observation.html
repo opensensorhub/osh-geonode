@@ -1,0 +1,57 @@
+{% extends "components/wizards/base_wizard.html" %}
+
+{% block body %}
+{#    Need to generate form more programatically for final product #}
+    <div>
+        <form>
+            <label for="name">Observation Name</label>
+            <input type="text" id="name"><br/>
+
+            <label for="endpoint">Endpoint URL</label>
+            <input type="url" id="endpoint"><br/>
+
+            <label for="offering">Offering ID</label>
+            <input type="text" id="offering"><br/>
+
+            <label for="obs-property">Observed Property URL</label>
+            <input type="url" id="obs-property"><br/>
+
+            <label for="start-time">Start Time</label>
+            <input type="date" id="start-time"><br/>
+
+            <label for="start-time">Start Time</label>
+            <input type="time" id="start-time"><br/>
+
+            <label for="sync-master-time">Sync Master Time?</label>
+            <input type="checkbox" id="sync-master-time" name="sync-master-time"><br/>
+
+            <label for="buffering-time">Buffering Time(ms)</label>
+            <input type="text" id="buffering-time"><br/>
+
+            <label for="buffering-time">Buffering Time(ms)</label>
+            <input type="text" id="buffering-time"><br/>
+
+            <label for="buffering-time">Buffering Time(ms)</label>
+            <input type="text" id="buffering-time"><br/>
+
+            <label for="replay-speed">Replay Speed</label>
+            <select name="protocol" size="4">
+                <option value="HTTP">HTTP</option>
+                <option value="HTTPS"/>HTTPS</option>
+                <option value="WS">WS</option>
+                <option value="WSS">WSS</option>
+            </select><br/>
+
+            <label for="replay-speed">Replay Speed</label>
+            <select name="replay-speed" size="5">
+                <option value="quarter">0.25x</option>
+                <option value="half"/>0.5x</option>
+                <option value="normal">1x</option>
+                <option value="double">2x</option>
+                <option value="quad">4x</option>
+            </select><br/>
+
+            <button type="submit">Next</button>
+        </form>
+    </div>
+{% endblock %}
