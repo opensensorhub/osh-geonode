@@ -19,7 +19,7 @@
 #########################################################################
 from tastypie.resources import ModelResource
 # from tastypie.authentication import OAuthAuthentication
-from tastypie.authorization import DjangoAuthorization
+from tastypie.authorization import DjangoAuthorization, Authorization
 from tastypie.serializers import Serializer
 from models import *
 
@@ -31,14 +31,15 @@ class HubResource(ModelResource):
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
-        fields = []
+        fields = ['id', 'name', 'description', 'keywords', 'url']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
         # Authentication
 #        authentication = OAuthAuthentication()
         # Authorization
-        authorization = DjangoAuthorization()
+        # authorization = DjangoAuthorization()
+        authorization = Authorization()
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
 
@@ -57,7 +58,8 @@ class ObservationResource(ModelResource):
         # Authentication
 #        authentication = OAuthAuthentication()
         # Authorization
-        authorization = DjangoAuthorization()
+        # authorization = DjangoAuthorization()
+        authorization = Authorization()
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
 
@@ -76,7 +78,8 @@ class OshLayerResource(ModelResource):
         # Authentication
 #        authentication = OAuthAuthentication()
         # Authorization
-        authorization = DjangoAuthorization()
+        # authorization = DjangoAuthorization()
+        authorization = Authorization()
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
 
@@ -95,7 +98,8 @@ class VideoViewResource(ModelResource):
         # Authentication
 #        authentication = OAuthAuthentication()
         # Authorization
-        authorization = DjangoAuthorization()
+        # authorization = DjangoAuthorization()
+        authorization = Authorization()
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
 
@@ -114,7 +118,8 @@ class ChartStylerResource(ModelResource):
         # Authentication
 #        authentication = OAuthAuthentication()
         # Authorization
-        authorization = DjangoAuthorization()
+        # authorization = DjangoAuthorization()
+        authorization = Authorization()
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
 
@@ -133,7 +138,8 @@ class LocationIndicatorResource(ModelResource):
         # Authentication
 #        authentication = OAuthAuthentication()
         # Authorization
-        authorization = DjangoAuthorization()
+        # authorization = DjangoAuthorization()
+        authorization = Authorization()
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
 
@@ -152,7 +158,8 @@ class TextStylerResource(ModelResource):
         # Authentication
 #        authentication = OAuthAuthentication()
         # Authorization
-        authorization = DjangoAuthorization()
+        # authorization = DjangoAuthorization()
+        authorization = Authorization()
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
 
@@ -171,7 +178,8 @@ class ViewResource(ModelResource):
         # Authentication
 #        authentication = OAuthAuthentication()
         # Authorization
-        authorization = DjangoAuthorization()
+        # authorization = DjangoAuthorization()
+        authorization = Authorization()
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
 
