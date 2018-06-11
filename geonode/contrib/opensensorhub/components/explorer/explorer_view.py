@@ -18,9 +18,6 @@
 #
 #########################################################################
 from django.views.generic import View
-# from django.shortcuts import render
-# from django.template import loader
-# from django.http import HttpResponse
 from django.shortcuts import render
 
 from geonode.contrib.opensensorhub.api import HubResource
@@ -40,13 +37,55 @@ class ExplorerView(View):
     # def get(self, request, *args, **kwargs):
     def get(self, request):
 
+        # Initialize the data dictionary to pass to the HTML template for rendering
+        data = dict({'html_body': 'explorer/explorer.html'})
+
+        # Setup filter data to populate filters
+        resources = {HubResource.Meta.resource_name,
+                     ObservationResource.Meta.resource_name,
+                     OshLayerResource.Meta.resource_name,
+                     VideoViewResource.Meta.resource_name,
+                     ChartStylerResource.Meta.resource_name,
+                     LocationIndicatorResource.Meta.resource_name,
+                     TextStylerResource.Meta.resource_name,
+                     ViewResource.Meta.resource_name}
+
+        data["resources"] = resources
+
+        elements = [HubResource(), ObservationResource(),
+                    OshLayerResource(), VideoViewResource(),
+                    ChartStylerResource(), LocationIndicatorResource(),
+                    TextStylerResource(), ViewResource()]
+
+        # Setup Elements for Cards
+        # cards = {HubResource.Meta.resource_name: '',
+        #          ObservationResource.Meta.resource_name: '',
+        #          OshLayerResource.Meta.resource_name: '',
+        #          VideoViewResource.Meta.resource_name: '',
+        #          ChartStylerResource.Meta.resource_name: '',
+        #          LocationIndicatorResource.Meta.resource_name: '',
+        #          TextStylerResource.Meta.resource_name: '',
+        #          ViewResource.Meta.resource_name: ''}
+
+        # data["cards"] = list(element.serialize(
+        #     None,
+        #     element.full_hydrate(element.build_bundle(request=request)),
+        #     "application/json") for element in elements)
+
         hubs = HubResource()
+        request_bundle = hubs.build_bundle(request=request)
+        queryset = hubs.obj_get_list(request_bundle)
 
-        hubs_bundle = hubs.build_bundle(request=request)
-        hubs_json = hubs.serialize(None, hubs.full_hydrate(hubs_bundle), "application/json")
+        bundles = []
+        for obj in queryset:
+            bundle = hubs.build_bundle(obj=obj, request=request)
+            bundles.append(hubs.full_dehydrate(bundle, for_list=True))
 
-        # return render(request, self.template_name, dict({'html_body': 'explorer/explorer.html', 'hubs': hubs_json}))
-        return render(request, self.template_name, dict({'html_body': 'wizards/wizard_add_observation.html', 'hubs': hubs_json}))
+        # list_json = hubs.serialize(None, bundles, "application/json")
+
+        data["hubs"] = [item.data for item in bundles]
+
+        return render(request, self.template_name, data)
 
     def post(self):
         pass
