@@ -3,8 +3,7 @@ from django.http import HttpResponse
 from django.views.generic import TemplateView
 
 # Form Imports
-from forms import ObservationForm
-from forms import TestForm
+from geonode.contrib.opensensorhub.components.wizards.wizard_observation_forms import ObservationForm
 
 
 def index(request):
@@ -16,22 +15,13 @@ class BaseWizard(TemplateView):
     template_name = 'wizards/wizard_add_hub.html'
 
 
-# class ObservationWizard(TemplateView):
-#     template_name = 'wizards/wizard_add_observation.html'
-#     form = ObservationForm
-
-# def add_obs(request):
-
-
-
 class ObservationWizard(TemplateView):
-
     template_name = 'component_base.html'
-    # form = TestForm()
+    form = ObservationForm()
 
     # def get(self, request, *args, **kwargs):
     def get(self, request):
-        form = TestForm()
+        form = self.form
 
         return render(request, self.template_name, dict({'html_body': 'wizards/wizard_add_observation.html',
                                                          'form': form}))
