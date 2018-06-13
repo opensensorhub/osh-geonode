@@ -37,7 +37,7 @@ class ExplorerView(View):
     # def get(self, request, *args, **kwargs):
     def get(self, request):
 
-        # Initialize the data dictionary to pass to the HTML template for rendering
+       # Initialize the data dictionary to pass to the HTML template for rendering
         data = dict({'html_body': 'explorer/explorer.html'})
 
         # Setup filter data to populate filters
@@ -57,35 +57,67 @@ class ExplorerView(View):
                     ChartStylerResource(), LocationIndicatorResource(),
                     TextStylerResource(), ViewResource()]
 
-        # Setup Elements for Cards
-        # cards = {HubResource.Meta.resource_name: '',
-        #          ObservationResource.Meta.resource_name: '',
-        #          OshLayerResource.Meta.resource_name: '',
-        #          VideoViewResource.Meta.resource_name: '',
-        #          ChartStylerResource.Meta.resource_name: '',
-        #          LocationIndicatorResource.Meta.resource_name: '',
-        #          TextStylerResource.Meta.resource_name: '',
-        #          ViewResource.Meta.resource_name: ''}
-
-        # data["cards"] = list(element.serialize(
-        #     None,
-        #     element.full_hydrate(element.build_bundle(request=request)),
-        #     "application/json") for element in elements)
-
-        hubs = HubResource()
-        request_bundle = hubs.build_bundle(request=request)
-        queryset = hubs.obj_get_list(request_bundle)
-
         bundles = []
-        for obj in queryset:
-            bundle = hubs.build_bundle(obj=obj, request=request)
-            bundles.append(hubs.full_dehydrate(bundle, for_list=True))
 
-        # list_json = hubs.serialize(None, bundles, "application/json")
+        for element in elements:
+            request_bundle = element.build_bundle(request=request)
+            queryset = element.obj_get_list(request_bundle)
 
-        data["hubs"] = [item.data for item in bundles]
+            for obj in queryset:
+                bundle = element.build_bundle(obj=obj, request=request)
+                bundles.append(element.full_dehydrate(bundle, for_list=True))
+
+        data["cards"] = [item.data for item in bundles]
 
         return render(request, self.template_name, data)
+
+    def post(self):
+        pass
+
+    def build_resource_explorer(self, request, resource):
+
+        # Initialize the data dictionary to pass to the HTML template for rendering
+        data = dict({'html_body': 'explorer/explorer.html'})
+
+        bundles = []
+
+        request_bundle = resource.build_bundle(request=request)
+        queryset = resource.obj_get_list(request_bundle)
+
+        for obj in queryset:
+            bundle = resource.build_bundle(obj=obj, request=request)
+            bundles.append(resource.full_dehydrate(bundle, for_list=True))
+
+        data["cards"] = [item.data for item in bundles]
+
+        return render(request, self.template_name, data)
+
+
+class HubExplorerView(ExplorerView):
+
+    def get(self, request):
+
+        return self.build_resource_explorer(request, HubResource())
+
+    def post(self):
+        pass
+
+
+class ObsExplorerView(ExplorerView):
+
+    def get(self, request):
+
+        return self.build_resource_explorer(request, ObservationResource())
+
+    def post(self):
+        pass
+
+
+class LayerExplorerView(ExplorerView):
+
+    def get(self, request):
+
+        return self.build_resource_explorer(request, OshLayerResource())
 
     def post(self):
         pass

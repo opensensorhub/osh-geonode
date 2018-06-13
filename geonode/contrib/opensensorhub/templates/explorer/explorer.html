@@ -1,44 +1,6 @@
-
-<!-- Filter controls -->
-<div style='margin: 20px;'>
-    <span style='padding: 10px;'>
-        <select>
-            <option selected="">Select Resource</option>
-            {% for resource in resources %}
-            <option value={{resource}}>{{resource|title}}</option>
-            {% endfor %}
-        </select>
-    </span>
-    <span style='padding: 10px;'>
-        <label for="inputDefault">Keywords:</label>
-        <input placeholder="Keywords" id="inputKeywords" type="text">
-    </span>
-</div>
-
+{% block body %}
+{% include "explorer/filter_layout.html" %}
 <!-- Card layout -->
-<div style='margin: 20px;'>
-    <span>
-{% for hub in hubs %}
-<div style='background-color: #F0864D; color: #1A1A1B; border-style: solid; border-width: 1px; border-color: #1A1A1B; border-radius: 5px; max-width: 30rem; display: inline-block; margin: 10px'>
-    <h3 style='padding-left: 5px; padding-right: 5px;'>{{hub.name}}</h3>
-    <hr style='border-color: #1A1A1B;'/>
-    <div style='padding: 5px;'>
-        <h5>{{hub.url}}</h5>
-        <!--h6 class="card-subtitle text-muted">Support card subtitle</h6-->
-    </div>
-    <hr style='border-color: #1A1A1B;'/>
-    <img style='background-color: #FFFFFF;padding: 5px; height: 200px; width: 100%; display: block;' src="{{STATIC_URL}}images/opensensorhub-logo2.png" alt="Card image">
-    <hr style='border-color: #1A1A1B;'/>
-    <div style='padding-left: 5px; padding-right: 5px;'>
-        <p>{{hub.description}}</p>
-    </div>
-    <hr style='border-color: #1A1A1B;'/>
-    <div style='padding-left: 5px; padding-right: 5px; padding-bottom: 5px;'>
-        {{hub.keywords}}
-    </div>
-</div>
-{% endfor %}
-
-        </span>
-</div>
+{% include "explorer/card_layout.html" %}
+{% endblock body %}
 

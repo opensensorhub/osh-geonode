@@ -21,6 +21,8 @@ from tastypie.resources import ModelResource
 # from tastypie.authentication import OAuthAuthentication
 from tastypie.authorization import DjangoAuthorization, Authorization
 from tastypie.serializers import Serializer
+from tastypie.constants import ALL, ALL_WITH_RELATIONS
+
 from models import *
 
 
@@ -42,6 +44,13 @@ class HubResource(ModelResource):
         authorization = Authorization()
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
+        # Filtering
+        filtering = {
+            'name': ALL,
+            'description': ALL,
+            'keywords': ALL,
+            'url': ALL
+        }
 
 
 class ObservationResource(ModelResource):
@@ -62,6 +71,8 @@ class ObservationResource(ModelResource):
         authorization = Authorization()
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
+        # Filtering
+        filtering = {}
 
 
 class OshLayerResource(ModelResource):
@@ -82,6 +93,8 @@ class OshLayerResource(ModelResource):
         authorization = Authorization()
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
+        # Filtering
+        filtering = {}
 
 
 class VideoViewResource(ModelResource):
@@ -102,6 +115,8 @@ class VideoViewResource(ModelResource):
         authorization = Authorization()
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
+        # Filtering
+        filtering = {}
 
 
 class ChartStylerResource(ModelResource):
@@ -122,6 +137,8 @@ class ChartStylerResource(ModelResource):
         authorization = Authorization()
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
+        # Filtering
+        filtering = {}
 
 
 class LocationIndicatorResource(ModelResource):
@@ -142,6 +159,8 @@ class LocationIndicatorResource(ModelResource):
         authorization = Authorization()
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
+        # Filtering
+        filtering = {}
 
 
 class TextStylerResource(ModelResource):
@@ -162,6 +181,8 @@ class TextStylerResource(ModelResource):
         authorization = Authorization()
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
+        # Filtering
+        filtering = {}
 
 
 class ViewResource(ModelResource):
@@ -182,4 +203,6 @@ class ViewResource(ModelResource):
         authorization = Authorization()
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
+        # Filtering
+        filtering = {}
 
