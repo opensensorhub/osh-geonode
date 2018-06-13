@@ -1,0 +1,14 @@
+<div style='margin: 20px;'>
+    <span style='padding: 10px;'>
+        <select>
+            <option selected="">Select Resource</option>
+            {% for resource in resources %}
+            <option value={{resource}}>{{resource|title}}</option>
+            {% endfor %}
+        </select>
+    </span>
+    <span style='padding: 10px;'>
+        <label for="inputDefault">Keywords:</label>
+        <input placeholder="Keywords" id="inputKeywords" type="text">
+    </span>
+</div>

@@ -18,7 +18,6 @@
 #
 #########################################################################
 from django.conf.urls import url, include
-from django.views.generic import TemplateView
 
 from tastypie.api import Api
 
@@ -34,6 +33,9 @@ from api import ViewResource
 import views
 
 from components.explorer.explorer_view import ExplorerView
+from components.explorer.explorer_view import HubExplorerView
+from components.explorer.explorer_view import ObsExplorerView
+from components.explorer.explorer_view import LayerExplorerView
 
 app_name = 'opensensorhub'
 
@@ -60,7 +62,10 @@ for resource in all_resources:
     osh_api.register(resource)
 
 urlpatterns = [
-        url(r'^sensors_browse', ExplorerView.as_view(), name='sensors_browse'),
+
+        url(r'^hubs', HubExplorerView.as_view(), name='explore_hubs'),
+        url(r'^observations', ObsExplorerView.as_view(), name='explore_obs'),
+        url(r'^sensor_layers', LayerExplorerView.as_view(), name='explore_sensor_layers'),
         url(r'^', include(osh_api.urls), name='api'),
         url(r'^api/', include(core_api.urls), name='core'),
         url(r'^api/', include(views_api.urls), name='views'),
@@ -70,4 +75,6 @@ urlpatterns = [
     url(r'^add-hub', views.BaseWizard.as_view(), name='base'),
     url(r'^add-obs', views.ObservationWizard.as_view(), name='obs-wiz'),
     # url(r'^test', views.create_user),
+    # Test link to view all resources as cards
+    url(r'^explore', ExplorerView.as_view(), name='explore'),
 ]

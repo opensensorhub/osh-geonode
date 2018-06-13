@@ -19,8 +19,10 @@
 #########################################################################
 from tastypie.resources import ModelResource
 # from tastypie.authentication import OAuthAuthentication
-from tastypie.authorization import DjangoAuthorization
+from tastypie.authorization import DjangoAuthorization, Authorization
 from tastypie.serializers import Serializer
+from tastypie.constants import ALL, ALL_WITH_RELATIONS
+
 from models import *
 
 
@@ -31,16 +33,24 @@ class HubResource(ModelResource):
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
-        fields = []
+        fields = ['id', 'name', 'description', 'keywords', 'url']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
         # Authentication
 #        authentication = OAuthAuthentication()
         # Authorization
-        authorization = DjangoAuthorization()
+        # authorization = DjangoAuthorization()
+        authorization = Authorization()
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
+        # Filtering
+        filtering = {
+            'name': ALL,
+            'description': ALL,
+            'keywords': ALL,
+            'url': ALL
+        }
 
 
 class ObservationResource(ModelResource):
@@ -57,9 +67,12 @@ class ObservationResource(ModelResource):
         # Authentication
 #        authentication = OAuthAuthentication()
         # Authorization
-        authorization = DjangoAuthorization()
+        # authorization = DjangoAuthorization()
+        authorization = Authorization()
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
+        # Filtering
+        filtering = {}
 
 
 class OshLayerResource(ModelResource):
@@ -76,9 +89,12 @@ class OshLayerResource(ModelResource):
         # Authentication
 #        authentication = OAuthAuthentication()
         # Authorization
-        authorization = DjangoAuthorization()
+        # authorization = DjangoAuthorization()
+        authorization = Authorization()
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
+        # Filtering
+        filtering = {}
 
 
 class VideoViewResource(ModelResource):
@@ -95,9 +111,12 @@ class VideoViewResource(ModelResource):
         # Authentication
 #        authentication = OAuthAuthentication()
         # Authorization
-        authorization = DjangoAuthorization()
+        # authorization = DjangoAuthorization()
+        authorization = Authorization()
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
+        # Filtering
+        filtering = {}
 
 
 class ChartStylerResource(ModelResource):
@@ -114,9 +133,12 @@ class ChartStylerResource(ModelResource):
         # Authentication
 #        authentication = OAuthAuthentication()
         # Authorization
-        authorization = DjangoAuthorization()
+        # authorization = DjangoAuthorization()
+        authorization = Authorization()
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
+        # Filtering
+        filtering = {}
 
 
 class LocationIndicatorResource(ModelResource):
@@ -133,9 +155,12 @@ class LocationIndicatorResource(ModelResource):
         # Authentication
 #        authentication = OAuthAuthentication()
         # Authorization
-        authorization = DjangoAuthorization()
+        # authorization = DjangoAuthorization()
+        authorization = Authorization()
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
+        # Filtering
+        filtering = {}
 
 
 class TextStylerResource(ModelResource):
@@ -152,9 +177,12 @@ class TextStylerResource(ModelResource):
         # Authentication
 #        authentication = OAuthAuthentication()
         # Authorization
-        authorization = DjangoAuthorization()
+        # authorization = DjangoAuthorization()
+        authorization = Authorization()
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
+        # Filtering
+        filtering = {}
 
 
 class ViewResource(ModelResource):
@@ -171,7 +199,10 @@ class ViewResource(ModelResource):
         # Authentication
 #        authentication = OAuthAuthentication()
         # Authorization
-        authorization = DjangoAuthorization()
+        # authorization = DjangoAuthorization()
+        authorization = Authorization()
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
+        # Filtering
+        filtering = {}
 
