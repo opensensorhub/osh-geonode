@@ -1,5 +1,6 @@
 from django import forms
 
+
 class TestForm(forms.Form):
     username = forms.CharField(max_length=30)
     password1 = forms.CharField(widget=forms.PasswordInput)
@@ -31,3 +32,22 @@ class TestForm(forms.Form):
     def get_questions(self):
         print("Hi")
         return 1
+
+
+class ObservationForm(forms.Form):
+    name = forms.CharField
+    source_type = forms.CharField
+    endpoint_url = forms.URLField
+    protocol = forms.Select
+    offering_id = forms.CharField
+    offering_service = forms.Select
+    observed_property = forms.URLField
+    start_time = forms.DateTimeField
+    end_time = forms.DateTimeField
+    sync_master_time = forms.CheckboxInput
+    buffering_time = forms.IntegerField
+    time_shift = forms.IntegerField
+    replay_speed = forms.Select
+
+    def do_stuff(self):
+        pass

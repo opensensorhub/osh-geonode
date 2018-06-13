@@ -4,7 +4,10 @@
 {#    Need to generate form more programatically for final product #}
     <form action="" method="post">
         {% csrf_token %}
-        {{ form }}
+        <p>Form goes here</p>
+        <p>
+        {{ form.as_p }}
+        </p>
         <input type="submit" value="Submit" />
     </form>
     {% comment %}<div>
