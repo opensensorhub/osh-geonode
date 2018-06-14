@@ -1,12 +1,27 @@
-{% extends "wizards/base_wizard.html" %}
+{#{% extends "wizards/base_wizard.html" %}#}
 
 {% block body %}
-<div>
-    <form action="wizard_add_hub.html">
-        <label for="url">Hub URL</label>
-        <input type="url" id="url">
-        <button type="submit">Next</button>
-        <p>TEST TEXT</p>
+    <style>
+        label {
+            display: inline-block;
+            width: 30%;
+            text-align: right;
+        }
+
+        input {
+            display: inline-block;
+            width: 50%;
+        }
+    </style>
+
+    {#    Look at using grid or flexbox to improve some of the layout feel #}
+    <form action="" method="post" style="width: 50%">
+        {% csrf_token %}
+        <p>Form goes here</p>
+        <p>
+            {{ form.as_p }}
+        </p>
+        <input type="submit" value="Submit" style="width: 10%; position: absolute; left: 30.9%;"/>
     </form>
-</div>
+
 {% endblock %}

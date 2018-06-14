@@ -1,26 +1,26 @@
 {#{% extends "components/wizards/base_wizard.html" %}#}
 
 {% block body %}
-{#    Need to generate form more programatically for final product #}
+    {#    Need to generate form more programatically for final product #}
     <style>
-    label{
-        display: inline-block;
-        width: 30%;
-        text-align: right;
-    }
+        label {
+            display: inline-block;
+            width: 30%;
+            text-align: right;
+        }
 
-    input{
-        display: inline-block;
-        width: 50%;
-    }
+        input {
+            display: inline-block;
+            width: 50%;
+        }
     </style>
     <form action="" method="post" style="width: 50%">
         {% csrf_token %}
         <p>Form goes here</p>
         <p>
-        {{ form.as_p }}
+            {{ form.as_p }}
         </p>
-        <input type="submit" value="Submit" style="width: 10%; position: absolute; left: 30%;" />
+        <input type="submit" value="Submit" style="width: 10%; position: absolute; left: 30%;"/>
     </form>
     {% comment %}<div>
         {#  Make sure we're hitting the right endpoint  #}

@@ -18,3 +18,8 @@ class ObservationForm(forms.Form):
 
     def do_stuff(self):
         pass
+
+
+class HubForm(forms.Form):
+    name = forms.CharField()
+    url = forms.URLField()
