@@ -5,6 +5,18 @@ from django.views.generic import TemplateView, FormView
 # Form Imports
 from geonode.contrib.opensensorhub.components.wizards.wizard_observation_forms import ObservationForm, HubForm
 
+# Resource Imports
+from geonode.contrib.opensensorhub.api import HubResource, ObservationResource, OshLayerResource, VideoViewResource, \
+    ChartStylerResource, LocationIndicatorResource, TextStylerResource, ViewResource
+
+class GenericWizard(FormView):
+    osh_resources = {HubResource(), ObservationResource(), OshLayerResource(), VideoViewResource(),
+                     ChartStylerResource(), LocationIndicatorResource(), TextStylerResource(), ViewResource()}
+
+    def get_available_hubs(self, request, resource):
+        hubs = 0
+        return hubs
+
 
 class ObservationWizard(TemplateView):
     template_name = 'component_base.html'

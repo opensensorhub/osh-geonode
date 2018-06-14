@@ -12,12 +12,17 @@
             display: inline-block;
             width: 50%;
         }
+
+        textarea {
+            display: inline-block;
+            width: 50%;
+            resize: none;
+        }
     </style>
 
     {#    Look at using grid or flexbox to improve some of the layout feel #}
-    <form action="" method="post" style="width: 50%">
+    <form action="" method="post" style="width: 50%;">
         {% csrf_token %}
-        <p>Form goes here</p>
         <p>
             {{ form.as_p }}
         </p>
