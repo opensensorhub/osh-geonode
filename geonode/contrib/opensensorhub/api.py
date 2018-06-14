@@ -36,7 +36,7 @@ class HubResource(ModelResource):
         fields = ['id', 'name', 'description', 'keywords', 'url']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
-        allowed_methods = ['get', 'post']
+        allowed_methods = ['get', 'post', 'delete']
         # Authentication
 #        authentication = OAuthAuthentication()
         # Authorization

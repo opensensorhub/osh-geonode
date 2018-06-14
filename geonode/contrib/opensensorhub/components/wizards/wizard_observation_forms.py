@@ -1,5 +1,9 @@
 from django import forms
 
+# Model Imports
+from geonode.contrib.opensensorhub.models import Hub, Observation, OSHLayer, VideoView, \
+    ChartStyler, LocationIndicator, TextStyler, View
+
 
 class ObservationForm(forms.Form):
     name = forms.CharField
@@ -20,6 +24,6 @@ class ObservationForm(forms.Form):
         pass
 
 
-class HubForm(forms.Form):
+class HubForm(forms.ModelForm):
     name = forms.CharField()
     url = forms.URLField()

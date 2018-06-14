@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.generic import TemplateView, FormView
 
@@ -39,5 +39,16 @@ class HubWizard(FormView):
 
     def get(self, request):
         form = self.form
-
         return render(request, self.template_name, dict({'html_body': 'wizards/wizard_add_hub.html', 'form': form}))
+
+    def post(self, request):
+        form = HubForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # TODO: Determine if we need cleaned data for other forms
+            # text = form.cleaned_data['post']
+            form = HubForm()
+            return redirect('hubs/')
+
+        args = {'form': form, 'html_body': 'wizards/wizard_add_hub.html'}
+        return render(request, self.template_name, args)
