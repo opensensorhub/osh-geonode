@@ -37,7 +37,7 @@ class ExplorerView(View):
     # def get(self, request, *args, **kwargs):
     def get(self, request):
 
-       # Initialize the data dictionary to pass to the HTML template for rendering
+        # Initialize the data dictionary to pass to the HTML template for rendering
         data = dict({'html_body': 'explorer/explorer.html'})
 
         # Setup filter data to populate filters
@@ -78,6 +78,18 @@ class ExplorerView(View):
 
         # Initialize the data dictionary to pass to the HTML template for rendering
         data = dict({'html_body': 'explorer/explorer.html'})
+
+        # Setup filter data to populate filters
+        resources = {HubResource.Meta.resource_name,
+                     ObservationResource.Meta.resource_name,
+                     OshLayerResource.Meta.resource_name,
+                     VideoViewResource.Meta.resource_name,
+                     ChartStylerResource.Meta.resource_name,
+                     LocationIndicatorResource.Meta.resource_name,
+                     TextStylerResource.Meta.resource_name,
+                     ViewResource.Meta.resource_name}
+
+        data["resources"] = resources
 
         bundles = []
 

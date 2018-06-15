@@ -1,14 +1,67 @@
-<div style='margin: 20px;'>
-    <span style='padding: 10px;'>
-        <select>
-            <option selected="">Select Resource</option>
-            {% for resource in resources %}
-            <option value={{resource}}>{{resource|title}}</option>
-            {% endfor %}
-        </select>
-    </span>
-    <span style='padding: 10px;'>
-        <label for="inputDefault">Keywords:</label>
-        <input placeholder="Keywords" id="inputKeywords" type="text">
-    </span>
+<div style='padding-top: 10px; padding-bottom: 10px;'>
+        <label style='display: inline;'>Filter Results</label>
+        <label style='display: inline; float: right; text-align:right;'>Clear all</label>
+</div>
+<div style='padding-top: 10px; padding-bottom: 10px;'>
+    <div style='padding-top: 5px; padding-bottom: 5px;'>
+        <label style='display: inline;'>SEARCH</label>
+        <img style='display: inline;' src="{{STATIC_URL}}images/info.png" width="20px" height="20px">
+        <label style='display: inline; float: right; text-align:right;'>Clear</label>
+    </div>
+    <div style='position: relative;'>
+        <input type="text" placeholder="Filter by content..." style='width: 100%'>
+        <img style='position: absolute; right: 5px; top: 5px; z-index: 1;' src="{{STATIC_URL}}images/search.png" width="20px" height="20px">
+    </div>
+</div>
+<div style='padding-top: 10px; padding-bottom: 10px; display: block;'>
+    <div style='padding-top: 5px; padding-bottom: 5px; display: block;'>
+        <label style='display: inline;'>Content Type</label>
+        <label style='display: inline; float:right;'>Clear</label>
+    </div>
+    {% for resource in resources %}
+    <div style='padding-top: 5px; padding-bottom: 5px; display: block;'>
+        <input style='padding-right: 5px;' type="checkbox"/>
+        <label>{{resource|title}}</label>
+    </div>
+    {% endfor %}
+</div>
+<div style='padding-top: 10px; padding-bottom: 10px; display: block;'>
+    <div style='padding-top: 5px; padding-bottom: 5px; display: block;'>
+        <label style='display: inline;'>Name</label>
+        <label style='display: inline; float:right;'>Clear</label>
+    </div>
+    <div style='position: relative;'>
+        <input type="text" placeholder="Filter by name..." style='width: 100%'>
+        <img style='position: absolute; right: 5px; top: 5px; z-index: 1;' src="{{STATIC_URL}}images/search.png" width="20px" height="20px">
+    </div>
+</div>
+<div style='padding-top: 10px; padding-bottom: 10px; display: block;'>
+    <div style='padding-top: 5px; padding-bottom: 5px; display: block;'>
+        <label style='display: inline;'>URL</label>
+        <label style='display: inline; float:right;'>Clear</label>
+    </div>
+    <div style='position: relative;'>
+        <input type="text" placeholder="Filter by URL..." style='width: 100%'>
+        <img style='position: absolute; right: 5px; top: 5px; z-index: 1;' src="{{STATIC_URL}}images/search.png" width="20px" height="20px">
+    </div>
+</div>
+<div style='padding-top: 10px; padding-bottom: 10px; display: block;'>
+    <div style='padding-top: 5px; padding-bottom: 5px; display: block;'>
+        <label style='display: inline;'>Description</label>
+        <label style='display: inline; float:right;'>Clear</label>
+    </div>
+    <div style='position: relative;'>
+        <input type="text" placeholder="Filter by description..." style='width: 100%'>
+        <img style='position: absolute; right: 5px; top: 5px; z-index: 1;' src="{{STATIC_URL}}images/search.png" width="20px" height="20px">
+    </div>
+</div>
+<div style='padding-top: 10px; padding-bottom: 10px; display: block;'>
+    <div style='padding-top: 5px; padding-bottom: 5px; display: block;'>
+        <label style='display: inline;'>Keywords</label>
+        <label style='display: inline; float:right;'>Clear</label>
+    </div>
+    <div style='position: relative;'>
+        <input type="text" placeholder="Filter by keywords..." style='width: 100%'>
+        <img style='position: absolute; right: 5px; top: 5px; z-index: 1;' src="{{STATIC_URL}}images/search.png" width="20px" height="20px">
+    </div>
 </div>

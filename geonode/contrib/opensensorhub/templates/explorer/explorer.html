@@ -1,6 +1,13 @@
 {% block body %}
-{% include "explorer/filter_layout.html" %}
-<!-- Card layout -->
-{% include "explorer/card_layout.html" %}
+<div style='color:#1A1A1B; position: relative;'>
+    <div style='display: inline-block;'>
+        {% include "explorer/filter_layout.html" %}
+    </div>
+    <div style='display: inline-block;'>
+        {% include "explorer/header.html" %}
+        {% include "explorer/card_layout.html" %}
+    </div>
+</div>
 {% endblock body %}
+{% block sidebar %}{% endblock sidebar %}
 
