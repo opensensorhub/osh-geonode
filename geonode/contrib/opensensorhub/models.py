@@ -171,8 +171,14 @@ class Hub(OshModel):
 # Model representation for Sensor Web Enablement Service
 # ------------------------------------------------------------------------------
 class SweService(models.Model):
-    SOS = 0,
-    SPS = 1
+    SERVICE_CHOICES = (
+        ('0', 'SOS'),
+        ('1', 'SPS'),
+    )
+
+    service = models.CharField(max_length=1, default='0', choices=SERVICE_CHOICES)
+    # SOS = 0,
+    # SPS = 1
 
     class Meta:
         abstract = True
@@ -199,14 +205,14 @@ class Observation(OshModel, SweService):
         ('4', 'QUAD'),
     )
 
-    hub = models.ForeignKey(Hub, on_delete=models.CASCADE)
-    layer = models.ForeignKey(OSHLayer)
-    view = models.ForeignKey(
-        View,
-#        models.SET_NULL,
-        blank=True,
-        null=True
-    )
+    # hub = models.ForeignKey(Hub, on_delete=models.CASCADE)
+#     layer = models.ForeignKey(OSHLayer)
+#     view = models.ForeignKey(
+#         View,
+# #        models.SET_NULL,
+#         blank=True,
+#         null=True
+#     )
 
     endpoint = models.URLField(max_length=200)
     offering = models.CharField(max_length=200)
@@ -218,6 +224,6 @@ class Observation(OshModel, SweService):
     time_shift = models.IntegerField()
     source_type = models.CharField(max_length=200)
     replay_speed = models.CharField(max_length=1, choices=REPLAY_SPEED_CHOICES, default='2')
-    service = models.IntegerField(default=SweService.SOS, validators=[validators.MinValueValidator(SweService.SOS),
-                                                                     validators.MaxValueValidator(SweService.SOS)])
+    # service = models.IntegerField(default=SweService.SOS, validators=[validators.MinValueValidator(SweService.SOS),
+    #                                                                  validators.MaxValueValidator(SweService.SOS)])
     protocol = models.CharField(max_length=1, choices=PROTOCOL_TYPE_CHOICES, default='2')
