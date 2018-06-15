@@ -60,7 +60,9 @@ class ObservationResource(ModelResource):
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
-        fields = []
+        fields = [('name', 'source_type', 'endpoint_url', 'protocol', 'offering_id', 'offering_service',
+                   'observed_property', 'start_time', 'end_time', 'sync_master_time', 'buffering_time', 'time_shift',
+                   'replay_speed')]
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
@@ -72,7 +74,12 @@ class ObservationResource(ModelResource):
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
         # Filtering
-        filtering = {}
+        filtering = {
+            'name': ALL,
+            'description': ALL,
+            'keywords': ALL,
+            'url': ALL
+        }
 
 
 class OshLayerResource(ModelResource):

@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.views.generic import TemplateView, FormView
 
 # Form Imports
-from geonode.contrib.opensensorhub.components.wizards.wizard_observation_forms import ObservationForm, HubForm
+from geonode.contrib.opensensorhub.components.wizards.wizard_forms import ObservationForm, HubForm
 
 # Resource Imports
 from geonode.contrib.opensensorhub.api import HubResource, ObservationResource, OshLayerResource, VideoViewResource, \
@@ -29,8 +29,17 @@ class ObservationWizard(TemplateView):
         return render(request, self.template_name, dict({'html_body': 'wizards/wizard_add_observation.html',
                                                          'form': form}))
 
-    def post(self):
-        pass
+    def post(self, request):
+        form = ObservationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # TODO: Determine if we need cleaned data for other forms
+            # text = form.cleaned_data['post']
+            form = ObservationForm()
+            return redirect('observations/')
+
+        args = {'form': form, 'html_body': 'wizards/wizard_add_observation.html'}
+        return render(request, self.template_name, args)
 
 
 class HubWizard(FormView):
