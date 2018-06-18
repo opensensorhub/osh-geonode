@@ -9,8 +9,10 @@
         <label style='display: inline; float: right; text-align:right;'>Clear</label>
     </div>
     <div style='position: relative;'>
-        <input type="text" placeholder="Filter by content..." style='width: 100%'>
-        <img style='position: absolute; right: 5px; top: 5px; z-index: 1;' src="{{STATIC_URL}}images/search.png" width="20px" height="20px">
+        <form method="get" action="/osh/hubs/">
+            <input type="text" placeholder="Filter by content..." style='width: 100%'>
+            <input type="submit" value="" style='border: none; background: no-repeat; background-size: cover; background-image: url({{STATIC_URL}}images/search.png); position: absolute; right: 5px; top: 3px; z-index: 1; width:30px; height:30px;' >
+        </form>
     </div>
 </div>
 <div style='padding-top: 10px; padding-bottom: 10px; display: block;'>
@@ -20,8 +22,10 @@
     </div>
     {% for resource in resources %}
     <div style='padding-top: 5px; padding-bottom: 5px; display: block;'>
-        <input style='padding-right: 5px;' type="checkbox"/>
-        <label>{{resource|title}}</label>
+        <form method="get" action="/osh/hubs/">
+            <input style='padding-right: 5px;' type="checkbox"/>
+            <label>{{resource|title}}</label>
+        </form>
     </div>
     {% endfor %}
 </div>
@@ -31,8 +35,10 @@
         <label style='display: inline; float:right;'>Clear</label>
     </div>
     <div style='position: relative;'>
-        <input type="text" placeholder="Filter by name..." style='width: 100%'>
-        <img style='position: absolute; right: 5px; top: 5px; z-index: 1;' src="{{STATIC_URL}}images/search.png" width="20px" height="20px">
+        <form method="get" action="/osh/hubs/">
+            <input type="text" placeholder="Filter by name..." style='width: 100%' name="name__contains">
+            <input type="submit" value="" style='border: none; background: no-repeat; background-size: cover; background-image: url({{STATIC_URL}}images/search.png); position: absolute; right: 5px; top: 3px; z-index: 1; width:30px; height:30px;' >
+        </form>
     </div>
 </div>
 <div style='padding-top: 10px; padding-bottom: 10px; display: block;'>
@@ -41,8 +47,10 @@
         <label style='display: inline; float:right;'>Clear</label>
     </div>
     <div style='position: relative;'>
-        <input type="text" placeholder="Filter by URL..." style='width: 100%'>
-        <img style='position: absolute; right: 5px; top: 5px; z-index: 1;' src="{{STATIC_URL}}images/search.png" width="20px" height="20px">
+        <form method="get" action="/osh/hubs/">
+            <input type="text" placeholder="Filter by URL..." style='width: 100%' name="url__contains">
+            <input type="submit" value="" style='border: none; background: no-repeat; background-size: cover; background-image: url({{STATIC_URL}}images/search.png); position: absolute; right: 5px; top: 3px; z-index: 1; width:30px; height:30px;' >
+        </form>
     </div>
 </div>
 <div style='padding-top: 10px; padding-bottom: 10px; display: block;'>
@@ -51,8 +59,10 @@
         <label style='display: inline; float:right;'>Clear</label>
     </div>
     <div style='position: relative;'>
-        <input type="text" placeholder="Filter by description..." style='width: 100%'>
-        <img style='position: absolute; right: 5px; top: 5px; z-index: 1;' src="{{STATIC_URL}}images/search.png" width="20px" height="20px">
+        <form method="get" action="/osh/hubs/">
+            <input type="text" placeholder="Filter by description..." style='width: 100%' name="description__contains">
+            <input type="submit" value="" style='border: none; background: no-repeat; background-size: cover; background-image: url({{STATIC_URL}}images/search.png); position: absolute; right: 5px; top: 3px; z-index: 1; width:30px; height:30px;' >
+        </form>
     </div>
 </div>
 <div style='padding-top: 10px; padding-bottom: 10px; display: block;'>
@@ -61,7 +71,9 @@
         <label style='display: inline; float:right;'>Clear</label>
     </div>
     <div style='position: relative;'>
-        <input type="text" placeholder="Filter by keywords..." style='width: 100%'>
-        <img style='position: absolute; right: 5px; top: 5px; z-index: 1;' src="{{STATIC_URL}}images/search.png" width="20px" height="20px">
+        <form method="get" action="/osh/hubs/">
+            <input type="text" placeholder="Filter by keywords..." style='width: 100%' name="keywords__contains">
+            <input type="submit" value="" style='border: none; background: no-repeat; background-size: cover; background-image: url({{STATIC_URL}}images/search.png); position: absolute; right: 5px; top: 3px; z-index: 1; width:30px; height:30px;' >
+        </form>
     </div>
 </div>
