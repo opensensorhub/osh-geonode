@@ -1,13 +1,139 @@
+{% block extra_head %}
+    <style>
+        .osh {
+            {#border: 25px solid red;#}
+            margin: 20px;
+            color: #1A1A1B;
+            position: relative;
+        }
+
+        .osh-div {
+            {#border: 25px solid green;#}
+            margin: 20px;
+            text-align: center;
+        }
+
+        .osh-element {
+            padding-left: 1em;
+            padding-right: 1em;
+        }
+
+        .osh-content {
+            display: inline-block;
+        }
+
+        .osh-filters {
+            {#border: 25px solid blue;#}
+            margin: 20px;
+            display: inline-block;
+        }
+
+        .osh-filter-row {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .osh-label {
+            display: inline;
+        }
+
+        .osh-label-right {
+            display: inline;
+            float: right;
+        }
+
+        .osh-cards {
+            {#border: 25px solid yellow;#}
+            margin: 20px;
+            display: inline-block;
+        }
+
+        .osh-form {
+            position: relative;
+        }
+
+        .osh-form-text-input {
+            width: 100%;
+        }
+
+        .osh-form-submit-input {
+            border: none;
+            background: no-repeat;
+            background-size: cover;
+            background-image: url({{ STATIC_URL }}images/search.png);
+            position: absolute;
+            right: 5px;
+            top: 6px;
+            z-index: 1;
+            width:30px;
+            height:30px;
+        }
+
+        .osh-form-info-image {
+            display: inline;
+            width: 20px;
+            height: 20px;
+        }
+
+        .osh-card-name {
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        .osh-card-background {
+            border-radius: 0px 0px 15px 15px;
+            background-color: #EDE4DC;'
+        }
+
+        .osh-card {
+            text-align: center;
+            box-shadow: 5px 5px 2px grey;
+            background-color: #F0864D;
+            color: #1A1A1B;
+            border-style: solid;
+            border-width: 3px;
+            border-color: #1A1A1B;
+            border-radius: 15px;
+            max-width: 30rem;
+            display: inline-block;
+            margin: 10px
+        }
+
+        .osh-card-url {
+            padding: 5px;
+        }
+
+        .osh-card-image {
+            background-color: #FFFFFF;
+            padding: 5px;
+            height: 100px;
+            width: 100%;
+            display: block;
+        }
+
+        .osh-card-description {
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        .osh-card-separator {
+            border-color: #1A1A1B;
+        }
+
+        .osh-card-keywords {
+            padding-left: 5px;
+            padding-right: 5px;
+            padding-bottom: 5px;
+        }
+    </style>
+{% endblock extra_head %}
 {% block body %}
-<div style='color:#1A1A1B; position: relative;'>
-    <div style='display: inline-block;'>
-        {% include "explorer/filter_layout.html" %}
-    </div>
-    <div style='display: inline-block;'>
+    <div class="osh">
         {% include "explorer/header.html" %}
-        {% include "explorer/card_layout.html" %}
+        <div class="osh-content">
+            {% include "explorer/filter_layout.html" %}
+            {% include "explorer/card_layout.html" %}
+        </div>
     </div>
-</div>
 {% endblock body %}
 {% block sidebar %}{% endblock sidebar %}
-

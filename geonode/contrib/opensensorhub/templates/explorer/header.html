@@ -1,10 +1,5 @@
-<div style='margin: 20px;'>
-    <span>
-        <div style='text-align: center; overflow: hidden; margin: 2em; width: 100%; color: #1A1A1B'>
-            {% for resource in resources %}
-            <a style='display: inline; float: left; padding: 1em 1em 2em; text-decoration: none; transition: 0.7s;' href="#">{{resource|title}}</a>
-            <div style='transition: 0.7s;'></div>
-            {% endfor %}
-        </div>
-    </span>
-</div>
+<header class="osh-div">
+    {% for resource in resources %}
+        <a class="osh-element" href="#">{{ resource|title }}</a>
+    {% endfor %}
+</header>

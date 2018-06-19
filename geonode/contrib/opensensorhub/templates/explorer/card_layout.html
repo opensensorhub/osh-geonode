@@ -1,25 +1,23 @@
-<div style='margin: 20px;'>
-    <span>
-        {% for card in cards %}
-        <div style='text-align: center; box-shadow: 5px 5px 2px grey; background-color: #F0864D; color: #1A1A1B; border-style: solid; border-width: 3px; border-color: #1A1A1B; border-radius: 15px; max-width: 30rem; display: inline-block; margin: 10px'>
-            <h3 style='padding-left: 5px; padding-right: 5px;'>{{card.name}}</h3>
-            <div style='border-radius: 0px 0px 15px 15px; background-color: #EDE4DC;'>
-                <hr style='border-color: #1A1A1B;'/>
-                <div style='padding: 5px;'>
+<span class="osh-cards">
+    {% for card in cards %}
+        <div class="osh-card">
+            <h3 class="osh-card-name">{{card.name}}</h3>
+            <div class="osh-card-background">
+                <hr class="osh-card-separator"/>
+                <div class="osh-card-url">
                     {{card.url}}
                 </div>
-                <hr style='border-color: #1A1A1B;'/>
-                <img style='background-color: #FFFFFF;padding: 5px; height: 100px; width: 100%; display: block;' src="{{STATIC_URL}}images/opensensorhub-logo2.png" alt="Card image">
-                <hr style='border-color: #1A1A1B;'/>
-                <div style='padding-left: 5px; padding-right: 5px;'>
+                <hr class="osh-card-separator"/>
+                <img class="osh-card-image" src="{{STATIC_URL}}images/opensensorhub-logo2.png" alt="Card image">
+                <hr class="osh-card-separator"/>
+                <div class="osh-card-description">
                     <p>{{card.description}}</p>
                 </div>
-                <hr style='border-color: #1A1A1B;'/>
-                <div style='padding-left: 5px; padding-right: 5px; padding-bottom: 5px;'>
+                <hr class="osh-card-separator"/>
+                <div class="osh-card-keywords">
                     {{card.keywords}}
                 </div>
             </div>
         </div>
-        {% endfor %}
-    </span>
-</div>
+    {% endfor %}
+</span>
