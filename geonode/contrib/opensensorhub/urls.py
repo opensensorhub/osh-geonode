@@ -31,11 +31,14 @@ from api import TextStylerResource
 from api import ViewResource
 
 import views
+import components.wizards.wizard_views
 
 from components.explorer.explorer_view import ExplorerView
 from components.explorer.explorer_view import HubExplorerView
 from components.explorer.explorer_view import ObsExplorerView
 from components.explorer.explorer_view import LayerExplorerView
+
+from components.wizards.wizard_views import ObservationWizard, HubWizard
 
 app_name = 'opensensorhub'
 
@@ -63,17 +66,17 @@ for resource in all_resources:
 
 urlpatterns = [
 
-        url(r'^hubs', HubExplorerView.as_view(), name='explore_hubs'),
-        url(r'^observations', ObsExplorerView.as_view(), name='explore_obs'),
-        url(r'^sensor_layers', LayerExplorerView.as_view(), name='explore_sensor_layers'),
-        url(r'^', include(osh_api.urls), name='api'),
-        url(r'^api/', include(core_api.urls), name='core'),
-        url(r'^api/', include(views_api.urls), name='views'),
-        url(r'^api/', include(stylers_api.urls), name='stylers'),
+    url(r'^hubs', HubExplorerView.as_view(), name='explore_hubs'),
+    url(r'^observations', ObsExplorerView.as_view(), name='explore_obs'),
+    url(r'^sensor_layers', LayerExplorerView.as_view(), name='explore_sensor_layers'),
+    url(r'^', include(osh_api.urls), name='api'),
+    url(r'^api/', include(core_api.urls), name='core'),
+    url(r'^api/', include(views_api.urls), name='views'),
+    url(r'^api/', include(stylers_api.urls), name='stylers'),
 
     # To allow for an easy to follow test link, delete when api is implemented
-    url(r'^add-hub', views.BaseWizard.as_view(), name='base'),
-    url(r'^add-obs', views.ObservationWizard.as_view(), name='obs-wiz'),
+    url(r'^add-hub', HubWizard.as_view(), name='hub-wiz'),
+    url(r'^add-obs', ObservationWizard.as_view(), name='obs-wiz'),
     # url(r'^test', views.create_user),
     # Test link to view all resources as cards
     url(r'^explore', ExplorerView.as_view(), name='explore'),

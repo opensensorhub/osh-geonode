@@ -1,9 +1,30 @@
 {#{% extends "components/wizards/base_wizard.html" %}#}
 
-{#{% block body %}#}
-{#    Need to generate form more programatically for final product #}
-    <div>
-        <form>
+{% block body %}
+    {#    Need to generate form more programatically for final product #}
+    <style>
+        label {
+            display: inline-block;
+            width: 30%;
+            text-align: right;
+        }
+
+        input {
+            display: inline-block;
+            width: 50%;
+        }
+    </style>
+    <form action="" method="post" style="width: 50%">
+        {% csrf_token %}
+        <p>Form goes here</p>
+        <p>
+            {{ form.as_p }}
+        </p>
+        <input type="submit" value="Submit" style="width: 10%; position: absolute; left: 30%;"/>
+    </form>
+    {% comment %}<div>
+        {#  Make sure we're hitting the right endpoint  #}
+        <form action="/osh/add-obs" method="post">
             <label for="name">Observation Name</label>
             <input type="text" id="name"><br/>
 
@@ -53,5 +74,5 @@
 
             <button type="submit">Next</button>
         </form>
-    </div>
-{#{% endblock %}#}
+    </div>{% endcomment %}
+{% endblock %}
