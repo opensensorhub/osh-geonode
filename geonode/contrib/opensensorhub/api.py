@@ -133,7 +133,8 @@ class ChartStylerResource(ModelResource):
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
-        fields = []
+        fields = ['name', 'description', 'keywords', 'data_source_x', 'data_source_y', 'label_x', 'label_y',
+                  'color_mode', 'range_mode', 'range_x', 'range_y', 'max_points', 'color_rgb', 'thresholds']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']

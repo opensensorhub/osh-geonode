@@ -3,76 +3,42 @@
 {% block body %}
     {#    Need to generate form more programatically for final product #}
     <style>
+        form{
+            width: 80%;
+            display: grid;
+            grid-template-columns: 25% 50% 25%;
+        }
+        p {
+            grid-column: 1/4;
+            display: grid;
+            grid-template-columns: 25% 50% 25%;
+            align-content: center;
+        }
         label {
             display: inline-block;
-            width: 30%;
+            width: 90%;
             text-align: right;
+            grid-column: 1/2;
         }
 
         input {
             display: inline-block;
-            width: 50%;
+            width: 100%;
+            grid-column: 2/3;
+            text-align: left;
+        }
+        #id_sync_master_time{
+            position: relative;
+            width: 0%;
+            height: 80%;
+            left: 0%;
         }
     </style>
-    <form action="" method="post" style="width: 50%">
+    <form action="" method="post">
         {% csrf_token %}
-        <p>Form goes here</p>
-        <p>
+        <h1 style="grid-column: 1/4; text-align: left; padding-left: 5%">Add an Observation</h1>
             {{ form.as_p }}
-        </p>
-        <input type="submit" value="Submit" style="width: 10%; position: absolute; left: 30%;"/>
+        <input type="submit" value="Submit" style="width: 25%; grid-column: 2/3; text-align: center"/>
+{#        <input type="submit" value="Submit"/>#}
     </form>
-    {% comment %}<div>
-        {#  Make sure we're hitting the right endpoint  #}
-        <form action="/osh/add-obs" method="post">
-            <label for="name">Observation Name</label>
-            <input type="text" id="name"><br/>
-
-            <label for="endpoint">Endpoint URL</label>
-            <input type="url" id="endpoint"><br/>
-
-            <label for="offering">Offering ID</label>
-            <input type="text" id="offering"><br/>
-
-            <label for="obs-property">Observed Property URL</label>
-            <input type="url" id="obs-property"><br/>
-
-            <label for="start-time">Start Time</label>
-            <input type="date" id="start-time"><br/>
-
-            <label for="start-time">Start Time</label>
-            <input type="time" id="start-time"><br/>
-
-            <label for="sync-master-time">Sync Master Time?</label>
-            <input type="checkbox" id="sync-master-time" name="sync-master-time"><br/>
-
-            <label for="buffering-time">Buffering Time(ms)</label>
-            <input type="text" id="buffering-time"><br/>
-
-            <label for="buffering-time">Buffering Time(ms)</label>
-            <input type="text" id="buffering-time"><br/>
-
-            <label for="buffering-time">Buffering Time(ms)</label>
-            <input type="text" id="buffering-time"><br/>
-
-            <label for="replay-speed">Replay Speed</label>
-            <select name="protocol" size="4">
-                <option value="HTTP">HTTP</option>
-                <option value="HTTPS"/>HTTPS</option>
-                <option value="WS">WS</option>
-                <option value="WSS">WSS</option>
-            </select><br/>
-
-            <label for="replay-speed">Replay Speed</label>
-            <select name="replay-speed" size="5">
-                <option value="quarter">0.25x</option>
-                <option value="half"/>0.5x</option>
-                <option value="normal">1x</option>
-                <option value="double">2x</option>
-                <option value="quad">4x</option>
-            </select><br/>
-
-            <button type="submit">Next</button>
-        </form>
-    </div>{% endcomment %}
 {% endblock %}

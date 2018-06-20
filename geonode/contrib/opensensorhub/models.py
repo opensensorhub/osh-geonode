@@ -61,7 +61,7 @@ class Styler(OshModel):
     styler_type = models.CharField(max_length=200)
     view = models.ForeignKey(
         View,
-#        models.SET_NULL,
+        #        models.SET_NULL,
         blank=True,
         null=True
     )
@@ -153,7 +153,6 @@ class OSHLayer(OshModel):
 # Model representation for an OpenSensorHub Instance
 # ------------------------------------------------------------------------------
 class Hub(OshModel):
-
     PROTOCOL_TYPE_CHOICES = (
         ('0', 'HTTP'),
         ('1', 'HTTPS'),
@@ -177,6 +176,7 @@ class SweService(models.Model):
     )
 
     service = models.CharField(max_length=1, default='0', choices=SERVICE_CHOICES)
+
     # SOS = 0,
     # SPS = 1
 
@@ -205,14 +205,14 @@ class Observation(OshModel, SweService):
         ('4', 'QUAD'),
     )
 
-    # hub = models.ForeignKey(Hub, on_delete=models.CASCADE)
-#     layer = models.ForeignKey(OSHLayer)
-#     view = models.ForeignKey(
-#         View,
-# #        models.SET_NULL,
-#         blank=True,
-#         null=True
-#     )
+    hub = models.ForeignKey(Hub, on_delete=models.CASCADE)
+    layer = models.ForeignKey(OSHLayer)
+    view = models.ForeignKey(
+        View,
+        #        models.SET_NULL,
+        blank=True,
+        null=True
+    )
 
     endpoint = models.URLField(max_length=200)
     offering = models.CharField(max_length=200)

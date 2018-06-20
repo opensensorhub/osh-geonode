@@ -39,3 +39,37 @@ class HubForm(forms.ModelForm):
 
     def do_stuff(self):
         pass
+
+
+class ViewForm(forms.ModelForm):
+    class Meta:
+        view_model = View
+        styler_models = {'Chart': ChartStyler, 'Text': TextStyler, 'Location': LocationIndicator, 'Video': VideoView}
+        fields = ('name', '')
+
+    def magic(self):
+        pass
+
+
+class ChartStylerForm(forms.ModelForm):
+    class Meta:
+        model = ChartStyler
+        fields = ()
+
+
+class LocationIndicatorForm(forms.ModelForm):
+    class Meta:
+        model = LocationIndicator
+        fields = ()
+
+
+class TextStylerForm(forms.ModelForm):
+    class Meta:
+        model = TextStyler
+        fields = ()
+
+
+class VideoViewForm(forms.ModelForm):
+    class Meta:
+        model = VideoView
+        fields = ()
