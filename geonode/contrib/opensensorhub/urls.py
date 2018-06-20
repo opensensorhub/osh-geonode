@@ -69,6 +69,7 @@ urlpatterns = [
     url(r'^hubs', HubExplorerView.as_view(), name='explore_hubs'),
     url(r'^observations', ObsExplorerView.as_view(), name='explore_obs'),
     url(r'^sensor_layers', LayerExplorerView.as_view(), name='explore_sensor_layers'),
+    url(r'^sensors', ExplorerView.as_view(), name='explore_sensors'),
     url(r'^', include(osh_api.urls), name='api'),
     url(r'^api/', include(core_api.urls), name='core'),
     url(r'^api/', include(views_api.urls), name='views'),
