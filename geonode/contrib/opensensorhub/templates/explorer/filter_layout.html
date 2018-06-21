@@ -5,33 +5,34 @@
     </div>
     <div class="osh-filter-row">
         <label class="osh-label">SEARCH</label>
-        <img class="osh-form-info-image" src="{{ STATIC_URL }}images/info.png">
+        <span class="osh-tooltip">
+            <img class="osh-form-info-image" src="{{ STATIC_URL }}images/info.png">
+            <span class="osh-tooltip-text">use keywords 'AND' or 'OR' to narrow or expand your search</span>
+        </span>
         <label class="osh-label-right">Clear</label>
-        <form class="osh-form" method="get" action="/osh/hubs/">
+        <form class="osh-form" method="get" action="/osh/search/">
             <input type="text" class="osh-form-text-input" placeholder="Filter by content...">
             <input type="submit" class="osh-form-submit-input" value="">
         </form>
     </div>
-    {% comment %}
-    <div class="oshfilterrow">
+    <div class="osh-filter-row">
         <div style='padding-top: 5px; padding-bottom: 5px; display: block;'>
-            <label class="oshlabel">Content Type</label>
-            <label class="oshlabel-right">Clear</label>
+            <label class="osh-label">Content Type</label>
+            <label class="osh-label-right">Clear</label>
         </div>
         {% for resource in resources %}
-            <div style='padding-top: 5px; padding-bottom: 5px; display: block;'>
-                <form method="get" action="/osh/hubs/">
-                    <input style='padding-right: 5px;' type="checkbox"/>
+            <div class="osh-form-checkbox">
+                <form method="get" action="/osh/search/">
+                    <input type="checkbox" name="type" value="{{ resource }}"/>
                     <label>{{ resource|title }}</label>
                 </form>
             </div>
         {% endfor %}
     </div>
-    {% endcomment %}
     <div class="osh-filter-row">
         <label class="osh-label">Name</label>
         <label class="osh-label-right">Clear</label>
-        <form class="osh-form" method="get" action="/osh/hubs/">
+        <form class="osh-form" method="get" action="/osh/search/">
             <input type="text" class="osh-form-text-input" placeholder="Filter by name..." name="name__contains">
             <input type="submit" class="osh-form-submit-input" value="">
         </form>
@@ -39,7 +40,7 @@
     <div class="osh-filter-row">
         <label class="osh-label">URL</label>
         <label class="osh-label-right">Clear</label>
-        <form class="osh-form" method="get" action="/osh/hubs/">
+        <form class="osh-form" method="get" action="/osh/search/">
             <input type="text" class="osh-form-text-input" placeholder="Filter by URL..." name="url__contains">
             <input type="submit" class="osh-form-submit-input" value="">
         </form>
@@ -47,7 +48,7 @@
     <div class="osh-filter-row">
         <label class="osh-label">Description</label>
         <label class="osh-label-right">Clear</label>
-        <form class="osh-form" method="get" action="/osh/hubs/">
+        <form class="osh-form" method="get" action="/osh/search/">
             <input type="text" class="osh-form-text-input" placeholder="Filter by description..." name="description__contains">
             <input type="submit" class="osh-form-submit-input" value="">
         </form>
@@ -55,7 +56,7 @@
     <div class="osh-filter-row">
         <label class="osh-label">Keywords</label>
         <label class="osh-label-right">Clear</label>
-        <form class="osh-form" method="get" action="/osh/hubs/">
+        <form class="osh-form" method="get" action="/osh/search/">
             <input type="text" class="osh-form-text-input" placeholder="Filter by keywords..." name="keywords__contains">
             <input type="submit" class="osh-form-submit-input" value="">
         </form>

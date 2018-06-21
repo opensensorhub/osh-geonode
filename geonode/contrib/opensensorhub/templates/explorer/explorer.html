@@ -1,15 +1,16 @@
 {% block extra_head %}
     <style>
         .osh {
-            {#border: 25px solid red;#}
+            {#border: 1px solid red;#}
             margin: 20px;
             color: #1A1A1B;
             position: relative;
         }
 
-        .osh-div {
-            {#border: 25px solid green;#}
+        .osh-header {
+            {#border: 1px solid green;#}
             margin: 20px;
+            {#padding-left: 100px;#}
             text-align: center;
         }
 
@@ -22,10 +23,12 @@
             display: inline-block;
         }
 
+        {# Filters ---------------------------- #}
         .osh-filters {
-            {#border: 25px solid blue;#}
+            {#border: 1px solid blue;#}
             margin: 20px;
             display: inline-block;
+            vertical-align: top;
         }
 
         .osh-filter-row {
@@ -40,12 +43,6 @@
         .osh-label-right {
             display: inline;
             float: right;
-        }
-
-        .osh-cards {
-            {#border: 25px solid yellow;#}
-            margin: 20px;
-            display: inline-block;
         }
 
         .osh-form {
@@ -63,7 +60,7 @@
             background-image: url({{ STATIC_URL }}images/search.png);
             position: absolute;
             right: 5px;
-            top: 6px;
+            top: 8px;
             z-index: 1;
             width:30px;
             height:30px;
@@ -73,6 +70,20 @@
             display: inline;
             width: 20px;
             height: 20px;
+        }
+
+        .osh-form-checkbox {
+            padding-top: 5px;
+            padding-bottom: 5px;
+            display: block;
+        }
+
+        {# Cards ---------------------------- #}
+        .osh-cards {
+        {#border: 1px solid yellow;#}
+            margin: 20px;
+            display: inline-block;
+            vertical-align: top;
         }
 
         .osh-card-name {
@@ -125,11 +136,38 @@
             padding-right: 5px;
             padding-bottom: 5px;
         }
+
+        {# Tool Tips ---------------------------- #}
+        .osh-tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        {# Tooltip text #}
+        .osh-tooltip .osh-tooltip-text {
+            visibility: hidden;
+            width: 120px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            padding: 5px 0;
+            border-radius: 6px;
+
+            /* Position the tooltip text - see examples below! */
+            position: absolute;
+            z-index: 1;
+        }
+
+        {# Show the tooltip text when you mouse over the tooltip container #}
+        .osh-tooltip:hover .osh-tooltip-text {
+            visibility: visible;
+        }
+
     </style>
 {% endblock extra_head %}
 {% block body %}
     <div class="osh">
-        {% include "explorer/header.html" %}
+{#        {% include "explorer/header.html" %}#}
         <div class="osh-content">
             {% include "explorer/filter_layout.html" %}
             {% include "explorer/card_layout.html" %}

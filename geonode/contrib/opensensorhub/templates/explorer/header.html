@@ -1,5 +1,5 @@
-<header class="osh-div">
+<header class="osh-header">
     {% for resource in resources %}
-        <a class="osh-element" href="#">{{ resource|title }}</a>
+        <a class="osh-element" href="/osh/{{ resource }}">{{ resource|title }}</a>
     {% endfor %}
 </header>
