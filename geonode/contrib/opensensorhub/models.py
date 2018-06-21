@@ -76,6 +76,7 @@ class Styler(OshModel):
 # Model representing an OSH Text Styler
 # ------------------------------------------------------------------------------
 class TextStyler(Styler):
+    data_source = models.CharField(max_length=200)
     location = models.CharField(max_length=200)
     color_mode = models.CharField(max_length=1, choices=COLOR_MODE_CHOICES, default='0')
     # Treat these strings as arrays of integers, will need to be converted to arrays when read
@@ -131,11 +132,12 @@ class ChartStyler(Styler):
 # Model representing an OSH Location Video View Styler
 # ------------------------------------------------------------------------------
 class VideoView(Styler):
+    data_source = models.CharField(max_length=200)
     draggable = models.BooleanField(default=False)
     show = models.BooleanField(default=False)
     dockable = models.BooleanField(default=False)
     closeable = models.BooleanField(default=False)
-    keepRatio = models.BooleanField(default=False)
+    keep_ratio = models.BooleanField(default=False)
 
 
 # ------------------------------------------------------------------------------

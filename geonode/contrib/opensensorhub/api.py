@@ -111,7 +111,8 @@ class VideoViewResource(ModelResource):
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
-        fields = []
+        fields = ['name', 'description', 'keywords', 'draggable', 'dockable', 'closeable', 'keep_ratio'
+                  'timeout', 'styler_type']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
@@ -134,7 +135,8 @@ class ChartStylerResource(ModelResource):
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
         fields = ['name', 'description', 'keywords', 'data_source_x', 'data_source_y', 'label_x', 'label_y',
-                  'color_mode', 'range_mode', 'range_x', 'range_y', 'max_points', 'color_rgb', 'thresholds']
+                  'color_mode', 'range_mode', 'range_x', 'range_y', 'max_points', 'color_rgb', 'thresholds',
+                  'timeout', 'styler_type']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
@@ -156,7 +158,8 @@ class LocationIndicatorResource(ModelResource):
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
-        fields = []
+        fields = ['name', 'description', 'keywords', 'data_source_lat', 'data_source_lon', 'data_source_alt',
+                  'timeout', 'styler_type']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
@@ -178,7 +181,8 @@ class TextStylerResource(ModelResource):
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
-        fields = []
+        fields = ['name', 'description', 'keywords', 'color_mode', 'color_rgb', 'thresholds',
+                  'timeout', 'styler_type']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
@@ -200,7 +204,7 @@ class ViewResource(ModelResource):
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
-        fields = []
+        fields = ['sensor_archetype']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']

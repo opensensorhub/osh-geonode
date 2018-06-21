@@ -45,7 +45,7 @@ class ViewForm(forms.ModelForm):
     class Meta:
         view_model = View
         styler_models = {'Chart': ChartStyler, 'Text': TextStyler, 'Location': LocationIndicator, 'Video': VideoView}
-        fields = ('name', '')
+        fields = ('name', )
 
     def magic(self):
         pass
@@ -54,22 +54,29 @@ class ViewForm(forms.ModelForm):
 class ChartStylerForm(forms.ModelForm):
     class Meta:
         model = ChartStyler
-        fields = ()
+        fields = ('name', 'description', 'data_source_x', 'label_x', 'data_source_y', 'label_y', 'keywords',
+                  'range_mode', 'range_x', 'range_y','color_mode', 'color_rgb', 'max_points',)
 
 
 class LocationIndicatorForm(forms.ModelForm):
     class Meta:
         model = LocationIndicator
-        fields = ()
+        fields = ('name', 'description', 'keywords', 'data_source_lat', 'data_source_lon', 'data_source_alt',
+                  'view_icon', 'render_mode',)
 
 
 class TextStylerForm(forms.ModelForm):
     class Meta:
         model = TextStyler
-        fields = ()
+        fields = ('name', 'description', 'keywords', 'data_source', 'color_mode', 'color_rgb', 'thresholds',)
 
 
 class VideoViewForm(forms.ModelForm):
     class Meta:
         model = VideoView
-        fields = ()
+        fields = ('name', 'description', 'keywords', 'data_source', 'show', 'draggable', 'dockable', 'keep_ratio',
+                  'closeable',)
+
+
+class ViewFormset(forms.BaseModelFormSet):
+    var = ''
