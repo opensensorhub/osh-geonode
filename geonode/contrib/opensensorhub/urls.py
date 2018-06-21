@@ -30,13 +30,10 @@ from api import LocationIndicatorResource
 from api import TextStylerResource
 from api import ViewResource
 
-import views
-import components.wizards.wizard_views
+# import views
+# import components.wizards.wizard_views
 
 from components.explorer.explorer_view import ExplorerView
-from components.explorer.explorer_view import HubExplorerView
-from components.explorer.explorer_view import ObsExplorerView
-from components.explorer.explorer_view import LayerExplorerView
 
 from components.wizards.wizard_views import ObservationWizard, HubWizard
 
@@ -66,10 +63,9 @@ for resource in all_resources:
 
 urlpatterns = [
 
-    url(r'^hubs', HubExplorerView.as_view(), name='explore_hubs'),
-    url(r'^observations', ObsExplorerView.as_view(), name='explore_obs'),
-    url(r'^sensor_layers', LayerExplorerView.as_view(), name='explore_sensor_layers'),
-    url(r'^sensors', ExplorerView.as_view(), name='explore_sensors'),
+    # Explorer URLS - Content Search Page
+    url(r'^search', ExplorerView.as_view(), name='explore_sensors'),
+
     url(r'^', include(osh_api.urls), name='api'),
     url(r'^api/', include(core_api.urls), name='core'),
     url(r'^api/', include(views_api.urls), name='views'),
