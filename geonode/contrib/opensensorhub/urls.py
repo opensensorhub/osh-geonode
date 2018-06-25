@@ -38,7 +38,7 @@ from components.explorer.explorer_view import HubExplorerView
 from components.explorer.explorer_view import ObsExplorerView
 from components.explorer.explorer_view import LayerExplorerView
 
-from components.wizards.wizard_views import ObservationWizard, HubWizard
+from components.wizards.wizard_views import ObservationWizard, HubWizard, CompositeFormView
 
 app_name = 'opensensorhub'
 
@@ -75,10 +75,12 @@ urlpatterns = [
     url(r'^api/', include(views_api.urls), name='views'),
     url(r'^api/', include(stylers_api.urls), name='stylers'),
 
-    # To allow for an easy to follow test link, delete when api is implemented
     url(r'^add-hub', HubWizard.as_view(), name='hub-wiz'),
     url(r'^add-obs', ObservationWizard.as_view(), name='obs-wiz'),
     # url(r'^test', views.create_user),
     # Test link to view all resources as cards
     url(r'^explore', ExplorerView.as_view(), name='explore'),
+
+    # To allow for an easy to follow test link, delete when composite forms are working
+    url(r'^test', CompositeFormView.as_view(), name='test')
 ]

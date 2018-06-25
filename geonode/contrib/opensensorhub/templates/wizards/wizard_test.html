@@ -1,0 +1,46 @@
+{% block body %}
+    {#    Need to generate form more programatically for final product #}
+    <style>
+        form{
+            width: 80%;
+            display: grid;
+            grid-template-columns: 25% 50% 25%;
+            grid-row-gap: 2vh;
+        }
+        p {
+            margin: 0%;
+            grid-column: 1/4;
+            display: grid;
+            grid-template-columns: 25% 50% 25%;
+            grid-row-gap: 2vh;
+            align-content: center;
+        }
+        label {
+            display: inline-block;
+            width: 90%;
+            text-align: right;
+            grid-column: 1/2;
+        }
+
+        input {
+            display: inline-block;
+            width: 100%;
+            grid-column: 2/3;
+            text-align: left;
+        }
+        #id_sync_master_time{
+            position: relative;
+            width: 0%;
+            height: 80%;
+            left: 0%;
+        }
+    </style>
+    <script type="application/javascript" src="{{ STATIC_URL }}js/wizard_add_hub.js"></script>
+    <h1 style="grid-column: 1/4; text-align: left; padding-left: 5%">Add a Thing</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit" style="width: 25%; grid-column: 2/3; text-align: center"/>
+        {#        <input type="submit" value="Submit"/>#}
+    </form>
+{% endblock %}

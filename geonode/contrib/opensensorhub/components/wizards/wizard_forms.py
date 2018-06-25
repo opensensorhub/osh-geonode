@@ -80,3 +80,19 @@ class VideoViewForm(forms.ModelForm):
 
 class ViewFormset(forms.BaseModelFormSet):
     var = ''
+
+
+class CompositeForm(forms.ModelForm):
+    keyed_field = forms.ChoiceField(
+        choices=(('A', 'Choice A'),
+                 ('B', 'Choice B'),
+                 ('C', 'Choice C')
+                 ),
+        label='Keyed Field'
+    )
+    class Meta:
+        model = View
+        fields = ('name', 'description', 'keywords', )
+
+    def doStuff(self):
+        pass
