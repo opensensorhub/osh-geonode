@@ -1,3 +1,7 @@
+// Keep track of created elements
+var elementCounter = 0;
+
+
 window.onload = function()
 {
     console.log(document.getElementById('id_keyed_field'));
@@ -15,32 +19,47 @@ window.onload = function()
 }
 
 function addFormFields(parentElement){
+    elementCounter++;
+    let elementClass = 'added-elements-' + elementCounter;
+
     // create new element
     let newLabel = document.createElement("label");
+    newLabel.className = elementClass;
     newLabel.setAttribute('for', 'new-element');
-    newLabel.setAttribute('grid-row', '2/3');
+    newLabel.style.gridColumn = '1/2';
     let newText = document.createTextNode('new-element');
-    newLabel.appendChild(newText);
+
 
     let newChild = document.createElement("input");
+    newChild.className = elementClass;
     newChild.setAttribute('text', 'New Element');
     newChild.setAttribute('id', 'new-element');
-    newLabel.setAttribute('grid-row', '2/3');
-
-    parentElement.appendChild(newLabel);
-    parentElement.appendChild(newChild);
-    console.log("New Element Added!");
 
     let removeButton = document.createElement('input');
+    removeButton.className = elementClass;
     removeButton.setAttribute('type', 'button');
-    removeButton.setAttribute('grid-column-start', '3');
-    removeButton.setAttribute('grid-row', '2/3');
+    removeButton.style.gridColumn = '3/4';
+    //removeButton.style.gridRow = (elementCounter+1) + '/' + (elementCounter+2);
+    removeButton.value = 'Remove';
     removeButton.onclick = removeElement;
-    parentElement.appendChild(removeButton)
 
+
+    // append newly created elements
+    newLabel.appendChild(newText);
+    parentElement.appendChild(newLabel);
+    parentElement.appendChild(newChild);
+    parentElement.appendChild(removeButton);
 }
 
 function removeElement(event){
-    console.log(this.value);
-    this.parentElement.remove();
+    let parent = this.parentNode;
+    // needs to remove siblings created with the button
+    console.log(this.className + ' class elements will be removed!');
+    // Convert to Array to deal with this being a live list
+    let elements = Array.prototype.slice.call(document.getElementsByClassName(this.className));
+    console.log(elements);
+    for (var el of elements) {
+        console.log(el);
+        parent.removeChild(el);
+    }
 }
