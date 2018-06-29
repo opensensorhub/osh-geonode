@@ -52,6 +52,10 @@ class HubResource(ModelResource):
             'url': ALL
         }
 
+    def dehydrate(self, bundle):
+        bundle.data['type'] = self.Meta.resource_name
+        return bundle
+
 
 class ObservationResource(ModelResource):
     class Meta:
@@ -81,6 +85,10 @@ class ObservationResource(ModelResource):
             'url': ALL
         }
 
+    def dehydrate(self, bundle):
+        bundle.data['type'] = self.Meta.resource_name
+        return bundle
+
 
 class OshLayerResource(ModelResource):
     class Meta:
@@ -102,6 +110,10 @@ class OshLayerResource(ModelResource):
         serializer = Serializer(formats=['json'])
         # Filtering
         filtering = {}
+
+    def dehydrate(self, bundle):
+        bundle.data['type'] = self.Meta.resource_name
+        return bundle
 
 
 class VideoViewResource(ModelResource):
@@ -125,6 +137,10 @@ class VideoViewResource(ModelResource):
         # Filtering
         filtering = {}
 
+    def dehydrate(self, bundle):
+        bundle.data['type'] = self.Meta.resource_name
+        return bundle
+
 
 class ChartStylerResource(ModelResource):
     class Meta:
@@ -146,6 +162,10 @@ class ChartStylerResource(ModelResource):
         serializer = Serializer(formats=['json'])
         # Filtering
         filtering = {}
+
+    def dehydrate(self, bundle):
+        bundle.data['type'] = self.Meta.resource_name
+        return bundle
 
 
 class LocationIndicatorResource(ModelResource):
@@ -169,6 +189,10 @@ class LocationIndicatorResource(ModelResource):
         # Filtering
         filtering = {}
 
+    def dehydrate(self, bundle):
+        bundle.data['type'] = self.Meta.resource_name
+        return bundle
+
 
 class TextStylerResource(ModelResource):
     class Meta:
@@ -190,6 +214,10 @@ class TextStylerResource(ModelResource):
         serializer = Serializer(formats=['json'])
         # Filtering
         filtering = {}
+
+    def dehydrate(self, bundle):
+        bundle.data['type'] = self.Meta.resource_name
+        return bundle
 
 
 class ViewResource(ModelResource):
@@ -213,3 +241,6 @@ class ViewResource(ModelResource):
         # Filtering
         filtering = {}
 
+    def dehydrate(self, bundle):
+        bundle.data['type'] = self.Meta.resource_name
+        return bundle
