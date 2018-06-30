@@ -30,15 +30,13 @@ from api import LocationIndicatorResource
 from api import TextStylerResource
 from api import ViewResource
 
-import views
-import components.wizards.wizard_views
-
 from components.explorer.explorer_view import ExplorerView
 from components.explorer.explorer_view import HubExplorerView
 from components.explorer.explorer_view import ObsExplorerView
 from components.explorer.explorer_view import LayerExplorerView
 
-from components.wizards.wizard_views import ObservationWizard, HubWizard, CompositeFormView
+from components.wizards.wizard_views import ObservationWizard, HubWizard, CompositeFormView, TestTemplateFormView
+# import components.wizards.wizard_views as wizard_views
 
 app_name = 'opensensorhub'
 
@@ -82,5 +80,7 @@ urlpatterns = [
     url(r'^explore', ExplorerView.as_view(), name='explore'),
 
     # To allow for an easy to follow test link, delete when composite forms are working
-    url(r'^test', CompositeFormView.as_view(), name='test')
+    url(r'^test', CompositeFormView.as_view(), name='test'),
+    # Test Template inclusion this way
+    url(r'^templates/wizards/test-1', TestTemplateFormView.as_view())
 ]

@@ -22,13 +22,16 @@ function addFormFields(parentElement){
     elementCounter++;
     let elementClass = 'added-elements-' + elementCounter;
 
+    htmlToBeTemplated(parentElement, '../osh/templates/wizards/test-1', elementClass);
+    // htmlToBeTemplated(parentElement, '../osh/test/');
+    includeHTML();
+
     // create new element
     let newLabel = document.createElement("label");
     newLabel.className = elementClass;
     newLabel.setAttribute('for', 'new-element');
+    newLabel.innerHTML = 'New Element:';
     newLabel.style.gridColumn = '1/2';
-    let newText = document.createTextNode('new-element');
-
 
     let newChild = document.createElement("input");
     newChild.className = elementClass;
@@ -45,7 +48,6 @@ function addFormFields(parentElement){
 
 
     // append newly created elements
-    newLabel.appendChild(newText);
     parentElement.appendChild(newLabel);
     parentElement.appendChild(newChild);
     parentElement.appendChild(removeButton);
@@ -62,4 +64,42 @@ function removeElement(event){
         console.log(el);
         parent.removeChild(el);
     }
+}
+
+// modified from example found at w3schools
+function includeHTML(){
+    let z, i, elmnt, file, xhttp;
+    /*loop through a collection of all HTML elements:*/
+    z = document.getElementsByTagName("*");
+    for (i = 0; i < z.length; i++) {
+        elmnt = z[i];
+        /*search for elements with a certain attribute:*/
+        file = elmnt.getAttribute("include-html");
+        if (file) {
+            /*make an HTTP request using the attribute value as the file name:*/
+            xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState === 4) {
+                    if (this.status === 200) {elmnt.innerHTML = this.responseText;}
+                    if (this.status === 404) {elmnt.innerHTML = "Page not found.";}
+                    /*remove the attribute, and call this function once more:*/
+                    elmnt.removeAttribute("include-html");
+                    includeHTML();
+                }
+            }
+            xhttp.open("GET", file, true);
+            xhttp.send();
+            /*exit the function:*/
+            return;
+        }
+    }
+}
+
+function htmlToBeTemplated(parentNode, elementURL, elementClass){
+    console.log("Adding new paragraph element");
+    let elem = document.createElement("p");
+    elem.setAttribute('include-html', elementURL);
+    //elem.innerHTML = 'test';
+    elem.className = elementClass;
+    parentNode.appendChild(elem);
 }

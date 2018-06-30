@@ -40,6 +40,7 @@
     <form action="" method="post">
         {% csrf_token %}
         {{ form.as_p }}
+{#        <p include-html="../osh/templates/wizards/test-1"></p>#}
         <input type="submit" value="Submit" style="width: 25%; grid-column: 2/3; text-align: center"/>
         {#        <input type="submit" value="Submit"/>#}
     </form>
