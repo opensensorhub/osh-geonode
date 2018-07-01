@@ -69,7 +69,7 @@ class CompositeFormView(FormView):
 
     def get(self, request):
         form = self.form
-        return render(request, self.template_name, dict({'html_body': 'wizards/wizard_test.html', 'form': form}))
+        return render(request, self.template_name, dict({'html_body': 'wizards/wizard_add_view.html', 'form': form}))
 
 # Form Templates for HTM inclusions
 class TestTemplateFormView(TemplateView):

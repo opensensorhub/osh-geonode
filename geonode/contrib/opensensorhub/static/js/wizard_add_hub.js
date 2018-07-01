@@ -2,31 +2,30 @@
 var elementCounter = 0;
 
 
-window.onload = function()
-{
-    console.log(document.getElementById('id_keyed_field'));
+window.onload = function () {
+    // console.log(document.getElementById('id_keyed_field'));
+    //
+    // let keyedField = document.getElementById("id_keyed_field");
+    // keyedField.addEventListener("input", onKeyedInputReceive);
+    // // console.log(keyedField.innerText);
+    //
+    // function onKeyedInputReceive(evt){
+    //     // console.log(this.value);
+    //     // console.log(evt.target.parentElement.parentElement.innerHTML);
+    //     addFormFields(evt.target.parentElement);
+    //     // console.log(keyedField.innerText);
+    // }
+};
 
-    let keyedField = document.getElementById("id_keyed_field");
-    keyedField.addEventListener("input", onKeyedInputReceive);
-    // console.log(keyedField.innerText);
-
-    function onKeyedInputReceive(evt){
-        // console.log(this.value);
-        // console.log(evt.target.parentElement.parentElement.innerHTML);
-        addFormFields(evt.target.parentElement);
-        // console.log(keyedField.innerText);
-    }
-}
-
-function addFormFields(parentElement){
+function addFormFields(parentElement) {
     elementCounter++;
     let elementClass = 'added-elements-' + elementCounter;
 
-    htmlToBeTemplated(parentElement, '../osh/templates/wizards/test-1', elementClass);
-    // htmlToBeTemplated(parentElement, '../osh/test/');
-    includeHTML();
+    // htmlToBeTemplated(parentElement, '../osh/templates/wizards/test-1', elementClass);
+    // // htmlToBeTemplated(parentElement, '../osh/test/');
+    // includeHTML();
 
-    // create new element
+    // create from element
     let newLabel = document.createElement("label");
     newLabel.className = elementClass;
     newLabel.setAttribute('for', 'new-element');
@@ -38,6 +37,7 @@ function addFormFields(parentElement){
     newChild.setAttribute('text', 'New Element');
     newChild.setAttribute('id', 'new-element');
 
+    // Remove button element
     let removeButton = document.createElement('input');
     removeButton.className = elementClass;
     removeButton.setAttribute('type', 'button');
@@ -48,12 +48,12 @@ function addFormFields(parentElement){
 
 
     // append newly created elements
-    parentElement.appendChild(newLabel);
-    parentElement.appendChild(newChild);
-    parentElement.appendChild(removeButton);
+    parentElement.insertAdjacentElement('beforebegin',newLabel);
+    parentElement.insertAdjacentElement('beforebegin',newChild);
+    parentElement.insertAdjacentElement('beforebegin',removeButton);
 }
 
-function removeElement(event){
+function removeElement(event) {
     let parent = this.parentNode;
     // needs to remove siblings created with the button
     console.log(this.className + ' class elements will be removed!');
@@ -67,27 +67,31 @@ function removeElement(event){
 }
 
 // modified from example found at w3schools
-function includeHTML(){
-    let z, i, elmnt, file, xhttp;
+function includeHTML() {
+    let elemCollection, elmnt, targetHTML, xhttp;
     /*loop through a collection of all HTML elements:*/
-    z = document.getElementsByTagName("*");
-    for (i = 0; i < z.length; i++) {
-        elmnt = z[i];
+    elemCollection = document.getElementsByTagName("*");
+    for (let i = 0; i < elemCollection.length; i++) {
+        elmnt = elemCollection[i];
         /*search for elements with a certain attribute:*/
-        file = elmnt.getAttribute("include-html");
-        if (file) {
+        targetHTML = elmnt.getAttribute("include-html");
+        if (targetHTML) {
             /*make an HTTP request using the attribute value as the file name:*/
             xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
+            xhttp.onreadystatechange = function () {
                 if (this.readyState === 4) {
-                    if (this.status === 200) {elmnt.innerHTML = this.responseText;}
-                    if (this.status === 404) {elmnt.innerHTML = "Page not found.";}
+                    if (this.status === 200) {
+                        elmnt.innerHTML = this.responseText;
+                    }
+                    if (this.status === 404) {
+                        elmnt.innerHTML = "HTML Template Page Not Found!";
+                    }
                     /*remove the attribute, and call this function once more:*/
                     elmnt.removeAttribute("include-html");
                     includeHTML();
                 }
-            }
-            xhttp.open("GET", file, true);
+            };
+            xhttp.open("GET", targetHTML, true);
             xhttp.send();
             /*exit the function:*/
             return;
@@ -95,11 +99,20 @@ function includeHTML(){
     }
 }
 
-function htmlToBeTemplated(parentNode, elementURL, elementClass){
+function htmlToBeTemplated(parentNode, elementURL, elementClass) {
     console.log("Adding new paragraph element");
     let elem = document.createElement("p");
     elem.setAttribute('include-html', elementURL);
     //elem.innerHTML = 'test';
     elem.className = elementClass;
     parentNode.appendChild(elem);
+}
+
+function addViewFormFields() {
+    // add to add-view-div
+    let targetParent = document.getElementById("view-add-label");
+    console.log(targetParent);
+    if (targetParent !== null) {
+        addFormFields(targetParent)
+    }
 }
