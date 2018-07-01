@@ -1,8 +1,9 @@
 // Keep track of created elements
 var elementCounter = 0;
-
+var formElement;
 
 window.onload = function () {
+    formElement = document.getElementById('view-form');
     // console.log(document.getElementById('id_keyed_field'));
     //
     // let keyedField = document.getElementById("id_keyed_field");
@@ -29,6 +30,7 @@ function addFormFields(parentElement) {
     let newLabel = document.createElement("label");
     newLabel.className = elementClass;
     newLabel.setAttribute('for', 'new-element');
+    newLabel.setAttribute('data-indexNum', elementCounter);
     newLabel.innerHTML = 'New Element:';
     newLabel.style.gridColumn = '1/2';
 
@@ -36,11 +38,13 @@ function addFormFields(parentElement) {
     newChild.className = elementClass;
     newChild.setAttribute('text', 'New Element');
     newChild.setAttribute('id', 'new-element');
+    newChild.setAttribute('data-indexNum', elementCounter);
 
     // Remove button element
     let removeButton = document.createElement('input');
-    removeButton.className = elementClass;
+    removeButton.className = elementClass + ' remove-btn';
     removeButton.setAttribute('type', 'button');
+    removeButton.setAttribute('data-indexNum', elementCounter);
     removeButton.style.gridColumn = '3/4';
     //removeButton.style.gridRow = (elementCounter+1) + '/' + (elementCounter+2);
     removeButton.value = 'Remove';
@@ -48,18 +52,22 @@ function addFormFields(parentElement) {
 
 
     // append newly created elements
-    parentElement.insertAdjacentElement('beforebegin',newLabel);
-    parentElement.insertAdjacentElement('beforebegin',newChild);
-    parentElement.insertAdjacentElement('beforebegin',removeButton);
+    parentElement.insertAdjacentElement('beforebegin', newLabel);
+    parentElement.insertAdjacentElement('beforebegin', newChild);
+    parentElement.insertAdjacentElement('beforebegin', removeButton);
+
+    // TODO: Remove after testing
+    getElementsByDataIndexNumber(1);
 }
 
 function removeElement(event) {
     let parent = this.parentNode;
     // needs to remove siblings created with the button
-    console.log(this.className + ' class elements will be removed!');
+    console.log('Elements with an indexnum of ' + this.dataset.indexnum + ' will be removed!');
     // Convert to Array to deal with this being a live list
-    let elements = Array.prototype.slice.call(document.getElementsByClassName(this.className));
-    console.log(elements);
+    // let elements = Array.prototype.slice.call(document.getElementsByClassName(this.className));
+    let elements = getElementsByDataIndexNumber(this.dataset.indexnum);
+    // console.log(elements);
     for (var el of elements) {
         console.log(el);
         parent.removeChild(el);
@@ -111,8 +119,25 @@ function htmlToBeTemplated(parentNode, elementURL, elementClass) {
 function addViewFormFields() {
     // add to add-view-div
     let targetParent = document.getElementById("view-add-label");
-    console.log(targetParent);
+    //console.log(targetParent);
     if (targetParent !== null) {
         addFormFields(targetParent)
     }
+}
+
+function getElementsByDataIndexNumber(indexNumber) {
+    let elements = [];
+    let elemCollection = Array.prototype.slice.call(formElement.getElementsByTagName('*'));
+    // console.log(elemCollection);
+    for (let i in elemCollection) {
+        let elem = elemCollection[i];
+        if (elem.getAttribute('data-indexnum') !== null) {
+            // console.log(elem.getAttribute('data-indexnum'));
+            if (elem.getAttribute('data-indexnum') === indexNumber.toString()) {
+                elements.push(elem);
+            }
+        }
+    }
+    // console.log(elements);
+    return elements
 }
