@@ -9,6 +9,7 @@ from geonode.contrib.opensensorhub.components.wizards.wizard_forms import Observ
 from geonode.contrib.opensensorhub.api import HubResource, ObservationResource, OshLayerResource, VideoViewResource, \
     ChartStylerResource, LocationIndicatorResource, TextStylerResource, ViewResource
 
+
 class GenericWizard(FormView):
     osh_resources = {HubResource(), ObservationResource(), OshLayerResource(), VideoViewResource(),
                      ChartStylerResource(), LocationIndicatorResource(), TextStylerResource(), ViewResource()}
@@ -71,9 +72,45 @@ class CompositeFormView(FormView):
         form = self.form
         return render(request, self.template_name, dict({'html_body': 'wizards/wizard_add_view.html', 'form': form}))
 
-# Form Templates for HTM inclusions
+
+# Form Templates for HTML inclusions
 class TestTemplateFormView(TemplateView):
     template_name = 'wizards/wizard_include_test_template.html'
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+
+class ChartTemplateFormView(TemplateView):
+    template_name = 'wizards/wizard_add_chartview_form.html'
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+
+class VideoTemplateFormView(TemplateView):
+    template_name = 'wizards/wizard_add_videoview_form.html'
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+
+class TextTemplateFormView(TemplateView):
+    template_name = 'wizards/wizard_add_textview_form.html'
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+
+class LocationMarkerTemplateFormView(TemplateView):
+    template_name = 'wizards/wizard_add_locationmarker.html'
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+
+class MapTemplateFormView(TemplateView):
+    template_name = 'wizards/wizard_add_mapview_form.html'
 
     def get(self, request):
         return render(request, self.template_name)

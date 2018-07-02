@@ -35,8 +35,7 @@ from components.explorer.explorer_view import HubExplorerView
 from components.explorer.explorer_view import ObsExplorerView
 from components.explorer.explorer_view import LayerExplorerView
 
-from components.wizards.wizard_views import ObservationWizard, HubWizard, CompositeFormView, TestTemplateFormView
-# import components.wizards.wizard_views as wizard_views
+import components.wizards.wizard_views
 
 app_name = 'opensensorhub'
 
@@ -73,14 +72,19 @@ urlpatterns = [
     url(r'^api/', include(views_api.urls), name='views'),
     url(r'^api/', include(stylers_api.urls), name='stylers'),
 
-    url(r'^add-hub', HubWizard.as_view(), name='hub-wiz'),
-    url(r'^add-obs', ObservationWizard.as_view(), name='obs-wiz'),
+    url(r'^add-hub', components.wizards.wizard_views.HubWizard.as_view(), name='hub-wiz'),
+    url(r'^add-obs', components.wizards.wizard_views.ObservationWizard.as_view(), name='obs-wiz'),
     # url(r'^test', views.create_user),
     # Test link to view all resources as cards
     url(r'^explore', ExplorerView.as_view(), name='explore'),
 
     # To allow for an easy to follow test link, delete when composite forms are working
-    url(r'^test', CompositeFormView.as_view(), name='test'),
+    url(r'^test', components.wizards.wizard_views.CompositeFormView.as_view(), name='test'),
     # Test Template inclusion this way
-    url(r'^templates/wizards/test-1', TestTemplateFormView.as_view())
+    url(r'^templates/wizards/test-1', components.wizards.wizard_views.TestTemplateFormView.as_view()),
+    url(r'^templates/wizards/chart', components.wizards.wizard_views.ChartTemplateFormView.as_view()),
+    url(r'^templates/wizards/video', components.wizards.wizard_views.VideoTemplateFormView.as_view()),
+    url(r'^templates/wizards/text', components.wizards.wizard_views.TextTemplateFormView.as_view()),
+    url(r'^templates/wizards/locationmarker', components.wizards.wizard_views.LocationMarkerTemplateFormView.as_view()),
+    url(r'^templates/wizards/map', components.wizards.wizard_views.MapTemplateFormView.as_view()),
 ]

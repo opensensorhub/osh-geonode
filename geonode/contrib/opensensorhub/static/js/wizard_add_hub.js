@@ -1,6 +1,12 @@
 // Keep track of created elements
 var elementCounter = 0;
 var formElement;
+var formTemplates = new Map();
+formTemplates.set('chart', 'templates/wizards/chart');
+formTemplates.set('video', 'templates/wizard/video');
+formTemplates.set('locationmarker', 'templates/wizards/locationmarker');
+formTemplates.set('text', 'templates/wizards/text');
+formTemplates.set('map', 'templates/wizards/map');
 
 window.onload = function () {
     formElement = document.getElementById('view-form');
@@ -18,27 +24,27 @@ window.onload = function () {
     // }
 };
 
-function addFormFields(parentElement) {
+function addFormFields(parentElement, templateURL) {
     elementCounter++;
     let elementClass = 'added-elements-' + elementCounter;
 
-    // htmlToBeTemplated(parentElement, '../osh/templates/wizards/test-1', elementClass);
-    // // htmlToBeTemplated(parentElement, '../osh/test/');
-    // includeHTML();
+    htmlToBeTemplated(parentElement, templateURL, elementClass);
+    // htmlToBeTemplated(parentElement, '../osh/test/');
+    includeHTML();
 
     // create from element
-    let newLabel = document.createElement("label");
-    newLabel.className = elementClass;
-    newLabel.setAttribute('for', 'new-element');
-    newLabel.setAttribute('data-indexNum', elementCounter);
-    newLabel.innerHTML = 'New Element:';
-    newLabel.style.gridColumn = '1/2';
-
-    let newChild = document.createElement("input");
-    newChild.className = elementClass;
-    newChild.setAttribute('text', 'New Element');
-    newChild.setAttribute('id', 'new-element');
-    newChild.setAttribute('data-indexNum', elementCounter);
+    // let newLabel = document.createElement("label");
+    // newLabel.className = elementClass;
+    // newLabel.setAttribute('for', 'new-element');
+    // newLabel.setAttribute('data-indexNum', elementCounter);
+    // newLabel.innerHTML = 'New Element:';
+    // newLabel.style.gridColumn = '1/2';
+    //
+    // let newChild = document.createElement("input");
+    // newChild.className = elementClass;
+    // newChild.setAttribute('text', 'New Element');
+    // newChild.setAttribute('id', 'new-element');
+    // newChild.setAttribute('data-indexNum', elementCounter);
 
     // Remove button element
     let removeButton = document.createElement('input');
@@ -52,8 +58,8 @@ function addFormFields(parentElement) {
 
 
     // append newly created elements
-    parentElement.insertAdjacentElement('beforebegin', newLabel);
-    parentElement.insertAdjacentElement('beforebegin', newChild);
+    // parentElement.insertAdjacentElement('beforebegin', newLabel);
+    // parentElement.insertAdjacentElement('beforebegin', newChild);
     parentElement.insertAdjacentElement('beforebegin', removeButton);
 
     // TODO: Remove after testing
@@ -111,17 +117,24 @@ function htmlToBeTemplated(parentNode, elementURL, elementClass) {
     console.log("Adding new paragraph element");
     let elem = document.createElement("p");
     elem.setAttribute('include-html', elementURL);
+    elem.setAttribute('data-indexnum', elementCounter);
     //elem.innerHTML = 'test';
     elem.className = elementClass;
-    parentNode.appendChild(elem);
+    // parentNode.appendChild(elem);
+    parentNode.insertAdjacentElement('beforebegin', elem);
 }
 
-function addViewFormFields() {
+function addViewFormFields(event) {
     // add to add-view-div
     let targetParent = document.getElementById("view-add-label");
     //console.log(targetParent);
-    if (targetParent !== null) {
-        addFormFields(targetParent)
+    let selector = document.getElementById('viewSelector');
+    let selectedView = selector.options[selector.selectedIndex].value;
+    console.log(selectedView);
+    // Switch on the type of view we're adding to get the correct form fields
+
+    if (formTemplates.has(selectedView)) {
+        addFormFields(targetParent, formTemplates.get(selectedView));
     }
 }
 
