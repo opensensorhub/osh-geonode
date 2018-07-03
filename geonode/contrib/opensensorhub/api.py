@@ -22,6 +22,7 @@ from tastypie.resources import ModelResource
 from tastypie.authorization import DjangoAuthorization, Authorization
 from tastypie.serializers import Serializer
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
+from tastypie import fields
 
 from models import *
 
@@ -38,7 +39,7 @@ class HubResource(ModelResource):
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post', 'delete']
         # Authentication
-#        authentication = OAuthAuthentication()
+        #        authentication = OAuthAuthentication()
         # Authorization
         # authorization = DjangoAuthorization()
         authorization = Authorization()
@@ -54,20 +55,21 @@ class HubResource(ModelResource):
 
 
 class ObservationResource(ModelResource):
+    hub = fields.ForeignKey(HubResource, 'source_hub')
     class Meta:
         queryset = Observation.objects.all()
         resource_name = 'observation'
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
-        fields = ['name', 'description', 'source_type', 'endpoint_url', 'protocol', 'offering_id', 'offering_service',
-                   'observed_property', 'start_time', 'end_time', 'sync_master_time', 'buffering_time', 'time_shift',
-                   'replay_speed']
+        fields = ['name', 'description', 'source_type', 'endpoint_url', 'protocol', 'offering_id',
+                  'offering_service', 'observed_property', 'start_time', 'end_time', 'sync_master_time',
+                  'buffering_time', 'time_shift', 'replay_speed', 'source_hub']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
         # Authentication
-#        authentication = OAuthAuthentication()
+        #        authentication = OAuthAuthentication()
         # Authorization
         # authorization = DjangoAuthorization()
         authorization = Authorization()
@@ -94,7 +96,7 @@ class OshLayerResource(ModelResource):
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
         # Authentication
-#        authentication = OAuthAuthentication()
+        #        authentication = OAuthAuthentication()
         # Authorization
         # authorization = DjangoAuthorization()
         authorization = Authorization()
@@ -112,12 +114,12 @@ class VideoViewResource(ModelResource):
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
         fields = ['name', 'description', 'keywords', 'draggable', 'dockable', 'closeable', 'keep_ratio'
-                  'timeout', 'styler_type']
+                                                                                           'timeout', 'styler_type']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
         # Authentication
-#        authentication = OAuthAuthentication()
+        #        authentication = OAuthAuthentication()
         # Authorization
         # authorization = DjangoAuthorization()
         authorization = Authorization()
@@ -141,7 +143,7 @@ class ChartStylerResource(ModelResource):
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
         # Authentication
-#        authentication = OAuthAuthentication()
+        #        authentication = OAuthAuthentication()
         # Authorization
         # authorization = DjangoAuthorization()
         authorization = Authorization()
@@ -164,7 +166,7 @@ class LocationIndicatorResource(ModelResource):
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
         # Authentication
-#        authentication = OAuthAuthentication()
+        #        authentication = OAuthAuthentication()
         # Authorization
         # authorization = DjangoAuthorization()
         authorization = Authorization()
@@ -187,7 +189,7 @@ class TextStylerResource(ModelResource):
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
         # Authentication
-#        authentication = OAuthAuthentication()
+        #        authentication = OAuthAuthentication()
         # Authorization
         # authorization = DjangoAuthorization()
         authorization = Authorization()
@@ -209,7 +211,7 @@ class ViewResource(ModelResource):
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
         # Authentication
-#        authentication = OAuthAuthentication()
+        #        authentication = OAuthAuthentication()
         # Authorization
         # authorization = DjangoAuthorization()
         authorization = Authorization()
@@ -217,4 +219,3 @@ class ViewResource(ModelResource):
         serializer = Serializer(formats=['json'])
         # Filtering
         filtering = {}
-

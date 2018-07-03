@@ -76,7 +76,7 @@ class Styler(OshModel):
 # Model representing an OSH Text Styler
 # ------------------------------------------------------------------------------
 class TextStyler(Styler):
-    data_source = models.CharField(max_length=200)
+    data_source = models.CharField(max_length=200, default='')
     location = models.CharField(max_length=200)
     color_mode = models.CharField(max_length=1, choices=COLOR_MODE_CHOICES, default='0')
     # Treat these strings as arrays of integers, will need to be converted to arrays when read
@@ -132,7 +132,7 @@ class ChartStyler(Styler):
 # Model representing an OSH Location Video View Styler
 # ------------------------------------------------------------------------------
 class VideoView(Styler):
-    data_source = models.CharField(max_length=200)
+    data_source = models.CharField(max_length=200, default='')
     draggable = models.BooleanField(default=False)
     show = models.BooleanField(default=False)
     dockable = models.BooleanField(default=False)
@@ -207,14 +207,18 @@ class Observation(OshModel, SweService):
         ('4', 'QUAD'),
     )
 
-    hub = models.ForeignKey(Hub, on_delete=models.CASCADE)
-    # layer = models.ForeignKey(OSHLayer)
-    # view = models.ForeignKey(
-    #     View,
-    #     #        models.SET_NULL,
-    #     blank=True,
-    #     null=True
-    # )
+    source_hub = models.ForeignKey(Hub, on_delete=models.CASCADE)
+    layer = models.ForeignKey(
+        OSHLayer,
+        blank=True,
+        null=True
+    )
+    view = models.ForeignKey(
+        View,
+        #        models.SET_NULL,
+        blank=True,
+        null=True
+    )
 
     endpoint = models.URLField(max_length=200)
     offering = models.CharField(max_length=200)

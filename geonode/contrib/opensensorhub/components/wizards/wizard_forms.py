@@ -7,6 +7,12 @@ from geonode.contrib.opensensorhub.models import Hub, Observation, OSHLayer, Vid
 import geonode.contrib.opensensorhub.models as models
 
 
+# Custom Fields
+class HubSelectionField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return str(obj.name)
+
+
 class ObservationForm(forms.ModelForm):
     # name = forms.CharField(label='Observation Name', max_length=100)
     # source_type = forms.CharField(label='Source Type', max_length=100)
@@ -21,20 +27,26 @@ class ObservationForm(forms.ModelForm):
     # buffering_time = forms.IntegerField(label='Buffering Time')
     # time_shift = forms.IntegerField(label='Time Shift(in ms)')
     # replay_speed = forms.ChoiceField(label='Replay Speed')
-    hubs = Hub.objects.values('id','name')
+    hubs = Hub.objects.all()
     # HUBS = hubs.values()
-    HUBS = ((h['id'], h['name']) for h in hubs)
-    HUBS = tuple(HUBS)
-    print(HUBS)
-    print('Hubs:^')
+    # HUBS = ((h['id'], h['name']) for h in hubs)
+    # for h in hubs:
+    #     print('Hub ID: ', Hub.objects.get(h['id']))
+    # HUBS = ((h['id'], h['name']) for h in hubs)
+    # HUBS = tuple(HUBS)
+    # # targetHub = Hub.objects.filter(id='1')
+    # print(HUBS)
+    # print('Hubs:^')
+    # print(targetHub)
     # HUBS = [hub.name for hub in models.Hub.objects.all()]
-    hub = forms.ChoiceField(label='Hub', choices=HUBS)
+    # hub = HubSelectionField(label='Hub', choices=HUBS)
+    source_hub = HubSelectionField(label='Hub', queryset=hubs)
 
     class Meta:
         model = Observation
-        fields = ('name', 'description', 'keywords', 'hub', 'source_type', 'endpoint', 'protocol', 'offering',
+        fields = ('name', 'description', 'keywords', 'source_hub', 'source_type', 'endpoint', 'protocol', 'offering',
                   'service', 'observed_property', 'start_time', 'end_time', 'sync_master_time', 'buffering_time',
-                  'time_shift', 'replay_speed', )
+                  'time_shift', 'replay_speed',)
 
 
 class HubForm(forms.ModelForm):
@@ -42,10 +54,10 @@ class HubForm(forms.ModelForm):
     url = forms.URLField(label='URL')
     description = forms.CharField(max_length=500)
     keywords = forms.CharField(max_length=500)
-    
+
     class Meta:
         model = Hub
-        fields = ('name', 'url', 'protocol', 'description', 'keywords', )
+        fields = ('name', 'url', 'protocol', 'description', 'keywords',)
 
     def do_stuff(self):
         pass
@@ -55,7 +67,7 @@ class ViewForm(forms.ModelForm):
     class Meta:
         view_model = View
         styler_models = {'Chart': ChartStyler, 'Text': TextStyler, 'Location': LocationIndicator, 'Video': VideoView}
-        fields = ('name', )
+        fields = ('name',)
 
     def magic(self):
         pass
@@ -75,10 +87,11 @@ class ChartStylerForm(forms.ModelForm):
     color_mode = forms.ChoiceField(label='Color Mode:', widget=forms.Select, choices=COLOR_MODE_CHOICES)
     range_mode = forms.ChoiceField(label='Range Mode', widget=forms.Select, choices=RANGE_CHOICES)
     max_points = forms.IntegerField(label='Max Points', initial=30)
+
     class Meta:
         model = ChartStyler
         fields = ('name', 'description', 'keywords', 'data_source_x', 'label_x', 'data_source_y', 'label_y',
-                  'range_mode', 'range_x', 'range_y','color_mode', 'color_rgb', 'max_points',)
+                  'range_mode', 'range_x', 'range_y', 'color_mode', 'color_rgb', 'max_points',)
 
 
 class LocationIndicatorForm(forms.ModelForm):
@@ -113,9 +126,10 @@ class CompositeForm(forms.ModelForm):
                  ),
         label='Keyed Field'
     )
+
     class Meta:
         model = View
-        fields = ('name', 'description', 'keywords', )
+        fields = ('name', 'description', 'keywords',)
 
     def doStuff(self):
         pass
