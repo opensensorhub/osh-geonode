@@ -67,10 +67,10 @@ class ChartStylerForm(forms.ModelForm):
 
     # data_source_x = forms.ChoiceField(label='Data Source X:', choices=DATASOURCES)
     data_source_y = forms.ChoiceField(label='Data Source Y:')
-    range_x = forms.FloatField(label='Range X:')
-    range_y = forms.FloatField(label='Range Y:')
-    label_x = forms.CharField(label='Label X:')
-    label_y = forms.CharField(label='Label Y:')
+    # range_x = forms.FloatField(label='Range X:')
+    # range_y = forms.FloatField(label='Range Y:')
+    # label_x = forms.CharField(label='Label X:')
+    # label_y = forms.CharField(label='Label Y:')
     color_mode = forms.ChoiceField(label='Color Mode:', widget=forms.Select, choices=COLOR_MODE_CHOICES)
     range_mode = forms.ChoiceField(label='Range Mode', widget=forms.Select, choices=RANGE_CHOICES)
     max_points = forms.IntegerField(label='Max Points', initial=30)
@@ -79,6 +79,13 @@ class ChartStylerForm(forms.ModelForm):
         model = ChartStyler
         fields = ('name', 'description', 'keywords', 'data_source_x', 'label_x', 'data_source_y', 'label_y',
                   'range_mode', 'range_x', 'range_y', 'color_mode', 'color_rgb', 'max_points',)
+        labels = {
+            'range_x': _('Range X:'),
+            'range_y': _('Range Y:'),
+            'label_x': _('Label X:'),
+            'label_y': _('Label Y:'),
+            'color_rgb': _('Color RGB'),
+        }
 
 
 class LocationIndicatorForm(forms.ModelForm):

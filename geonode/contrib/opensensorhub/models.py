@@ -105,10 +105,10 @@ class LocationIndicator(Styler):
 # ------------------------------------------------------------------------------
 class ChartStyler(Styler):
     RANGE_MODE_CHOICES = (
-        ('0', 'ALL_FIXED'),
-        ('1', 'X_DYNAMIC'),
-        ('2', 'Y_DYNAMIC'),
-        ('3', 'ALL_DYNAMIC')
+        ('0', 'Fixed Ranges'),
+        ('1', 'X-Axis Dynamic'),
+        ('2', 'Y-Axis Dynamic'),
+        ('3', 'All Axes Dynamic')
     )
 
     data_source_x = models.CharField(max_length=200)

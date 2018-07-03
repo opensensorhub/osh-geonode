@@ -131,7 +131,9 @@ class VideoViewResource(ModelResource):
 
 
 class ChartStylerResource(ModelResource):
+
     class Meta:
+        data_source
         queryset = ChartStyler.objects.all()
         resource_name = 'chart'
         # BlackList: These are fields to exclude from being exposed by the API
