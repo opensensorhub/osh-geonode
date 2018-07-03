@@ -4,6 +4,8 @@ from django import forms
 from geonode.contrib.opensensorhub.models import Hub, Observation, OSHLayer, VideoView, \
     ChartStyler, LocationIndicator, TextStyler, View, SweService
 
+import geonode.contrib.opensensorhub.models as models
+
 
 class ObservationForm(forms.ModelForm):
     # name = forms.CharField(label='Observation Name', max_length=100)
@@ -19,12 +21,20 @@ class ObservationForm(forms.ModelForm):
     # buffering_time = forms.IntegerField(label='Buffering Time')
     # time_shift = forms.IntegerField(label='Time Shift(in ms)')
     # replay_speed = forms.ChoiceField(label='Replay Speed')
+    hubs = Hub.objects.values('id','name')
+    # HUBS = hubs.values()
+    HUBS = ((h['id'], h['name']) for h in hubs)
+    HUBS = tuple(HUBS)
+    print(HUBS)
+    print('Hubs:^')
+    # HUBS = [hub.name for hub in models.Hub.objects.all()]
+    hub = forms.ChoiceField(label='Hub', choices=HUBS)
 
     class Meta:
         model = Observation
-        fields = ('name', 'source_type', 'endpoint', 'protocol', 'offering', 'service',
-                  'observed_property', 'start_time', 'end_time', 'sync_master_time', 'buffering_time', 'time_shift',
-                  'replay_speed', )
+        fields = ('name', 'description', 'keywords', 'hub', 'source_type', 'endpoint', 'protocol', 'offering',
+                  'service', 'observed_property', 'start_time', 'end_time', 'sync_master_time', 'buffering_time',
+                  'time_shift', 'replay_speed', )
 
 
 class HubForm(forms.ModelForm):
@@ -52,9 +62,22 @@ class ViewForm(forms.ModelForm):
 
 
 class ChartStylerForm(forms.ModelForm):
+    COLOR_MODE_CHOICES = models.COLOR_MODE_CHOICES
+    RANGE_CHOICES = ChartStyler.RANGE_MODE_CHOICES
+    # DATASOURCES = [(observation.id, observation.name)for observation in Observation.objects.all()]
+
+    # data_source_x = forms.ChoiceField(label='Data Source X:', choices=DATASOURCES)
+    data_source_y = forms.ChoiceField(label='Data Source Y:')
+    range_x = forms.FloatField(label='Range X:')
+    range_y = forms.FloatField(label='Range Y:')
+    label_x = forms.CharField(label='Label X:')
+    label_y = forms.CharField(label='Label Y:')
+    color_mode = forms.ChoiceField(label='Color Mode:', widget=forms.Select, choices=COLOR_MODE_CHOICES)
+    range_mode = forms.ChoiceField(label='Range Mode', widget=forms.Select, choices=RANGE_CHOICES)
+    max_points = forms.IntegerField(label='Max Points', initial=30)
     class Meta:
         model = ChartStyler
-        fields = ('name', 'description', 'data_source_x', 'label_x', 'data_source_y', 'label_y', 'keywords',
+        fields = ('name', 'description', 'keywords', 'data_source_x', 'label_x', 'data_source_y', 'label_y',
                   'range_mode', 'range_x', 'range_y','color_mode', 'color_rgb', 'max_points',)
 
 

@@ -208,13 +208,13 @@ class Observation(OshModel, SweService):
     )
 
     hub = models.ForeignKey(Hub, on_delete=models.CASCADE)
-    layer = models.ForeignKey(OSHLayer)
-    view = models.ForeignKey(
-        View,
-        #        models.SET_NULL,
-        blank=True,
-        null=True
-    )
+    # layer = models.ForeignKey(OSHLayer)
+    # view = models.ForeignKey(
+    #     View,
+    #     #        models.SET_NULL,
+    #     blank=True,
+    #     null=True
+    # )
 
     endpoint = models.URLField(max_length=200)
     offering = models.CharField(max_length=200)

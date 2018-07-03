@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from django.views.generic import TemplateView, FormView
 
 # Form Imports
-from geonode.contrib.opensensorhub.components.wizards.wizard_forms import ObservationForm, HubForm, CompositeForm
+from geonode.contrib.opensensorhub.components.wizards.wizard_forms import ObservationForm, HubForm, CompositeForm, \
+    ChartStylerForm, TextStylerForm, VideoViewForm, LocationIndicatorForm
 
 # Resource Imports
 from geonode.contrib.opensensorhub.api import HubResource, ObservationResource, OshLayerResource, VideoViewResource, \
@@ -81,11 +82,14 @@ class TestTemplateFormView(TemplateView):
         return render(request, self.template_name)
 
 
-class ChartTemplateFormView(TemplateView):
+class ChartTemplateFormView(FormView):
     template_name = 'wizards/wizard_add_chartview_form.html'
+    # template_name = 'component_base.html'
+    form = ChartStylerForm()
 
     def get(self, request):
-        return render(request, self.template_name)
+        form = self.form
+        return render(request, self.template_name, dict({'html_body': 'wizards/wizard_add_chartview_form.html', 'form': form}))
 
 
 class VideoTemplateFormView(TemplateView):
