@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 # Model Imports
 from geonode.contrib.opensensorhub.models import Hub, Observation, OSHLayer, VideoView, \
@@ -14,39 +15,25 @@ class HubSelectionField(forms.ModelChoiceField):
 
 
 class ObservationForm(forms.ModelForm):
-    # name = forms.CharField(label='Observation Name', max_length=100)
-    # source_type = forms.CharField(label='Source Type', max_length=100)
-    # endpoint = forms.URLField(label='Endpoint URL')
-    # protocol = forms.ChoiceField(label='Protocol')
-    # offering = forms.CharField(label='Offering ID', max_length=100)
-    # service = forms.ChoiceField(label='Offering Service')
-    # observed_property = forms.URLField(label='Observed Property')
-    # start_time = forms.DateTimeField(label='Start Time')
-    # end_time = forms.DateTimeField(label='End Time')
-    # sync_master_time = forms.BooleanField(label='Sync Master Time')
-    # buffering_time = forms.IntegerField(label='Buffering Time')
-    # time_shift = forms.IntegerField(label='Time Shift(in ms)')
-    # replay_speed = forms.ChoiceField(label='Replay Speed')
     hubs = Hub.objects.all()
-    # HUBS = hubs.values()
-    # HUBS = ((h['id'], h['name']) for h in hubs)
-    # for h in hubs:
-    #     print('Hub ID: ', Hub.objects.get(h['id']))
-    # HUBS = ((h['id'], h['name']) for h in hubs)
-    # HUBS = tuple(HUBS)
-    # # targetHub = Hub.objects.filter(id='1')
-    # print(HUBS)
-    # print('Hubs:^')
-    # print(targetHub)
-    # HUBS = [hub.name for hub in models.Hub.objects.all()]
-    # hub = HubSelectionField(label='Hub', choices=HUBS)
-    source_hub = HubSelectionField(label='Hub', queryset=hubs)
+
+    hub = HubSelectionField(label='Hub', queryset=hubs)
 
     class Meta:
         model = Observation
-        fields = ('name', 'description', 'keywords', 'source_hub', 'source_type', 'endpoint', 'protocol', 'offering',
+        fields = ('name', 'description', 'keywords', 'hub', 'source_type', 'endpoint', 'protocol', 'offering',
                   'service', 'observed_property', 'start_time', 'end_time', 'sync_master_time', 'buffering_time',
                   'time_shift', 'replay_speed',)
+        labels = {
+            'observed_property': _('Observed Property:'),
+            'source_type': _('Source Type:'),
+            'start_time': _('Start Time:'),
+            'end_time': _('End Time:'),
+            'sync_master_time': _('Sync Master Time:'),
+            'buffering_time': _('Buffering Time:'),
+            'time_shift': _('Time Shift:'),
+            'replay_speed': _('Replay Speed:'),
+        }
 
 
 class HubForm(forms.ModelForm):

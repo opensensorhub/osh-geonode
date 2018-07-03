@@ -55,7 +55,8 @@ class HubResource(ModelResource):
 
 
 class ObservationResource(ModelResource):
-    hub = fields.ForeignKey(HubResource, 'source_hub')
+    hub = fields.ForeignKey(HubResource, 'hub')
+
     class Meta:
         queryset = Observation.objects.all()
         resource_name = 'observation'
@@ -64,7 +65,7 @@ class ObservationResource(ModelResource):
         # WhiteList: These are fields to include for being exposed by the API
         fields = ['name', 'description', 'source_type', 'endpoint_url', 'protocol', 'offering_id',
                   'offering_service', 'observed_property', 'start_time', 'end_time', 'sync_master_time',
-                  'buffering_time', 'time_shift', 'replay_speed', 'source_hub']
+                  'buffering_time', 'time_shift', 'replay_speed', 'hub', 'layers', 'views']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']

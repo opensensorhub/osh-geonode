@@ -207,7 +207,7 @@ class Observation(OshModel, SweService):
         ('4', 'QUAD'),
     )
 
-    source_hub = models.ForeignKey(Hub, on_delete=models.CASCADE)
+    hub = models.ForeignKey(Hub, on_delete=models.CASCADE)
     layer = models.ForeignKey(
         OSHLayer,
         blank=True,
@@ -226,8 +226,8 @@ class Observation(OshModel, SweService):
     start_time = models.CharField(max_length=200)
     end_time = models.CharField(max_length=200)
     sync_master_time = models.BooleanField(default=False)
-    buffering_time = models.IntegerField(validators=[validators.MinValueValidator(0)], null=True)
-    time_shift = models.IntegerField(null=True)
+    buffering_time = models.IntegerField(validators=[validators.MinValueValidator(0)], null=False, default=500)
+    time_shift = models.IntegerField(null=False, default=0)
     source_type = models.CharField(max_length=200)
     replay_speed = models.CharField(max_length=1, choices=REPLAY_SPEED_CHOICES, default='2')
     # service = models.IntegerField(default=SweService.SOS, validators=[validators.MinValueValidator(SweService.SOS),
