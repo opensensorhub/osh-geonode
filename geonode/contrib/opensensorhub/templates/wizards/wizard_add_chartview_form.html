@@ -1,0 +1,36 @@
+{#TODO: add form fields#}
+{#<form id="chart-styler-form" action="" method="post">#}
+{#    <label for="data_source_x">Data Source X-Axis</label>#}
+{#    <select name="data_source_x">#}
+        {#    Need to get options from DB#}
+{#    </select>#}
+{#    <label>Data Source Y-Axis</label>#}
+{#    <select name="data_source_y">#}
+        {#    Need to get Options from DB#}
+{#    </select>#}
+{#    <label>Label X-Axis</label>#}
+{#    <input type="text" name="label_x">#}
+{#    <label>Label Y-Axis</label>#}
+{#    <input type="text" name="label_y">#}
+{#    <label>Color Mode</label>#}
+{#    <input name="color_mode">#}
+{#    <label>Range Mode</label>#}
+{#    <input name="range_mode">#}
+{#    <label>Range X</label>#}
+{#    <input type="text" name="x_range_lower">#}
+{#    <input type="text" name="x_range_upper">#}
+{#    <label>Range Y</label>#}
+{#    <input type="text" name="y_range_lower">#}
+{#    <input type="text" name="y_range_upper">#}
+{#    <label>Max Points</label>#}
+{#    <input type="text" name="max_points">#}
+    {# Any potential for an RGB picker style widget?#}
+{#    <label>Colors</label>#}
+{#    <input name="color_rgb">#}
+{#    <label>Color Thresholds</label>#}
+{#    <input name="color_thresholds">#}
+{#</form>#}
+<form id="char-form">
+    {% csrf_token %}
+    {{ form }}
+</form>

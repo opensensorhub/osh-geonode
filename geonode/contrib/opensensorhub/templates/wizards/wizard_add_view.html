@@ -1,0 +1,124 @@
+{% block body %}
+    <style>
+        #view-form {
+            width: 80vw;
+            display: grid;
+            grid-template-columns: 25% 50% 25%;
+            grid-column-gap: 1vw;
+            grid-row-gap: 2vh;
+        }
+
+        p {
+            margin: 0%;
+            grid-column: 1/4;
+            display: grid;
+            grid-template-columns: 15vw 30vw 15vw;
+            grid-column-gap: 1vw;
+            grid-row-gap: 2vh;
+            align-content: center;
+        }
+
+        label {
+            display: inline-block;
+            width: 90%;
+            text-align: right;
+            grid-column: 1/2;
+        }
+
+        input {
+            display: inline-block;
+            width: 100%;
+            grid-column: 2/3;
+            text-align: left;
+        }
+
+        #id_sync_master_time {
+            position: relative;
+            width: 0%;
+            height: 80%;
+            left: 0%;
+        }
+
+        #added-fields {
+            margin-top: 20px;
+            width: 62vw;
+            padding: 0;
+            padding-bottom: 1vh;
+            border: 2px solid black;
+            grid-column: 1/4;
+            display: grid;
+            grid-template-columns: 15vw 30vw 15vw;
+            grid-column-gap: 1vw;
+            grid-row-gap: 2vh;
+        }
+
+        #added-fields-header {
+        {#position: relative;#} margin-top: -8%;
+            margin-left: 10px;
+            background-color: white;
+            width: 70%;
+            text-align: center;
+        }
+
+        button {
+            border-style: solid;
+            border-width: 1px;
+        }
+
+        button:hover {
+            background-color: #ff7d32;
+        }
+    #add-view-btn {
+        width: 98%;
+    }
+    .remove-btn {
+        width: 98%;
+    }
+    </style>
+
+    <script type="application/javascript" src="{{ STATIC_URL }}js/wizard_add_hub.js"></script>
+
+    <h1 style="grid-column: 1/4; text-align: left; padding-left: 3%">Add a View</h1>
+{% comment %} Elements without names will not be submitted, useful for controlling certain actions that we don't necessarily
+              want the user sending to the server{% endcomment %}
+    <form id="view-form" action="" method="get">
+        {% csrf_token %}
+        <p>
+            <label for="name">Name:</label>
+            <input type="text" name="name">
+        </p>
+
+        <p>
+            <label>Description:</label>
+            <input type="text">
+        </p>
+
+        <p>
+            <label>Keywords:</label>
+            <input type="text">
+        </p>
+
+        <div id="added-fields">
+            <h3 id="added-fields-header">Add Views</h3>
+            <p style="grid-column: 1/4; display: block;">New Form Fields Will Appear Here!</p>
+            <label id="view-add-label">View Type:</label>
+            <select id="viewSelector">
+                <option value="none">----</option>
+                <option value="chart">Chart</option>
+                <option value="video">Video</option>
+                <option value="text">Text</option>
+                <option value="locationmarker">Location Marker</option>
+                <option value="map">Map</option>
+            </select>
+            <button type="button" id="add-view-btn" onclick="addViewFormFields()">Add A New Data View</button>
+        </div>
+
+        <input type="submit" value="Submit" style="width: 25%; grid-column: 2/3; text-align: center"/>
+    </form>
+
+    {#    <div id="viewModal" class="modal">#}
+    {#        <div class="modal-content">#}
+    {#            <p>Form Stuff goes here</p>#}
+    {#        </div>#}
+    {#    </div>#}
+{% endblock %}

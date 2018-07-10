@@ -1,5 +1,3 @@
-{#{% extends "components/wizards/base_wizard.html" %}#}
-
 {% block body %}
     {#    Need to generate form more programatically for final product #}
     <style>
@@ -7,11 +5,14 @@
             width: 80%;
             display: grid;
             grid-template-columns: 25% 50% 25%;
+            grid-row-gap: 2vh;
         }
         p {
+            margin: 0%;
             grid-column: 1/4;
             display: grid;
             grid-template-columns: 25% 50% 25%;
+            grid-row-gap: 2vh;
             align-content: center;
         }
         label {
@@ -34,11 +35,13 @@
             left: 0%;
         }
     </style>
+    <script type="application/javascript" src="{{ STATIC_URL }}js/wizard_add_hub.js"></script>
+    <h1 style="grid-column: 1/4; text-align: left; padding-left: 5%">Add a Thing</h1>
     <form action="" method="post">
         {% csrf_token %}
-        <h1 style="grid-column: 1/4; text-align: left; padding-left: 5%">Add an Observation</h1>
-            {{ form.as_p }}
+        {{ form.as_p }}
+{#        <p include-html="../osh/templates/wizards/test-1"></p>#}
         <input type="submit" value="Submit" style="width: 25%; grid-column: 2/3; text-align: center"/>
-{#        <input type="submit" value="Submit"/>#}
+        {#        <input type="submit" value="Submit"/>#}
     </form>
 {% endblock %}

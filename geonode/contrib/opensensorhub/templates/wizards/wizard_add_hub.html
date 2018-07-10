@@ -1,32 +1,42 @@
-{#{% extends "wizards/base_wizard.html" %}#}
-
 {% block body %}
+    {#    Need to generate form more programatically for final product #}
     <style>
+        form{
+            width: 80%;
+            display: grid;
+            grid-template-columns: 25% 50% 25%;
+        }
+        p {
+            grid-column: 1/4;
+            display: grid;
+            grid-template-columns: 25% 50% 25%;
+            align-content: center;
+        }
         label {
             display: inline-block;
-            width: 30%;
+            width: 90%;
             text-align: right;
+            grid-column: 1/2;
         }
 
         input {
             display: inline-block;
-            width: 50%;
+            width: 100%;
+            grid-column: 2/3;
+            text-align: left;
         }
-
-        textarea {
-            display: inline-block;
-            width: 50%;
-            resize: none;
+        #id_sync_master_time{
+            position: relative;
+            width: 0%;
+            height: 80%;
+            left: 0%;
         }
     </style>
-
-    {#    Look at using grid or flexbox to improve some of the layout feel #}
-    <form action="" method="post" style="width: 50%;">
+    <form action="" method="post">
         {% csrf_token %}
-        <p>
-            {{ form.as_p }}
-        </p>
-        <input type="submit" value="Submit" style="width: 10%; position: absolute; left: 30.9%;"/>
+        <h1 style="grid-column: 1/4; text-align: left; padding-left: 5%">Add a Hub</h1>
+        {{ form.as_p }}
+        <input type="submit" value="Submit" style="width: 25%; grid-column: 2/3; text-align: center"/>
+        {#        <input type="submit" value="Submit"/>#}
     </form>
-
 {% endblock %}

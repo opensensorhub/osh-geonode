@@ -26,6 +26,13 @@ COLOR_MODE_CHOICES = (
     ('2', 'COLORMAP'),
 )
 
+PROTOCOL_TYPE_CHOICES = (
+    ('0', 'HTTP'),
+    ('1', 'HTTPS'),
+    ('2', 'WS'),
+    ('3', 'WSS'),
+)
+
 
 # ------------------------------------------------------------------------------
 # OshModel
@@ -61,7 +68,7 @@ class Styler(OshModel):
     styler_type = models.CharField(max_length=200)
     view = models.ForeignKey(
         View,
-#        models.SET_NULL,
+        #        models.SET_NULL,
         blank=True,
         null=True
     )
@@ -76,6 +83,7 @@ class Styler(OshModel):
 # Model representing an OSH Text Styler
 # ------------------------------------------------------------------------------
 class TextStyler(Styler):
+    data_source = models.CharField(max_length=200, default='')
     location = models.CharField(max_length=200)
     color_mode = models.CharField(max_length=1, choices=COLOR_MODE_CHOICES, default='0')
     # Treat these strings as arrays of integers, will need to be converted to arrays when read
@@ -104,10 +112,10 @@ class LocationIndicator(Styler):
 # ------------------------------------------------------------------------------
 class ChartStyler(Styler):
     RANGE_MODE_CHOICES = (
-        ('0', 'ALL_FIXED'),
-        ('1', 'X_DYNAMIC'),
-        ('2', 'Y_DYNAMIC'),
-        ('3', 'ALL_DYNAMIC')
+        ('0', 'Fixed Ranges'),
+        ('1', 'X-Axis Dynamic'),
+        ('2', 'Y-Axis Dynamic'),
+        ('3', 'All Axes Dynamic')
     )
 
     data_source_x = models.CharField(max_length=200)
@@ -131,11 +139,12 @@ class ChartStyler(Styler):
 # Model representing an OSH Location Video View Styler
 # ------------------------------------------------------------------------------
 class VideoView(Styler):
+    data_source = models.CharField(max_length=200, default='')
     draggable = models.BooleanField(default=False)
     show = models.BooleanField(default=False)
     dockable = models.BooleanField(default=False)
     closeable = models.BooleanField(default=False)
-    keepRatio = models.BooleanField(default=False)
+    keep_ratio = models.BooleanField(default=False)
 
 
 # ------------------------------------------------------------------------------
@@ -154,12 +163,6 @@ class OSHLayer(OshModel):
 # ------------------------------------------------------------------------------
 class Hub(OshModel):
 
-    PROTOCOL_TYPE_CHOICES = (
-        ('0', 'HTTP'),
-        ('1', 'HTTPS'),
-        ('2', 'WS'),
-        ('3', 'WSS'),
-    )
 
     url = models.URLField(max_length=200)
     protocol = models.CharField(max_length=1, choices=PROTOCOL_TYPE_CHOICES, default='2')
@@ -177,6 +180,7 @@ class SweService(models.Model):
     )
 
     service = models.CharField(max_length=1, default='0', choices=SERVICE_CHOICES)
+
     # SOS = 0,
     # SPS = 1
 
@@ -190,12 +194,6 @@ class SweService(models.Model):
 # Model representation for OSH Observations
 # ------------------------------------------------------------------------------
 class Observation(OshModel, SweService):
-    PROTOCOL_TYPE_CHOICES = (
-        ('0', 'HTTP'),
-        ('1', 'HTTPS'),
-        ('2', 'WS'),
-        ('3', 'WSS'),
-    )
 
     REPLAY_SPEED_CHOICES = (
         ('0', 'QUARTER'),
@@ -205,25 +203,30 @@ class Observation(OshModel, SweService):
         ('4', 'QUAD'),
     )
 
-    # hub = models.ForeignKey(Hub, on_delete=models.CASCADE)
-#     layer = models.ForeignKey(OSHLayer)
-#     view = models.ForeignKey(
-#         View,
-# #        models.SET_NULL,
-#         blank=True,
-#         null=True
-#     )
+    hub = models.ForeignKey(Hub, on_delete=models.CASCADE)
+    layer = models.ForeignKey(
+        OSHLayer,
+        blank=True,
+        null=True
+    )
+    view = models.ForeignKey(
+        View,
+        #        models.SET_NULL,
+        blank=True,
+        null=True
+    )
 
     endpoint = models.URLField(max_length=200)
     offering = models.CharField(max_length=200)
     observed_property = models.URLField(max_length=200)
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
+    start_time = models.CharField(max_length=200)
+    end_time = models.CharField(max_length=200)
     sync_master_time = models.BooleanField(default=False)
-    buffering_time = models.IntegerField(validators=[validators.MinValueValidator(0)])
-    time_shift = models.IntegerField()
+    buffering_time = models.IntegerField(validators=[validators.MinValueValidator(0)], null=False, default=500)
+    time_shift = models.IntegerField(null=False, default=0)
     source_type = models.CharField(max_length=200)
     replay_speed = models.CharField(max_length=1, choices=REPLAY_SPEED_CHOICES, default='2')
     # service = models.IntegerField(default=SweService.SOS, validators=[validators.MinValueValidator(SweService.SOS),
     #                                                                  validators.MaxValueValidator(SweService.SOS)])
     protocol = models.CharField(max_length=1, choices=PROTOCOL_TYPE_CHOICES, default='2')
+

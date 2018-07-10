@@ -22,6 +22,7 @@ from tastypie.resources import ModelResource
 from tastypie.authorization import DjangoAuthorization, Authorization
 from tastypie.serializers import Serializer
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
+from tastypie import fields
 
 from models import *
 
@@ -38,7 +39,7 @@ class HubResource(ModelResource):
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post', 'delete']
         # Authentication
-#        authentication = OAuthAuthentication()
+        #        authentication = OAuthAuthentication()
         # Authorization
         # authorization = DjangoAuthorization()
         authorization = Authorization()
@@ -52,22 +53,28 @@ class HubResource(ModelResource):
             'url': ALL
         }
 
+    def dehydrate(self, bundle):
+        bundle.data['type'] = self.Meta.resource_name
+        return bundle
+
 
 class ObservationResource(ModelResource):
+    hub = fields.ForeignKey(HubResource, 'hub')
+
     class Meta:
         queryset = Observation.objects.all()
         resource_name = 'observation'
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
-        fields = [('name', 'source_type', 'endpoint_url', 'protocol', 'offering_id', 'offering_service',
-                   'observed_property', 'start_time', 'end_time', 'sync_master_time', 'buffering_time', 'time_shift',
-                   'replay_speed')]
+        fields = ['name', 'description', 'source_type', 'endpoint_url', 'protocol', 'offering_id',
+                  'offering_service', 'observed_property', 'start_time', 'end_time', 'sync_master_time',
+                  'buffering_time', 'time_shift', 'replay_speed', 'hub', 'layers', 'views']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
         # Authentication
-#        authentication = OAuthAuthentication()
+        #        authentication = OAuthAuthentication()
         # Authorization
         # authorization = DjangoAuthorization()
         authorization = Authorization()
@@ -80,6 +87,10 @@ class ObservationResource(ModelResource):
             'keywords': ALL,
             'url': ALL
         }
+
+    def dehydrate(self, bundle):
+        bundle.data['type'] = self.Meta.resource_name
+        return bundle
 
 
 class OshLayerResource(ModelResource):
@@ -94,7 +105,7 @@ class OshLayerResource(ModelResource):
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
         # Authentication
-#        authentication = OAuthAuthentication()
+        #        authentication = OAuthAuthentication()
         # Authorization
         # authorization = DjangoAuthorization()
         authorization = Authorization()
@@ -102,6 +113,10 @@ class OshLayerResource(ModelResource):
         serializer = Serializer(formats=['json'])
         # Filtering
         filtering = {}
+
+    def dehydrate(self, bundle):
+        bundle.data['type'] = self.Meta.resource_name
+        return bundle
 
 
 class VideoViewResource(ModelResource):
@@ -111,12 +126,13 @@ class VideoViewResource(ModelResource):
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
-        fields = []
+        fields = ['name', 'description', 'keywords', 'draggable', 'dockable', 'closeable', 'keep_ratio'
+                                                                                           'timeout', 'styler_type']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
         # Authentication
-#        authentication = OAuthAuthentication()
+        #        authentication = OAuthAuthentication()
         # Authorization
         # authorization = DjangoAuthorization()
         authorization = Authorization()
@@ -125,20 +141,28 @@ class VideoViewResource(ModelResource):
         # Filtering
         filtering = {}
 
+    def dehydrate(self, bundle):
+        bundle.data['type'] = self.Meta.resource_name
+        return bundle
+
 
 class ChartStylerResource(ModelResource):
+
     class Meta:
+        data_source_x = fields.ForeignKey('ObservationResource', 'data_source_x')
         queryset = ChartStyler.objects.all()
         resource_name = 'chart'
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
-        fields = []
+        fields = ['name', 'description', 'keywords', 'data_source_x', 'data_source_y', 'label_x', 'label_y',
+                  'color_mode', 'range_mode', 'range_x', 'range_y', 'max_points', 'color_rgb', 'thresholds',
+                  'timeout', 'styler_type']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
         # Authentication
-#        authentication = OAuthAuthentication()
+        #        authentication = OAuthAuthentication()
         # Authorization
         # authorization = DjangoAuthorization()
         authorization = Authorization()
@@ -146,6 +170,10 @@ class ChartStylerResource(ModelResource):
         serializer = Serializer(formats=['json'])
         # Filtering
         filtering = {}
+
+    def dehydrate(self, bundle):
+        bundle.data['type'] = self.Meta.resource_name
+        return bundle
 
 
 class LocationIndicatorResource(ModelResource):
@@ -155,12 +183,13 @@ class LocationIndicatorResource(ModelResource):
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
-        fields = []
+        fields = ['name', 'description', 'keywords', 'data_source_lat', 'data_source_lon', 'data_source_alt',
+                  'timeout', 'styler_type']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
         # Authentication
-#        authentication = OAuthAuthentication()
+        #        authentication = OAuthAuthentication()
         # Authorization
         # authorization = DjangoAuthorization()
         authorization = Authorization()
@@ -168,6 +197,10 @@ class LocationIndicatorResource(ModelResource):
         serializer = Serializer(formats=['json'])
         # Filtering
         filtering = {}
+
+    def dehydrate(self, bundle):
+        bundle.data['type'] = self.Meta.resource_name
+        return bundle
 
 
 class TextStylerResource(ModelResource):
@@ -177,12 +210,13 @@ class TextStylerResource(ModelResource):
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
-        fields = []
+        fields = ['name', 'description', 'keywords', 'color_mode', 'color_rgb', 'thresholds',
+                  'timeout', 'styler_type']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
         # Authentication
-#        authentication = OAuthAuthentication()
+        #        authentication = OAuthAuthentication()
         # Authorization
         # authorization = DjangoAuthorization()
         authorization = Authorization()
@@ -190,6 +224,10 @@ class TextStylerResource(ModelResource):
         serializer = Serializer(formats=['json'])
         # Filtering
         filtering = {}
+
+    def dehydrate(self, bundle):
+        bundle.data['type'] = self.Meta.resource_name
+        return bundle
 
 
 class ViewResource(ModelResource):
@@ -199,12 +237,12 @@ class ViewResource(ModelResource):
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
-        fields = []
+        fields = ['sensor_archetype']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
         # Authentication
-#        authentication = OAuthAuthentication()
+        #        authentication = OAuthAuthentication()
         # Authorization
         # authorization = DjangoAuthorization()
         authorization = Authorization()
@@ -213,3 +251,6 @@ class ViewResource(ModelResource):
         # Filtering
         filtering = {}
 
+    def dehydrate(self, bundle):
+        bundle.data['type'] = self.Meta.resource_name
+        return bundle
