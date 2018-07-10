@@ -26,6 +26,13 @@ COLOR_MODE_CHOICES = (
     ('2', 'COLORMAP'),
 )
 
+PROTOCOL_TYPE_CHOICES = (
+    ('0', 'HTTP'),
+    ('1', 'HTTPS'),
+    ('2', 'WS'),
+    ('3', 'WSS'),
+)
+
 
 # ------------------------------------------------------------------------------
 # OshModel
@@ -155,12 +162,7 @@ class OSHLayer(OshModel):
 # Model representation for an OpenSensorHub Instance
 # ------------------------------------------------------------------------------
 class Hub(OshModel):
-    PROTOCOL_TYPE_CHOICES = (
-        ('0', 'HTTP'),
-        ('1', 'HTTPS'),
-        ('2', 'WS'),
-        ('3', 'WSS'),
-    )
+
 
     url = models.URLField(max_length=200)
     protocol = models.CharField(max_length=1, choices=PROTOCOL_TYPE_CHOICES, default='2')
@@ -192,12 +194,6 @@ class SweService(models.Model):
 # Model representation for OSH Observations
 # ------------------------------------------------------------------------------
 class Observation(OshModel, SweService):
-    PROTOCOL_TYPE_CHOICES = (
-        ('0', 'HTTP'),
-        ('1', 'HTTPS'),
-        ('2', 'WS'),
-        ('3', 'WSS'),
-    )
 
     REPLAY_SPEED_CHOICES = (
         ('0', 'QUARTER'),
@@ -233,3 +229,4 @@ class Observation(OshModel, SweService):
     # service = models.IntegerField(default=SweService.SOS, validators=[validators.MinValueValidator(SweService.SOS),
     #                                                                  validators.MaxValueValidator(SweService.SOS)])
     protocol = models.CharField(max_length=1, choices=PROTOCOL_TYPE_CHOICES, default='2')
+
