@@ -48,6 +48,9 @@ class OshModel(models.Model):
     class Meta:
         abstract = True
 
+    def __str__(self):
+        return self.name
+
 
 # ------------------------------------------------------------------------------
 # View
@@ -162,7 +165,6 @@ class OSHLayer(OshModel):
 # Model representation for an OpenSensorHub Instance
 # ------------------------------------------------------------------------------
 class Hub(OshModel):
-
 
     url = models.URLField(max_length=200)
     protocol = models.CharField(max_length=1, choices=PROTOCOL_TYPE_CHOICES, default='2')
