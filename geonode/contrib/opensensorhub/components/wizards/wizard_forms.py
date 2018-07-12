@@ -14,6 +14,11 @@ class HubSelectionField(forms.ModelChoiceField):
         return str(obj.name)
 
 
+class ObservationSelectField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return str(obj.name)
+
+
 class ObservationForm(forms.ModelForm):
     hubs = Hub.objects.all()
 
@@ -50,6 +55,7 @@ class HubForm(forms.ModelForm):
         pass
 
 
+# TODO: Is this needed or can it be removed?
 class ViewForm(forms.ModelForm):
     class Meta:
         view_model = View
@@ -63,18 +69,16 @@ class ViewForm(forms.ModelForm):
 class ChartStylerForm(forms.ModelForm):
     COLOR_MODE_CHOICES = models.COLOR_MODE_CHOICES
     RANGE_CHOICES = ChartStyler.RANGE_MODE_CHOICES
-    # DATASOURCES = [(observation.id, observation.name)for observation in Observation.objects.all()]
 
-    # data_source_x = forms.ChoiceField(label='Data Source X:', choices=DATASOURCES)
-    data_source_y = forms.ChoiceField(label='Data Source Y:')
-    # range_x = forms.FloatField(label='Range X:')
-    # range_y = forms.FloatField(label='Range Y:')
-    # label_x = forms.CharField(label='Label X:')
-    # label_y = forms.CharField(label='Label Y:')
+    # TODO: Look into implementing a system-wide time observation
+    observations = Observation.objects.all()
+    data_source_x = ObservationSelectField(label='Data Source (X-Axis):', queryset=observations)
+    data_source_y = ObservationSelectField(label='Data Source (Y-Axis):', queryset=observations)
     color_mode = forms.ChoiceField(label='Color Mode:', widget=forms.Select, choices=COLOR_MODE_CHOICES)
     range_mode = forms.ChoiceField(label='Range Mode', widget=forms.Select, choices=RANGE_CHOICES)
     max_points = forms.IntegerField(label='Max Points', initial=30)
 
+    # TODO: Add upper and lower range fields
     class Meta:
         model = ChartStyler
         fields = ('name', 'description', 'keywords', 'data_source_x', 'label_x', 'data_source_y', 'label_y',
@@ -89,23 +93,47 @@ class ChartStylerForm(forms.ModelForm):
 
 
 class LocationIndicatorForm(forms.ModelForm):
+    observations = Observation.objects.all()
+    data_source_lat = ObservationSelectField(label='Data Source (Latitude):', queryset=observations)
+    data_source_lon = ObservationSelectField(label='Data Source (Longitude):', queryset=observations)
+    data_source_alt = ObservationSelectField(label='Data Source (Altitude):', queryset=observations)
+
     class Meta:
         model = LocationIndicator
         fields = ('name', 'description', 'keywords', 'data_source_lat', 'data_source_lon', 'data_source_alt',
                   'view_icon', 'render_mode',)
+        labels = {
+            'view_icon': _('Icon:'),
+            'render_mode': _('Render Mode:'),
+        }
 
 
 class TextStylerForm(forms.ModelForm):
+    observations = Observation.objects.all()
+    data_source = ObservationSelectField(label='Data Source:', queryset=observations)
+
     class Meta:
         model = TextStyler
+        # TODO: Rework the color and threshold form options
+        # The add HTML sheet may be useful for this (uncertain)
         fields = ('name', 'description', 'keywords', 'data_source', 'color_mode', 'color_rgb', 'thresholds',)
+        labels = {
+            'color_mode': _('Color Mode:'),
+            'color_rgb': _('Color RGB:'),
+        }
 
 
 class VideoViewForm(forms.ModelForm):
+    observations = Observation.objects.all()
+    data_source = ObservationSelectField(label='Data Source:', queryset=observations)
+
     class Meta:
         model = VideoView
         fields = ('name', 'description', 'keywords', 'data_source', 'show', 'draggable', 'dockable', 'keep_ratio',
                   'closeable',)
+        labels = {
+            'keep_ratio': _('Keep Ratio:')
+        }
 
 
 class ViewFormset(forms.BaseModelFormSet):
@@ -127,3 +155,9 @@ class CompositeForm(forms.ModelForm):
 
     def doStuff(self):
         pass
+
+
+class MapTemplateForm(forms.Form):
+    name = forms.CharField()
+    description = forms.CharField(max_length=500)
+    keywords = forms.CharField(max_length=500)

@@ -3,25 +3,13 @@ var elementCounter = 0;
 var formElement;
 var formTemplates = new Map();
 formTemplates.set('chart', 'templates/wizards/chart');
-formTemplates.set('video', 'templates/wizard/video');
+formTemplates.set('video', 'templates/wizards/video');
 formTemplates.set('locationmarker', 'templates/wizards/locationmarker');
 formTemplates.set('text', 'templates/wizards/text');
 formTemplates.set('map', 'templates/wizards/map');
 
 window.onload = function () {
     formElement = document.getElementById('view-form');
-    // console.log(document.getElementById('id_keyed_field'));
-    //
-    // let keyedField = document.getElementById("id_keyed_field");
-    // keyedField.addEventListener("input", onKeyedInputReceive);
-    // // console.log(keyedField.innerText);
-    //
-    // function onKeyedInputReceive(evt){
-    //     // console.log(this.value);
-    //     // console.log(evt.target.parentElement.parentElement.innerHTML);
-    //     addFormFields(evt.target.parentElement);
-    //     // console.log(keyedField.innerText);
-    // }
 };
 
 function addFormFields(parentElement, templateURL) {
@@ -31,20 +19,6 @@ function addFormFields(parentElement, templateURL) {
     htmlToBeTemplated(parentElement, templateURL, elementClass);
     // htmlToBeTemplated(parentElement, '../osh/test/');
     includeHTML();
-
-    // create from element
-    // let newLabel = document.createElement("label");
-    // newLabel.className = elementClass;
-    // newLabel.setAttribute('for', 'new-element');
-    // newLabel.setAttribute('data-indexNum', elementCounter);
-    // newLabel.innerHTML = 'New Element:';
-    // newLabel.style.gridColumn = '1/2';
-    //
-    // let newChild = document.createElement("input");
-    // newChild.className = elementClass;
-    // newChild.setAttribute('text', 'New Element');
-    // newChild.setAttribute('id', 'new-element');
-    // newChild.setAttribute('data-indexNum', elementCounter);
 
     // Remove button element
     let removeButton = document.createElement('input');
@@ -56,10 +30,7 @@ function addFormFields(parentElement, templateURL) {
     removeButton.value = 'Remove';
     removeButton.onclick = removeElement;
 
-
     // append newly created elements
-    // parentElement.insertAdjacentElement('beforebegin', newLabel);
-    // parentElement.insertAdjacentElement('beforebegin', newChild);
     parentElement.insertAdjacentElement('beforebegin', removeButton);
 
     // TODO: Remove after testing
@@ -70,8 +41,8 @@ function removeElement(event) {
     let parent = this.parentNode;
     // needs to remove siblings created with the button
     console.log('Elements with an indexnum of ' + this.dataset.indexnum + ' will be removed!');
+
     // Convert to Array to deal with this being a live list
-    // let elements = Array.prototype.slice.call(document.getElementsByClassName(this.className));
     let elements = getElementsByDataIndexNumber(this.dataset.indexnum);
     // console.log(elements);
     for (var el of elements) {
@@ -131,6 +102,7 @@ function addViewFormFields(event) {
     let selector = document.getElementById('viewSelector');
     let selectedView = selector.options[selector.selectedIndex].value;
     console.log(selectedView);
+    console.log(formTemplates.get(selectedView));
     // Switch on the type of view we're adding to get the correct form fields
 
     if (formTemplates.has(selectedView)) {

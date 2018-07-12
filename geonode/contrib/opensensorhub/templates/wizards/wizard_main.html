@@ -78,44 +78,13 @@
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/osh-wizards.css">
 
     <script type="application/javascript" src="{{ STATIC_URL }}js/wizard_add_hub.js"></script>
-
     <h1 style="grid-column: 1/4; text-align: left; padding-left: 3%">Add a View</h1>
-    {% comment %} Elements without names will not be submitted, useful for controlling certain actions that we don't necessarily
-              want the user sending to the server{% endcomment %}
-    <form id="view-form" action="" method="get">
-        {% csrf_token %}
-        <p>
-            <label for="name">Name:</label>
-            <input type="text" name="name">
-        </p>
+    <div>
+{#        Should/could a separate form be loaded here?#}
+        <button>Previous</button>
+        <button>Next</button>
+    </div>
 
-        <p>
-            <label>Description:</label>
-            <input type="text">
-        </p>
-
-        <p>
-            <label>Keywords:</label>
-            <input type="text">
-        </p>
-
-        <div id="added-fields">
-            <h3 id="added-fields-header">Add Views</h3>
-            <p style="grid-column: 1/4; display: block;">New Form Fields Will Appear Here!</p>
-            <label id="view-add-label">View Type:</label>
-            <select id="viewSelector">
-                <option value="none">----</option>
-                <option value="chart">Chart</option>
-                <option value="video">Video</option>
-                <option value="text">Text</option>
-                <option value="locationmarker">Location Marker</option>
-                <option value="map">Map</option>
-            </select>
-            <button type="button" id="add-view-btn" onclick="addViewFormFields()">Add A New Data View</button>
-        </div>
-
-        <input type="submit" value="Submit" style="width: 25%; grid-column: 2/3; text-align: center"/>
-    </form>
 
     <div id="progress-bar">
         <div id="hub-pellet" class="progress-pellets">
@@ -147,9 +116,4 @@
         </div>
     </div>
 
-    {#    <div id="viewModal" class="modal">#}
-    {#        <div class="modal-content">#}
-    {#            <p>Form Stuff goes here</p>#}
-    {#        </div>#}
-    {#    </div>#}
 {% endblock %}

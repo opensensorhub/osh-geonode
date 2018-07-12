@@ -1,0 +1,144 @@
+#view-form {
+    width: 80vw;
+    display: grid;
+    grid-template-columns: 25% 50% 25%;
+    grid-column-gap: 1vw;
+    grid-row-gap: 2vh;
+}
+
+.wiz-form{
+    width: 80vw;
+    display: grid;
+    grid-template-columns: 25% 50% 25%;
+    grid-column-gap: 1vw;
+    grid-row-gap: 2vh;
+}
+
+p {
+    margin: 0%;
+    grid-column: 1/4;
+    display: grid;
+    grid-template-columns: 15vw 30vw 15vw;
+    grid-column-gap: 1vw;
+    grid-row-gap: 2vh;
+    align-content: center;
+}
+
+label {
+    display: inline-block;
+    width: 90%;
+    text-align: right;
+    grid-column: 1/2;
+}
+
+input {
+    display: inline-block;
+    width: 100%;
+    grid-column: 2/3;
+    text-align: left;
+}
+
+#id_sync_master_time {
+    position: relative;
+    width: 0%;
+    height: 80%;
+    left: 0%;
+}
+
+#added-fields {
+    margin-top: 20px;
+    width: 62vw;
+    padding: 0;
+    padding-bottom: 1vh;
+    border: 2px solid black;
+    grid-column: 1/4;
+    display: grid;
+    grid-template-columns: 15vw 30vw 15vw;
+    grid-column-gap: 1vw;
+    grid-row-gap: 2vh;
+}
+
+#added-fields-header {
+    margin-top: -8%;
+    margin-left: 10px;
+    background-color: white;
+    width: 70%;
+    text-align: center;
+}
+
+button {
+    border-style: solid;
+    border-width: 1px;
+}
+
+button:hover {
+    background-color: #ff7d32;
+}
+
+#add-view-btn {
+    width: 98%;
+}
+
+.remove-btn {
+    width: 98%;
+}
+
+#progress-bar {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-content: space-between;
+    width: 80%;
+    margin-top: 1vh;
+}
+
+.progress-pellets {
+    display: flex;
+    width: 6vw;
+    height: 4vh;
+    border-radius: 5px;
+    background-color: #ff7d32;
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    justify-content: center;
+    align-content: center
+}
+
+.progress-pellet-text {
+    align-self: center;
+}
+
+.arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+}
+
+.right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+
+.up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+}
+
+.down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+
+input[type=checkbox]{
+    position: relative;
+    width: 0%;
+    height: 80%;
+    left: 0%;
+}

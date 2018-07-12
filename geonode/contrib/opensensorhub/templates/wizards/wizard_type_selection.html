@@ -1,0 +1,62 @@
+{% block body %}
+
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/osh-wizards.css">
+
+    {#    <script type="application/javascript" src="{{ STATIC_URL }}js/wizard_add_hub.js"></script>#}
+    <script type="application/javascript" src="{{ STATIC_URL }}js/wizard_view_select.js"></script>
+
+    <h1 style="grid-column: 1/4; text-align: left; padding-left: 0">Choose a View to Add</h1>
+    {#    <form id="view-form" action="" method="get">#}
+    {#        {% csrf_token %}#}
+    <p style="margin: 4vh">
+        <label for="view-selector">View Type:</label>
+        <select id="view-selector" name="view-selector">
+            <option value="none">----</option>
+            <option value="chart">Chart</option>
+            <option value="video">Video</option>
+            <option value="text">Text</option>
+            <option value="locationmarker">Location Marker</option>
+            <option value="map">Map</option>
+        </select>
+
+
+        <button id="add-view-btn" onclick="directToViewWizard()">Add
+            Selected View
+        </button>
+    </p>
+    {#    </form>#}
+
+    <div class="test-div-remove" style="border-width: 4px; border-color: yellow; border-style: dashed">
+        <div id="progress-bar">
+            <div id="hub-pellet" class="progress-pellets">
+                <div class="progress-pellet-text" style="align-self: center">Hub</div>
+            </div>
+            <div>
+                <i class="arrow right"></i>
+            </div>
+            <div id="observation-pellet" class="progress-pellets">
+                <div class="progress-pellet-text" style="align-self: center">Obs</div>
+            </div>
+            <div>
+                <i class="arrow right"></i>
+            </div>
+            <div id="style-pellet" class="progress-pellets">
+                <div class="progress-pellet-text" style="align-self: center">Style</div>
+            </div>
+            <div>
+                <i class="arrow right"></i>
+            </div>
+            <div id="view-pellet" class="progress-pellets">
+                <div class="progress-pellet-text" style="align-self: center">View</div>
+            </div>
+            <div>
+                <i class="arrow right"></i>
+            </div>
+            <div id="layout-pellet" class="progress-pellets">
+                <div class="progress-pellet-text" style="align-self: center">Layout</div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

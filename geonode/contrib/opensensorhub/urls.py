@@ -77,10 +77,12 @@ urlpatterns = [
     # To allow for an easy to follow test link, delete when composite forms are working
     url(r'^test', components.wizards.wizard_views.CompositeFormView.as_view(), name='test'),
     # Test Template inclusion this way
-    url(r'^templates/wizards/test-1', components.wizards.wizard_views.TestTemplateFormView.as_view()),
-    url(r'^templates/wizards/chart', components.wizards.wizard_views.ChartTemplateFormView.as_view()),
-    url(r'^templates/wizards/video', components.wizards.wizard_views.VideoTemplateFormView.as_view()),
-    url(r'^templates/wizards/text', components.wizards.wizard_views.TextTemplateFormView.as_view()),
-    url(r'^templates/wizards/locationmarker', components.wizards.wizard_views.LocationMarkerTemplateFormView.as_view()),
-    url(r'^templates/wizards/map', components.wizards.wizard_views.MapTemplateFormView.as_view()),
+    url(r'^wizards/test-1', components.wizards.wizard_views.TestTemplateFormView.as_view()),
+    url(r'^wizards/chart', components.wizards.wizard_views.ChartTemplateFormView.as_view()),
+    url(r'^wizards/video', components.wizards.wizard_views.VideoTemplateFormView.as_view()),
+    url(r'^wizards/text', components.wizards.wizard_views.TextTemplateFormView.as_view()),
+    url(r'^wizards/locationmarker', components.wizards.wizard_views.LocationMarkerTemplateFormView.as_view()),
+    url(r'^wizards/map', components.wizards.wizard_views.MapTemplateFormView.as_view()),
+    url(r'^osh-wizard/', components.wizards.wizard_views.WizardMainView.as_view()),
+    url(r'^view-selection', components.wizards.wizard_views.ViewSelectionWidget.as_view()),
 ]

@@ -1,1 +1,10 @@
-// TODO: add form fields
+{#TODO: add form fields#}
+
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/osh-wizards.css">
+
+<h1>Wizard-Type: {{ wizard_type}}</h1>
+
+<form id="chart-form" class="wiz-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+</form>

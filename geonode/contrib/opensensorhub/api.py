@@ -120,14 +120,16 @@ class OshLayerResource(ModelResource):
 
 
 class VideoViewResource(ModelResource):
+    data_source = fields.ForeignKey(ObservationResource, 'data_source')
+
     class Meta:
         queryset = VideoView.objects.all()
         resource_name = 'video'
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
-        fields = ['name', 'description', 'keywords', 'draggable', 'dockable', 'closeable', 'keep_ratio'
-                                                                                           'timeout', 'styler_type']
+        fields = ['name', 'description', 'keywords', 'draggable', 'dockable', 'closeable', 'keep_ratio', 'data_source',
+                  'timeout', 'styler_type']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
@@ -147,9 +149,11 @@ class VideoViewResource(ModelResource):
 
 
 class ChartStylerResource(ModelResource):
+    data_source_x = fields.ForeignKey(ObservationResource, 'data_source_x')
+    data_source_y = fields.ForeignKey(ObservationResource, 'data_source_y')
 
     class Meta:
-        data_source
+        # data_source
         queryset = ChartStyler.objects.all()
         resource_name = 'chart'
         # BlackList: These are fields to exclude from being exposed by the API
@@ -177,6 +181,10 @@ class ChartStylerResource(ModelResource):
 
 
 class LocationIndicatorResource(ModelResource):
+    data_source_lat = fields.ForeignKey(ObservationResource, 'data_source_lat')
+    data_source_lon = fields.ForeignKey(ObservationResource, 'data_source_lon')
+    data_source_alt = fields.ForeignKey(ObservationResource, 'data_source_alt')
+
     class Meta:
         queryset = LocationIndicator.objects.all()
         resource_name = 'point'
@@ -204,6 +212,8 @@ class LocationIndicatorResource(ModelResource):
 
 
 class TextStylerResource(ModelResource):
+    data_source = fields.ForeignKey(ObservationResource, 'data_source')
+
     class Meta:
         queryset = TextStyler.objects.all()
         resource_name = 'text'
