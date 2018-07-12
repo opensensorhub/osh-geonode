@@ -35,6 +35,33 @@ PROTOCOL_TYPE_CHOICES = (
 
 
 # ------------------------------------------------------------------------------
+# Category
+#
+# Model representing recursive ontology of OSH model objects
+# ------------------------------------------------------------------------------
+class Category(models.Model):
+    name = models.CharField(max_length=200)
+    # slug = models.SlugField()
+    parent = models.ForeignKey('self', blank=True, null=True, related_name='children')
+
+    class Meta:
+        # unique_together = ('slug', 'parent')
+        unique_together = ('name', 'parent')
+        verbose_name_plural = 'categories'
+
+    def __str__(self):
+        full_path = [self.name]
+
+        k = self.parent
+
+        while k is not None:
+            full_path.append(k.name)
+            k = k.parent
+
+        return ' -> '.join(full_path[::-1])
+
+
+# ------------------------------------------------------------------------------
 # OshModel
 #
 # Model representing an OSH the base OSH Model
@@ -44,6 +71,8 @@ class OshModel(models.Model):
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=200)
     keywords = models.CharField(max_length=200)
+    category = models.ForeignKey(Category, blank=True, null=True)
+    # slug = models.SlugField(unique=True, null=True)
 
     class Meta:
         abstract = True
@@ -86,8 +115,20 @@ class Styler(OshModel):
 # Model representing an OSH Text Styler
 # ------------------------------------------------------------------------------
 class TextStyler(Styler):
+    SCREEN_POSITION_CHOICES = (
+        ('0', 'TOP_LEFT'),
+        ('1', 'TOP_CENTER'),
+        ('2', 'TOP_RIGHT'),
+        ('3', 'LEFT'),
+        ('4', 'CENTER'),
+        ('5', 'RIGHT'),
+        ('6', 'BOTTOM_LEFT'),
+        ('7', 'BOTTOM_CENTER'),
+        ('8', 'BOTTOM_RIGHT')
+    )
+
     data_source = models.CharField(max_length=200, default='')
-    location = models.CharField(max_length=200)
+    screen_position = models.CharField(max_length=1, choices=SCREEN_POSITION_CHOICES, default='4')
     color_mode = models.CharField(max_length=1, choices=COLOR_MODE_CHOICES, default='0')
     # Treat these strings as arrays of integers, will need to be converted to arrays when read
     # and strings when stored

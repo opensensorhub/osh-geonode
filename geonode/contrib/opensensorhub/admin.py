@@ -22,14 +22,15 @@ from django.contrib import admin
 
 # Register your models here.
 
+from models import Category
 from models import TextStyler, LocationIndicator, ChartStyler
 from models import View, VideoView
 from models import Hub, Observation, OSHLayer
 
 
 class OshModelAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description')
-    fields = ('name', 'description', 'keywords')
+    list_display = ('name', 'description', 'category')
+    fields = ('name', 'description', 'keywords', 'category')
 
 
 class StylerAdmin(OshModelAdmin):
@@ -39,14 +40,14 @@ class StylerAdmin(OshModelAdmin):
 
 class TextStylerAdmin(StylerAdmin):
     fields = StylerAdmin.fields + \
-             ('data_source', 'location', 'color_mode',
+             ('data_source', 'screen_position', 'color_mode',
               'color_rgb', 'thresholds')
+
 
 class LocationIndicatorAdmin(StylerAdmin):
     fields = StylerAdmin.fields + \
              ('data_source_lat', 'data_source_lon',
               'data_source_alt', 'view_icon', 'render_mode')
-
 
 
 class ChartStylerAdmin(StylerAdmin):
@@ -90,3 +91,4 @@ admin.site.register(VideoView, VideoViewAdmin)
 admin.site.register(Hub, HubAdmin)
 admin.site.register(Observation, ObservationAdmin)
 admin.site.register(OSHLayer, OSHLayerAdmin)
+admin.site.register(Category)
