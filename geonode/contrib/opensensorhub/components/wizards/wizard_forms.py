@@ -2,8 +2,8 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 
 # Model Imports
-from geonode.contrib.opensensorhub.models import Hub, Observation, OSHLayer, VideoView, \
-    ChartStyler, LocationIndicator, TextStyler, View, SweService
+from geonode.contrib.opensensorhub.models import Hub, Observation, Layer, VideoStyler, \
+    ChartStyler, PointMarkerStyler, TextStyler, View, SweService
 
 import geonode.contrib.opensensorhub.models as models
 
@@ -59,7 +59,7 @@ class HubForm(forms.ModelForm):
 class ViewForm(forms.ModelForm):
     class Meta:
         view_model = View
-        styler_models = {'Chart': ChartStyler, 'Text': TextStyler, 'Location': LocationIndicator, 'Video': VideoView}
+        styler_models = {'Chart': ChartStyler, 'Text': TextStyler, 'Location': PointMarkerStyler, 'Video': VideoStyler}
         fields = ('name',)
 
     def magic(self):
@@ -99,7 +99,7 @@ class LocationIndicatorForm(forms.ModelForm):
     data_source_alt = ObservationSelectField(label='Data Source (Altitude):', queryset=observations)
 
     class Meta:
-        model = LocationIndicator
+        model = PointMarkerStyler
         fields = ('name', 'description', 'keywords', 'data_source_lat', 'data_source_lon', 'data_source_alt',
                   'view_icon', 'render_mode',)
         labels = {
@@ -128,7 +128,7 @@ class VideoViewForm(forms.ModelForm):
     data_source = ObservationSelectField(label='Data Source:', queryset=observations)
 
     class Meta:
-        model = VideoView
+        model = VideoStyler
         fields = ('name', 'description', 'keywords', 'data_source', 'show', 'draggable', 'dockable', 'keep_ratio',
                   'closeable',)
         labels = {

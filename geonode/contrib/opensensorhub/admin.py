@@ -23,9 +23,9 @@ from django.contrib import admin
 # Register your models here.
 
 from models import Category
-from models import TextStyler, LocationIndicator, ChartStyler
-from models import View, VideoView
-from models import Hub, Observation, OSHLayer
+from models import TextStyler, PointMarkerStyler, ChartStyler
+from models import View, VideoStyler
+from models import Hub, Observation, Layer
 
 
 class OshModelAdmin(admin.ModelAdmin):
@@ -34,37 +34,48 @@ class OshModelAdmin(admin.ModelAdmin):
 
 
 class StylerAdmin(OshModelAdmin):
-    fields = OshModelAdmin.fields + \
-             ('timeout', 'styler_type', 'view')
+    readonly_fields = ('type', )
+    fields = OshModelAdmin.fields + ('view', 'type')
+    # + \
+    # ('timeout', 'styler_type', 'view')
 
 
 class TextStylerAdmin(StylerAdmin):
     fields = StylerAdmin.fields + \
-             ('data_source', 'screen_position', 'color_mode',
+             ('screen_position', 'color_mode',
               'color_rgb', 'thresholds')
+             # ('data_source', 'screen_position', 'color_mode',
+             #  'color_rgb', 'thresholds')
 
 
-class LocationIndicatorAdmin(StylerAdmin):
+class PointMarkerStylerAdmin(StylerAdmin):
     fields = StylerAdmin.fields + \
-             ('data_source_lat', 'data_source_lon',
-              'data_source_alt', 'view_icon', 'render_mode')
+             ('view_icon', 'render_mode')
+            # ('data_source_lat', 'data_source_lon',
+            #  'data_source_alt', 'view_icon', 'render_mode')
 
 
 class ChartStylerAdmin(StylerAdmin):
     fields = StylerAdmin.fields + \
-             ('data_source_x', 'data_source_y', 'label_x', 'label_y',
+             ('label_x', 'label_y',
               'color_mode', 'range_mode', 'range_x', 'range_y',
               'max_points', 'color_rgb', 'thresholds')
+            # ('data_source_x', 'data_source_y', 'label_x', 'label_y',
+            #  'color_mode', 'range_mode', 'range_x', 'range_y',
+            #  'max_points', 'color_rgb', 'thresholds')
+
+
+class VideoStylerAdmin(StylerAdmin):
+    fields = StylerAdmin.fields + \
+             ('draggable', 'show',
+              'dockable', 'closeable', 'keep_ratio')
+             # ('data_source', 'draggable', 'show',
+             #  'dockable', 'closeable', 'keep_ratio')
 
 
 class ViewAdmin(OshModelAdmin):
-    fields = OshModelAdmin.fields + ('sensor_archetype', )
-
-
-class VideoViewAdmin(StylerAdmin):
-    fields = StylerAdmin.fields + \
-             ('data_source', 'draggable', 'show',
-              'dockable', 'closeable', 'keep_ratio')
+    # fields = OshModelAdmin.fields + ('sensor_archetype', )
+    fields = OshModelAdmin.fields + ('layers', )
 
 
 class HubAdmin(OshModelAdmin):
@@ -73,22 +84,27 @@ class HubAdmin(OshModelAdmin):
 
 class ObservationAdmin(OshModelAdmin):
     fields = OshModelAdmin.fields + \
-             ('hub', 'layer', 'view', 'endpoint', 'offering',
+             ('hub', 'views', 'endpoint', 'offering',
               'observed_property', 'start_time', 'end_time',
               'sync_master_time', 'buffering_time', 'time_shift',
               'source_type', 'replay_speed', 'protocol')
+             # ('hub', 'layer', 'view', 'endpoint', 'offering',
+             #  'observed_property', 'start_time', 'end_time',
+             #  'sync_master_time', 'buffering_time', 'time_shift',
+             #  'source_type', 'replay_speed', 'protocol')
 
 
-class OSHLayerAdmin(OshModelAdmin):
-    fields = OshModelAdmin.fields + ('url', 'protocol')
+class LayerAdmin(OshModelAdmin):
+    fields = OshModelAdmin.fields
+    # fields = OshModelAdmin.fields + ('url', 'protocol')
 
 
 admin.site.register(TextStyler, TextStylerAdmin)
-admin.site.register(LocationIndicator, LocationIndicatorAdmin)
+admin.site.register(PointMarkerStyler, PointMarkerStylerAdmin)
 admin.site.register(ChartStyler, ChartStylerAdmin)
 admin.site.register(View, ViewAdmin)
-admin.site.register(VideoView, VideoViewAdmin)
+admin.site.register(VideoStyler, VideoStylerAdmin)
 admin.site.register(Hub, HubAdmin)
 admin.site.register(Observation, ObservationAdmin)
-admin.site.register(OSHLayer, OSHLayerAdmin)
+admin.site.register(Layer, LayerAdmin)
 admin.site.register(Category)
