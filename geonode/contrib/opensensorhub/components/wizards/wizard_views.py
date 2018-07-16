@@ -90,7 +90,7 @@ class TestTemplateFormView(TemplateView):
         return render(request, self.template_name)
 
 
-class ChartTemplateFormView(FormView):
+class ChartStylerFormView(FormView):
     # template_name = 'wizards/wizard_add_chartview_form.html'
     template_name = 'component_base.html'
     form = ChartStylerForm()
@@ -99,7 +99,7 @@ class ChartTemplateFormView(FormView):
     def get(self, request):
         form = self.form
         return render(request, self.template_name,
-                      dict({'html_body': 'wizards/wizard_add_chartview_form.html', 'form': form,
+                      dict({'html_body': 'wizards/wizard_add_styler.html', 'form': form,
                             'wizard_type': self.wizard_type}))
 
     def post(self, request):
@@ -111,11 +111,11 @@ class ChartTemplateFormView(FormView):
             # return redirect('observations/')
             return redirect('/osh/view-selection/')
 
-        args = {'form': form, 'html_body': 'wizards/wizard_add_chartview_form.html', 'wizard_type': self.wizard_type}
+        args = {'form': form, 'html_body': 'wizards/wizard_add_styler.html', 'wizard_type': self.wizard_type}
         return render(request, self.template_name, args)
 
 
-class VideoTemplateFormView(FormView):
+class VideoStylerFormView(FormView):
     template_name = 'component_base.html'
     form = VideoViewForm()
     wizard_type = 'video-styler'
@@ -123,7 +123,7 @@ class VideoTemplateFormView(FormView):
     def get(self, request):
         form = self.form
         return render(request, self.template_name,
-                      dict({'html_body': 'wizards/wizard_add_videoview_form.html', 'form': form,
+                      dict({'html_body': 'wizards/wizard_add_styler.html', 'form': form,
                             'wizard_type': self.wizard_type}))
 
     def post(self, request):
@@ -133,11 +133,11 @@ class VideoTemplateFormView(FormView):
             form = VideoViewForm()
             return redirect('/osh/view-selection/')
 
-        args = {'form': form, 'html_body': 'wizards/wizard_add_videoview_form.html', 'wizard_type': self.wizard_type}
+        args = {'form': form, 'html_body': 'wizards/wizard_add_styler.html', 'wizard_type': self.wizard_type}
         return render(request, self.template_name, args)
 
 
-class TextTemplateFormView(TemplateView):
+class TextStylerFormView(TemplateView):
     template_name = 'component_base.html'
     form = TextStylerForm()
     wizard_type = 'text-styler'
@@ -145,7 +145,7 @@ class TextTemplateFormView(TemplateView):
     def get(self, request):
         form = self.form
         return render(request, self.template_name,
-                      dict({'html_body': 'wizards/wizard_add_textview_form.html', 'form': form,
+                      dict({'html_body': 'wizards/wizard_add_styler.html', 'form': form,
                             'wizard_type': self.wizard_type}))
 
     def post(self, request):
@@ -155,11 +155,11 @@ class TextTemplateFormView(TemplateView):
             form = TextStylerForm()
             return redirect('/osh/view-selection/')
 
-        args = {'form': form, 'html_body': 'wizards/wizard_add_textview_form.html', 'wizard_type': self.wizard_type}
+        args = {'form': form, 'html_body': 'wizards/wizard_add_styler.html', 'wizard_type': self.wizard_type}
         return render(request, self.template_name, args)
 
 
-class LocationMarkerTemplateFormView(TemplateView):
+class LocationMarkerStylerFormView(TemplateView):
     template_name = 'component_base.html'
     form = LocationIndicatorForm()
     wizard_type = 'location-marker'
@@ -167,7 +167,7 @@ class LocationMarkerTemplateFormView(TemplateView):
     def get(self, request):
         form = self.form
         return render(request, self.template_name,
-                      dict({'html_body': 'wizards/wizard_add_locationmarker.html', 'form': form,
+                      dict({'html_body': 'wizards/wizard_add_styler.html', 'form': form,
                             'wizard_type': self.wizard_type}))
 
     def post(self, request):
@@ -177,7 +177,7 @@ class LocationMarkerTemplateFormView(TemplateView):
             form = TextStylerForm()
             return redirect('/osh/view-selection/')
 
-        args = {'form': form, 'html_body': 'wizards/wizard_add_locationmarker.html', 'wizard_type': self.wizard_type}
+        args = {'form': form, 'html_body': 'wizards/wizard_add_styler.html', 'wizard_type': self.wizard_type}
         return render(request, self.template_name, args)
 
 
@@ -201,6 +201,7 @@ class MapTemplateFormView(TemplateView):
 
         args = {'form': form, 'html_body': 'wizards/wizard_add_mapview_form.html', 'wizard_type': self.wizard_type}
         return render(request, self.template_name, args)
+
 
 class ViewSelectionWidget(TemplateView):
     template_name = 'component_base.html'
