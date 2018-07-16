@@ -23,7 +23,7 @@ from django.shortcuts import render
 from geonode.contrib.opensensorhub.api import HubResource
 from geonode.contrib.opensensorhub.api import ObservationResource
 from geonode.contrib.opensensorhub.api import OshLayerResource
-from geonode.contrib.opensensorhub.api import VideoViewResource
+from geonode.contrib.opensensorhub.api import VideoStylerResource
 from geonode.contrib.opensensorhub.api import ChartStylerResource
 from geonode.contrib.opensensorhub.api import LocationIndicatorResource
 from geonode.contrib.opensensorhub.api import TextStylerResource
@@ -44,7 +44,7 @@ class ExplorerView(View):
         resources = {HubResource.Meta.resource_name,
                      ObservationResource.Meta.resource_name,
                      OshLayerResource.Meta.resource_name,
-                     VideoViewResource.Meta.resource_name,
+                     VideoStylerResource.Meta.resource_name,
                      ChartStylerResource.Meta.resource_name,
                      LocationIndicatorResource.Meta.resource_name,
                      TextStylerResource.Meta.resource_name,
@@ -53,7 +53,7 @@ class ExplorerView(View):
         data["resources"] = resources
 
         elements = [HubResource(), ObservationResource(),
-                    OshLayerResource(), VideoViewResource(),
+                    OshLayerResource(), VideoStylerResource(),
                     ChartStylerResource(), LocationIndicatorResource(),
                     TextStylerResource(), ViewResource()]
 

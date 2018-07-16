@@ -95,7 +95,7 @@ class ObservationResource(ModelResource):
 
 class OshLayerResource(ModelResource):
     class Meta:
-        queryset = OSHLayer.objects.all()
+        queryset = Layer.objects.all()
         resource_name = 'layer'
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
@@ -119,11 +119,11 @@ class OshLayerResource(ModelResource):
         return bundle
 
 
-class VideoViewResource(ModelResource):
+class VideoStylerResource(ModelResource):
     data_source = fields.ForeignKey(ObservationResource, 'data_source')
 
     class Meta:
-        queryset = VideoView.objects.all()
+        queryset = VideoStyler.objects.all()
         resource_name = 'video'
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
@@ -186,7 +186,7 @@ class LocationIndicatorResource(ModelResource):
     data_source_alt = fields.ForeignKey(ObservationResource, 'data_source_alt')
 
     class Meta:
-        queryset = LocationIndicator.objects.all()
+        queryset = PointMarkerStyler.objects.all()
         resource_name = 'point'
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
