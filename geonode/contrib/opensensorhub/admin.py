@@ -35,24 +35,18 @@ class OshModelAdmin(admin.ModelAdmin):
 
 class StylerAdmin(OshModelAdmin):
     readonly_fields = ('type', )
-    fields = OshModelAdmin.fields + ('view', 'type')
-    # + \
-    # ('timeout', 'styler_type', 'view')
+    fields = OshModelAdmin.fields + ('view', 'type', )
 
 
 class TextStylerAdmin(StylerAdmin):
     fields = StylerAdmin.fields + \
              ('screen_position', 'color_mode',
               'color_rgb', 'thresholds')
-             # ('data_source', 'screen_position', 'color_mode',
-             #  'color_rgb', 'thresholds')
 
 
 class PointMarkerStylerAdmin(StylerAdmin):
     fields = StylerAdmin.fields + \
              ('view_icon', 'render_mode')
-            # ('data_source_lat', 'data_source_lon',
-            #  'data_source_alt', 'view_icon', 'render_mode')
 
 
 class ChartStylerAdmin(StylerAdmin):
@@ -60,22 +54,16 @@ class ChartStylerAdmin(StylerAdmin):
              ('label_x', 'label_y',
               'color_mode', 'range_mode', 'range_x', 'range_y',
               'max_points', 'color_rgb', 'thresholds')
-            # ('data_source_x', 'data_source_y', 'label_x', 'label_y',
-            #  'color_mode', 'range_mode', 'range_x', 'range_y',
-            #  'max_points', 'color_rgb', 'thresholds')
 
 
 class VideoStylerAdmin(StylerAdmin):
     fields = StylerAdmin.fields + \
              ('draggable', 'show',
               'dockable', 'closeable', 'keep_ratio')
-             # ('data_source', 'draggable', 'show',
-             #  'dockable', 'closeable', 'keep_ratio')
 
 
 class ViewAdmin(OshModelAdmin):
-    # fields = OshModelAdmin.fields + ('sensor_archetype', )
-    fields = OshModelAdmin.fields + ('layers', )
+    fields = OshModelAdmin.fields + ('observations', )
 
 
 class HubAdmin(OshModelAdmin):
@@ -84,19 +72,14 @@ class HubAdmin(OshModelAdmin):
 
 class ObservationAdmin(OshModelAdmin):
     fields = OshModelAdmin.fields + \
-             ('hub', 'views', 'endpoint', 'offering',
+             ('hub', 'endpoint', 'offering',
               'observed_property', 'start_time', 'end_time',
               'sync_master_time', 'buffering_time', 'time_shift',
               'source_type', 'replay_speed', 'protocol')
-             # ('hub', 'layer', 'view', 'endpoint', 'offering',
-             #  'observed_property', 'start_time', 'end_time',
-             #  'sync_master_time', 'buffering_time', 'time_shift',
-             #  'source_type', 'replay_speed', 'protocol')
 
 
 class LayerAdmin(OshModelAdmin):
-    fields = OshModelAdmin.fields
-    # fields = OshModelAdmin.fields + ('url', 'protocol')
+    fields = OshModelAdmin.fields + ('views', )
 
 
 admin.site.register(TextStyler, TextStylerAdmin)

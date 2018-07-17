@@ -23,10 +23,10 @@ from tastypie.api import Api
 
 from api import HubResource
 from api import ObservationResource
-from api import OshLayerResource
+from api import LayerResource
 from api import VideoStylerResource
 from api import ChartStylerResource
-from api import LocationIndicatorResource
+from api import PointMarkerStylerResource
 from api import TextStylerResource
 from api import ViewResource
 
@@ -36,9 +36,9 @@ import components.wizards.wizard_views
 
 app_name = 'opensensorhub'
 
-core_resources = [HubResource(), ObservationResource(), OshLayerResource()]
-view_resources = [ViewResource(), VideoStylerResource(), LocationIndicatorResource()]
-styler_resources = [ChartStylerResource(), TextStylerResource()]
+core_resources = [HubResource(), ObservationResource(), LayerResource()]
+view_resources = [ViewResource()]
+styler_resources = [ChartStylerResource(), TextStylerResource(), PointMarkerStylerResource(), VideoStylerResource()]
 
 all_resources = core_resources + view_resources + styler_resources
 
