@@ -7,13 +7,13 @@ from geonode.contrib.opensensorhub.components.wizards.wizard_forms import Observ
     ChartStylerForm, TextStylerForm, VideoViewForm, LocationIndicatorForm, MapTemplateForm
 
 # Resource Imports
-from geonode.contrib.opensensorhub.api import HubResource, ObservationResource, OshLayerResource, VideoStylerResource, \
-    ChartStylerResource, LocationIndicatorResource, TextStylerResource, ViewResource
+from geonode.contrib.opensensorhub.api import HubResource, ObservationResource, LayerResource, VideoStylerResource, \
+    ChartStylerResource, PointMarkerStylerResource, TextStylerResource, ViewResource
 
 
 class GenericWizard(FormView):
-    osh_resources = {HubResource(), ObservationResource(), OshLayerResource(), VideoStylerResource(),
-                     ChartStylerResource(), LocationIndicatorResource(), TextStylerResource(), ViewResource()}
+    osh_resources = {HubResource(), ObservationResource(), LayerResource(), VideoStylerResource(),
+                     ChartStylerResource(), PointMarkerStylerResource(), TextStylerResource(), ViewResource()}
 
     def get_available_hubs(self, request, resource):
         hubs = 0

@@ -19,7 +19,6 @@
 #########################################################################
 from django.db import models
 from django.core import validators
-from sqlalchemy.sql import False_
 
 COLOR_MODE_CHOICES = (
     ('0', 'FIXED'),
@@ -42,11 +41,9 @@ PROTOCOL_TYPE_CHOICES = (
 # ------------------------------------------------------------------------------
 class Category(models.Model):
     name = models.CharField(max_length=200)
-    # slug = models.SlugField()
     parent = models.ForeignKey('self', blank=True, null=True, related_name='children')
 
     class Meta:
-        # unique_together = ('slug', 'parent')
         unique_together = ('name', 'parent')
         verbose_name_plural = 'categories'
 
@@ -73,141 +70,12 @@ class OshModel(models.Model):
     description = models.CharField(max_length=200)
     keywords = models.CharField(max_length=200)
     category = models.ForeignKey(Category, blank=True, null=True)
-    # slug = models.SlugField(unique=True, null=True)
 
     class Meta:
         abstract = True
 
     def __str__(self):
         return self.name
-
-
-# ------------------------------------------------------------------------------
-# Layer
-#
-# Model representing an OSH Layer
-# ------------------------------------------------------------------------------
-class Layer(OshModel):
-    pass
-
-
-# ------------------------------------------------------------------------------
-# View
-#
-# Model representing an OSH View
-# ------------------------------------------------------------------------------
-class View(OshModel):
-    # sensor_archetype = models.CharField(max_length=200)
-    layers = models.ManyToManyField(Layer)
-    # styler = models.ForeignKey(Styler, on_delete=models.SET_NULL, null=True)
-
-
-# ------------------------------------------------------------------------------
-# Styler
-#
-# Model representing an OSH Styler
-# ------------------------------------------------------------------------------
-class Styler(OshModel):
-    STYLER_TYPE_CHOICES = (
-        ('0', 'UNDEFINED'),
-        ('1', 'TEXT STYLER'),
-        ('2', 'POINT MARKER STYLER'),
-        ('3', 'CHART STYLER'),
-        ('4', 'VIDEO STYLER')
-    )
-
-    # timeout = models.IntegerField()
-
-    view = models.OneToOneField(View, on_delete=models.SET_NULL, null=True)
-
-    class Meta:
-        abstract = True
-
-
-# ------------------------------------------------------------------------------
-# TextStyler
-#
-# Model representing an OSH Text Styler
-# ------------------------------------------------------------------------------
-class TextStyler(Styler):
-    SCREEN_POSITION_CHOICES = (
-        ('0', 'TOP LEFT'),
-        ('1', 'TOP CENTER'),
-        ('2', 'TOP RIGHT'),
-        ('3', 'LEFT'),
-        ('4', 'CENTER'),
-        ('5', 'RIGHT'),
-        ('6', 'BOTTOM LEFT'),
-        ('7', 'BOTTOM CENTER'),
-        ('8', 'BOTTOM RIGHT')
-    )
-
-    # data_source = models.CharField(max_length=200, default='')
-    screen_position = models.CharField(max_length=1, choices=SCREEN_POSITION_CHOICES, default='4')
-    color_mode = models.CharField(max_length=1, choices=COLOR_MODE_CHOICES, default='0')
-    # Treat these strings as arrays of integers, will need to be converted to arrays when read
-    # and strings when stored
-    color_rgb = models.CharField(max_length=200)
-    thresholds = models.CharField(max_length=200)
-    type = models.CharField(max_length=1, choices=Styler.STYLER_TYPE_CHOICES, default='1')
-
-
-# ------------------------------------------------------------------------------
-# PointMarkerStyler
-#
-# Model representing an OSH Location Indicator Styler
-# ------------------------------------------------------------------------------
-class PointMarkerStyler(Styler):
-    # data_source_lat = models.CharField(max_length=200)
-    # data_source_lon = models.CharField(max_length=200)
-    # data_source_alt = models.CharField(max_length=200)
-    view_icon = models.URLField(max_length=200)
-    render_mode = models.CharField(max_length=200)
-    type = models.CharField(max_length=1, choices=Styler.STYLER_TYPE_CHOICES, default='2')
-
-
-# ------------------------------------------------------------------------------
-# ChartStyler
-#
-# Model representing an OSH Location Chart Styler
-# ------------------------------------------------------------------------------
-class ChartStyler(Styler):
-    RANGE_MODE_CHOICES = (
-        ('0', 'Fixed Ranges'),
-        ('1', 'X-Axis Dynamic'),
-        ('2', 'Y-Axis Dynamic'),
-        ('3', 'All Axes Dynamic')
-    )
-
-    # data_source_x = models.CharField(max_length=200)
-    # data_source_y = models.CharField(max_length=200)
-    label_x = models.CharField(max_length=200)
-    label_y = models.CharField(max_length=200)
-    color_mode = models.CharField(max_length=1, choices=COLOR_MODE_CHOICES, default='0')
-    range_mode = models.CharField(max_length=1, choices=RANGE_MODE_CHOICES, default='0')
-    range_x = models.FloatField()
-    range_y = models.FloatField()
-    max_points = models.IntegerField()
-    # Treat these strings as arrays of integers, will need to be converted to arrays when read
-    # and strings when stored
-    color_rgb = models.CharField(max_length=200)
-    thresholds = models.CharField(max_length=200)
-    type = models.CharField(max_length=1, choices=Styler.STYLER_TYPE_CHOICES, default='3')
-
-
-# ------------------------------------------------------------------------------
-# VideoStyler
-#
-# Model representing an OSH Location Video View Styler
-# ------------------------------------------------------------------------------
-class VideoStyler(Styler):
-    # data_source = models.CharField(max_length=200, default='')
-    draggable = models.BooleanField(default=False)
-    show = models.BooleanField(default=False)
-    dockable = models.BooleanField(default=False)
-    closeable = models.BooleanField(default=False)
-    keep_ratio = models.BooleanField(default=False)
-    type = models.CharField(max_length=1, choices=Styler.STYLER_TYPE_CHOICES, default='4')
 
 
 # ------------------------------------------------------------------------------
@@ -234,9 +102,6 @@ class SweService(models.Model):
 
     service = models.CharField(max_length=1, default='0', choices=SERVICE_CHOICES)
 
-    # SOS = 0,
-    # SPS = 1
-
     class Meta:
         abstract = True
 
@@ -257,7 +122,6 @@ class Observation(OshModel, SweService):
     )
 
     hub = models.ForeignKey(Hub, on_delete=models.CASCADE)
-    views = models.ManyToManyField(View)
 
     endpoint = models.URLField(max_length=200)
     offering = models.CharField(max_length=200)
@@ -269,7 +133,122 @@ class Observation(OshModel, SweService):
     time_shift = models.IntegerField(null=False, default=0)
     source_type = models.CharField(max_length=200)
     replay_speed = models.CharField(max_length=1, choices=REPLAY_SPEED_CHOICES, default='2')
-    # service = models.IntegerField(default=SweService.SOS, validators=[validators.MinValueValidator(SweService.SOS),
-    #                                                                  validators.MaxValueValidator(SweService.SOS)])
     protocol = models.CharField(max_length=1, choices=PROTOCOL_TYPE_CHOICES, default='2')
+
+
+# ------------------------------------------------------------------------------
+# View
+#
+# Model representing an OSH View
+# ------------------------------------------------------------------------------
+class View(OshModel):
+    observations = models.ManyToManyField(Observation, blank=True)
+
+
+# ------------------------------------------------------------------------------
+# Layer
+#
+# Model representing an OSH Layer
+# ------------------------------------------------------------------------------
+class Layer(OshModel):
+    views = models.ManyToManyField(View)
+
+
+# ------------------------------------------------------------------------------
+# Styler
+#
+# Model representing an OSH Styler
+# ------------------------------------------------------------------------------
+class Styler(OshModel):
+    STYLER_TYPE_CHOICES = (
+        ('0', 'UNDEFINED'),
+        ('1', 'TEXT STYLER'),
+        ('2', 'POINT MARKER STYLER'),
+        ('3', 'CHART STYLER'),
+        ('4', 'VIDEO STYLER')
+    )
+
+    view = models.OneToOneField(View, on_delete=models.SET_NULL, null=True, blank=True)
+
+    class Meta:
+        abstract = True
+
+
+# ------------------------------------------------------------------------------
+# TextStyler
+#
+# Model representing an OSH Text Styler
+# ------------------------------------------------------------------------------
+class TextStyler(Styler):
+    SCREEN_POSITION_CHOICES = (
+        ('0', 'TOP LEFT'),
+        ('1', 'TOP CENTER'),
+        ('2', 'TOP RIGHT'),
+        ('3', 'LEFT'),
+        ('4', 'CENTER'),
+        ('5', 'RIGHT'),
+        ('6', 'BOTTOM LEFT'),
+        ('7', 'BOTTOM CENTER'),
+        ('8', 'BOTTOM RIGHT')
+    )
+
+    screen_position = models.CharField(max_length=1, choices=SCREEN_POSITION_CHOICES, default='4')
+    color_mode = models.CharField(max_length=1, choices=COLOR_MODE_CHOICES, default='0')
+    # Treat these strings as arrays of integers, will need to be converted to arrays when read
+    # and strings when stored
+    color_rgb = models.CharField(max_length=200, blank=True, default="000000")
+    thresholds = models.CharField(max_length=200, blank=True)
+    type = models.CharField(max_length=1, choices=Styler.STYLER_TYPE_CHOICES, default='1')
+
+
+# ------------------------------------------------------------------------------
+# PointMarkerStyler
+#
+# Model representing an OSH Location Indicator Styler
+# ------------------------------------------------------------------------------
+class PointMarkerStyler(Styler):
+    view_icon = models.FileField(max_length=200, blank=True, default="")
+    render_mode = models.CharField(max_length=200, blank=True)
+    type = models.CharField(max_length=1, choices=Styler.STYLER_TYPE_CHOICES, default='2')
+
+
+# ------------------------------------------------------------------------------
+# ChartStyler
+#
+# Model representing an OSH Location Chart Styler
+# ------------------------------------------------------------------------------
+class ChartStyler(Styler):
+    RANGE_MODE_CHOICES = (
+        ('0', 'Fixed Ranges'),
+        ('1', 'X-Axis Dynamic'),
+        ('2', 'Y-Axis Dynamic'),
+        ('3', 'All Axes Dynamic')
+    )
+
+    label_x = models.CharField(max_length=200)
+    label_y = models.CharField(max_length=200)
+    color_mode = models.CharField(max_length=1, choices=COLOR_MODE_CHOICES, default='0')
+    range_mode = models.CharField(max_length=1, choices=RANGE_MODE_CHOICES, default='0')
+    range_x = models.FloatField(blank=True, null=True)
+    range_y = models.FloatField(blank=True, null=True)
+    max_points = models.IntegerField()
+    # Treat these strings as arrays of integers, will need to be converted to arrays when read
+    # and strings when stored
+    color_rgb = models.CharField(max_length=200, blank=True, default="000000")
+    thresholds = models.CharField(max_length=200, blank=True)
+    type = models.CharField(max_length=1, choices=Styler.STYLER_TYPE_CHOICES, default='3')
+
+
+# ------------------------------------------------------------------------------
+# VideoStyler
+#
+# Model representing an OSH Location Video View Styler
+# ------------------------------------------------------------------------------
+class VideoStyler(Styler):
+    draggable = models.BooleanField(default=False)
+    show = models.BooleanField(default=False)
+    dockable = models.BooleanField(default=False)
+    closeable = models.BooleanField(default=False)
+    keep_ratio = models.BooleanField(default=False)
+    type = models.CharField(max_length=1, choices=Styler.STYLER_TYPE_CHOICES, default='4')
 
