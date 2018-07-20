@@ -1,9 +1,9 @@
 const formTemplates = new Map();
-formTemplates.set('chart', '../osh/wizards/chart');
-formTemplates.set('video', '../osh/wizards/video');
-formTemplates.set('locationmarker', '../osh/wizards/locationmarker');
-formTemplates.set('text', '../osh/wizards/text');
-formTemplates.set('map', '../osh/wizards/map');
+formTemplates.set('chart', '../wizards/chart');
+formTemplates.set('video', '../wizards/video');
+formTemplates.set('locationmarker', '../wizards/locationmarker');
+formTemplates.set('text', '../wizards/text');
+formTemplates.set('map', '../wizards/map');
 
 
 window.onload = function () {

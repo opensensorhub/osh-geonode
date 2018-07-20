@@ -67,9 +67,9 @@ class ObservationResource(ModelResource):
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
-        fields = ['name', 'description', 'source_type', 'endpoint_url', 'protocol', 'offering_id',
-                  'offering_service', 'observed_property', 'start_time', 'end_time', 'sync_master_time',
-                  'buffering_time', 'time_shift', 'replay_speed', 'hub', 'layers', 'views']
+        fields = ['name', 'description', 'source_type', 'endpoint', 'protocol', 'offering',
+                  'observed_property', 'start_time', 'end_time', 'sync_master_time',
+                  'buffering_time', 'time_shift', 'replay_speed', 'hub']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
@@ -120,7 +120,6 @@ class LayerResource(ModelResource):
 
 
 class VideoStylerResource(ModelResource):
-
     class Meta:
         queryset = VideoStyler.objects.all()
         resource_name = 'video'
@@ -148,7 +147,6 @@ class VideoStylerResource(ModelResource):
 
 
 class ChartStylerResource(ModelResource):
-
     class Meta:
         queryset = ChartStyler.objects.all()
         resource_name = 'chart'
@@ -177,7 +175,6 @@ class ChartStylerResource(ModelResource):
 
 
 class PointMarkerStylerResource(ModelResource):
-
     class Meta:
         queryset = PointMarkerStyler.objects.all()
         resource_name = 'point'
@@ -204,7 +201,6 @@ class PointMarkerStylerResource(ModelResource):
 
 
 class TextStylerResource(ModelResource):
-
     class Meta:
         queryset = TextStyler.objects.all()
         resource_name = 'text'
@@ -232,13 +228,15 @@ class TextStylerResource(ModelResource):
 
 
 class ViewResource(ModelResource):
+    observations = fields.ForeignKey(ObservationResource, 'observations')
+
     class Meta:
         queryset = View.objects.all()
         resource_name = 'view'
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
-        fields = ['sensor_archetype']
+        fields = ['observations']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']

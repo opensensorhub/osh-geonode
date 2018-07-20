@@ -75,7 +75,7 @@ urlpatterns = [
     url(r'^explore', ExplorerView.as_view(), name='explore'),
 
     # To allow for an easy to follow test link, delete when composite forms are working
-    url(r'^test', components.wizards.wizard_views.CompositeFormView.as_view(), name='test'),
+    # url(r'^test', components.wizards.wizard_views.CompositeFormView.as_view(), name='test'),
     # Test Template inclusion this way
     url(r'^wizards/test-1', components.wizards.wizard_views.TestTemplateFormView.as_view()),
     url(r'^wizards/chart', components.wizards.wizard_views.ChartStylerFormView.as_view()),
@@ -85,4 +85,5 @@ urlpatterns = [
     url(r'^wizards/map', components.wizards.wizard_views.MapTemplateFormView.as_view()),
     url(r'^osh-wizard/', components.wizards.wizard_views.WizardMainView.as_view()),
     url(r'^view-selection', components.wizards.wizard_views.ViewSelectionWidget.as_view()),
+    url(r'^add-view', components.wizards.wizard_views.ViewToAView.as_view()),
 ]

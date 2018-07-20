@@ -1,9 +1,14 @@
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/osh-wizards.css">
 
-<h1>Wizard-Type: {{ wizard_type}}</h1>
+<h1>Wizard-Type: {{ wizard_type }}</h1>
 
-<form id="chart-form" class="wiz-form">
+<form id="chart-form" class="wiz-form" method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Submit" style="width: 25%; grid-column: 2/3; text-align: center"/>
+    <p>
+        <label for="category">Category:</label>
+        <input type="text" name="category"/>
+    <p>
+
+        <input type="submit" value="Submit" style="width: 25%; grid-column: 2/3; text-align: center"/>
 </form>

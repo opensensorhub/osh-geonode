@@ -3,8 +3,8 @@ from django.http import HttpResponse
 from django.views.generic import TemplateView, FormView
 
 # Form Imports
-from geonode.contrib.opensensorhub.components.wizards.wizard_forms import ObservationForm, HubForm, CompositeForm, \
-    ChartStylerForm, TextStylerForm, VideoViewForm, LocationIndicatorForm, MapTemplateForm
+from geonode.contrib.opensensorhub.components.wizards.wizard_forms import ObservationForm, HubForm, \
+    ChartStylerForm, TextStylerForm, VideoStylerForm, LocationIndicatorForm, MapTemplateForm, ViewForm
 
 # Resource Imports
 from geonode.contrib.opensensorhub.api import HubResource, ObservationResource, LayerResource, VideoStylerResource, \
@@ -38,7 +38,7 @@ class ObservationWizard(TemplateView):
             # TODO: Determine if we need cleaned data for other forms
             form = ObservationForm()
             # return redirect('observations/')
-            return redirect('/osh/add-obs/')
+            return redirect('/osh/add-view/')
 
         args = {'form': form, 'html_body': 'wizards/wizard_add_observation.html'}
         return render(request, self.template_name, args)
@@ -63,16 +63,6 @@ class HubWizard(FormView):
 
         args = {'form': form, 'html_body': 'wizards/wizard_add_hub.html'}
         return render(request, self.template_name, args)
-
-
-class CompositeFormView(FormView):
-    template_name = 'component_base.html'
-    form = CompositeForm()
-
-    def get(self, request):
-        # print(request.target_object)
-        form = self.form
-        return render(request, self.template_name, dict({'html_body': 'wizards/wizard_add_view.html', 'form': form}))
 
 
 class WizardMainView(TemplateView):
@@ -117,7 +107,7 @@ class ChartStylerFormView(FormView):
 
 class VideoStylerFormView(FormView):
     template_name = 'component_base.html'
-    form = VideoViewForm()
+    form = VideoStylerForm()
     wizard_type = 'video-styler'
 
     def get(self, request):
@@ -127,10 +117,10 @@ class VideoStylerFormView(FormView):
                             'wizard_type': self.wizard_type}))
 
     def post(self, request):
-        form = VideoViewForm(request.POST)
+        form = VideoStylerForm(request.POST)
         if form.is_valid():
             form.save()
-            form = VideoViewForm()
+            form = VideoStylerForm()
             return redirect('/osh/view-selection/')
 
         args = {'form': form, 'html_body': 'wizards/wizard_add_styler.html', 'wizard_type': self.wizard_type}
@@ -171,10 +161,10 @@ class LocationMarkerStylerFormView(TemplateView):
                             'wizard_type': self.wizard_type}))
 
     def post(self, request):
-        form = TextStylerForm(request.POST)
+        form = LocationIndicatorForm(request.POST)
         if form.is_valid():
             form.save()
-            form = TextStylerForm()
+            form = LocationIndicatorForm()
             return redirect('/osh/view-selection/')
 
         args = {'form': form, 'html_body': 'wizards/wizard_add_styler.html', 'wizard_type': self.wizard_type}
@@ -208,3 +198,23 @@ class ViewSelectionWidget(TemplateView):
 
     def get(self, request):
         return render(request, self.template_name, dict({'html_body': 'wizards/wizard_type_selection.html'}))
+
+
+class ViewToAView(FormView):
+    template_name = 'component_base.html'
+    html_path = 'wizards/wizard_add_view.html'
+    form = ViewForm
+
+    def get(self, request):
+        form = self.form
+        return render(request, self.template_name, dict({'html_body': self.html_path, 'form': form}))
+
+    def post(self, request):
+        form = ViewForm(request.POST)
+        if form.is_valid():
+            form.save()
+            form = ViewForm()
+            return redirect('/osh/view-selection')
+
+        args = {'form': form, 'html_body': self.html_path}
+        return render(request, self.template_name, args)
