@@ -36,10 +36,11 @@ class HubResource(ModelResource):
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
+        fields = ['name', 'description', 'keywords', 'category', 'url']
         fields = ['id', 'name', 'description', 'keywords', 'url', 'category']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
-        allowed_methods = ['get', 'post', 'delete']
+        allowed_methods = ['get', 'post', 'delete', 'update']
         # Authentication
         #        authentication = OAuthAuthentication()
         # Authorization
@@ -52,6 +53,7 @@ class HubResource(ModelResource):
             'name': ALL,
             'description': ALL,
             'keywords': ALL,
+            'category': ALL,
             'url': ALL
         }
 
@@ -75,7 +77,7 @@ class ObservationResource(ModelResource):
                   'buffering_time', 'time_shift', 'replay_speed', 'hub', 'category']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
-        allowed_methods = ['get', 'post']
+        allowed_methods = ['get', 'post', 'delete', 'update']
         # Authentication
         #        authentication = OAuthAuthentication()
         # Authorization
@@ -88,7 +90,7 @@ class ObservationResource(ModelResource):
             'name': ALL,
             'description': ALL,
             'keywords': ALL,
-            'url': ALL
+            'category' : ALL,
         }
 
     def dehydrate(self, bundle):
@@ -108,7 +110,7 @@ class LayerResource(ModelResource):
         fields = ['category']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
-        allowed_methods = ['get', 'post']
+        allowed_methods = ['get', 'post', 'delete', 'update']
         # Authentication
         #        authentication = OAuthAuthentication()
         # Authorization
@@ -117,7 +119,12 @@ class LayerResource(ModelResource):
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
         # Filtering
-        filtering = {}
+        filtering = {
+            'name': ALL,
+            'description': ALL,
+            'keywords': ALL,
+            'category' : ALL,
+        }
 
     def dehydrate(self, bundle):
         bundle.data['type'] = self.Meta.resource_name
@@ -137,7 +144,7 @@ class VideoStylerResource(ModelResource):
                   'timeout', 'styler_type', 'category']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
-        allowed_methods = ['get', 'post']
+        allowed_methods = ['get', 'post', 'delete', 'update']
         # Authentication
         #        authentication = OAuthAuthentication()
         # Authorization
@@ -146,7 +153,12 @@ class VideoStylerResource(ModelResource):
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
         # Filtering
-        filtering = {}
+        filtering = {
+            'name': ALL,
+            'description': ALL,
+            'keywords': ALL,
+            'category' : ALL,
+        }
 
     def dehydrate(self, bundle):
         bundle.data['type'] = self.Meta.resource_name
@@ -167,7 +179,7 @@ class ChartStylerResource(ModelResource):
                   'timeout', 'styler_type', 'category']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
-        allowed_methods = ['get', 'post']
+        allowed_methods = ['get', 'post', 'delete', 'update']
         # Authentication
         #        authentication = OAuthAuthentication()
         # Authorization
@@ -176,7 +188,12 @@ class ChartStylerResource(ModelResource):
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
         # Filtering
-        filtering = {}
+        filtering = {
+            'name': ALL,
+            'description': ALL,
+            'keywords': ALL,
+            'category' : ALL,
+        }
 
     def dehydrate(self, bundle):
         bundle.data['type'] = self.Meta.resource_name
@@ -195,7 +212,7 @@ class PointMarkerStylerResource(ModelResource):
         fields = ['name', 'description', 'keywords', 'timeout', 'styler_type', 'view_icon', 'render_mode', 'category']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
-        allowed_methods = ['get', 'post']
+        allowed_methods = ['get', 'post', 'delete', 'update']
         # Authentication
         #        authentication = OAuthAuthentication()
         # Authorization
@@ -204,7 +221,12 @@ class PointMarkerStylerResource(ModelResource):
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
         # Filtering
-        filtering = {}
+        filtering = {
+            'name': ALL,
+            'description': ALL,
+            'keywords': ALL,
+            'category' : ALL,
+        }
 
     def dehydrate(self, bundle):
         bundle.data['type'] = self.Meta.resource_name
@@ -224,7 +246,7 @@ class TextStylerResource(ModelResource):
                   'timeout', 'styler_type', 'category']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
-        allowed_methods = ['get', 'post']
+        allowed_methods = ['get', 'post', 'delete', 'update']
         # Authentication
         #        authentication = OAuthAuthentication()
         # Authorization
@@ -233,7 +255,12 @@ class TextStylerResource(ModelResource):
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
         # Filtering
-        filtering = {}
+        filtering = {
+            'name': ALL,
+            'description': ALL,
+            'keywords': ALL,
+            'category' : ALL,
+        }
 
     def dehydrate(self, bundle):
         bundle.data['type'] = self.Meta.resource_name
@@ -253,7 +280,7 @@ class ViewResource(ModelResource):
         fields = ['observations', 'category']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
-        allowed_methods = ['get', 'post']
+        allowed_methods = ['get', 'post', 'delete', 'update']
         # Authentication
         #        authentication = OAuthAuthentication()
         # Authorization
@@ -262,7 +289,12 @@ class ViewResource(ModelResource):
         # Serializer: Allow only JSON serialization
         serializer = Serializer(formats=['json'])
         # Filtering
-        filtering = {}
+        filtering = {
+            'name': ALL,
+            'description': ALL,
+            'keywords': ALL,
+            'category' : ALL,
+        }
 
     def dehydrate(self, bundle):
         bundle.data['type'] = self.Meta.resource_name
