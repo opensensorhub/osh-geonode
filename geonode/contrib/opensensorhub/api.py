@@ -28,13 +28,15 @@ from models import *
 
 
 class HubResource(ModelResource):
+    category = fields.ForeignKey(Category, 'category')
+
     class Meta:
         queryset = Hub.objects.all()
         resource_name = 'hub'
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
-        fields = ['id', 'name', 'description', 'keywords', 'url']
+        fields = ['id', 'name', 'description', 'keywords', 'url', 'category']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post', 'delete']
@@ -60,6 +62,7 @@ class HubResource(ModelResource):
 
 class ObservationResource(ModelResource):
     hub = fields.ForeignKey(HubResource, 'hub')
+    category = fields.ForeignKey(Category, 'category')
 
     class Meta:
         queryset = Observation.objects.all()
@@ -69,7 +72,7 @@ class ObservationResource(ModelResource):
         # WhiteList: These are fields to include for being exposed by the API
         fields = ['name', 'description', 'source_type', 'endpoint', 'protocol', 'offering',
                   'observed_property', 'start_time', 'end_time', 'sync_master_time',
-                  'buffering_time', 'time_shift', 'replay_speed', 'hub']
+                  'buffering_time', 'time_shift', 'replay_speed', 'hub', 'category']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
@@ -94,13 +97,15 @@ class ObservationResource(ModelResource):
 
 
 class LayerResource(ModelResource):
+    category = fields.ForeignKey(Category, 'category')
+
     class Meta:
         queryset = Layer.objects.all()
         resource_name = 'layer'
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
-        fields = []
+        fields = ['category']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
@@ -120,6 +125,8 @@ class LayerResource(ModelResource):
 
 
 class VideoStylerResource(ModelResource):
+    category = fields.ForeignKey(Category, 'category')
+
     class Meta:
         queryset = VideoStyler.objects.all()
         resource_name = 'video'
@@ -127,7 +134,7 @@ class VideoStylerResource(ModelResource):
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
         fields = ['name', 'description', 'keywords', 'draggable', 'dockable', 'closeable', 'keep_ratio',
-                  'timeout', 'styler_type']
+                  'timeout', 'styler_type', 'category']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
@@ -147,6 +154,8 @@ class VideoStylerResource(ModelResource):
 
 
 class ChartStylerResource(ModelResource):
+    category = fields.ForeignKey(Category, 'category')
+
     class Meta:
         queryset = ChartStyler.objects.all()
         resource_name = 'chart'
@@ -155,7 +164,7 @@ class ChartStylerResource(ModelResource):
         # WhiteList: These are fields to include for being exposed by the API
         fields = ['name', 'description', 'keywords', 'label_x', 'label_y',
                   'color_mode', 'range_mode', 'range_x', 'range_y', 'max_points', 'color_rgb', 'thresholds',
-                  'timeout', 'styler_type']
+                  'timeout', 'styler_type', 'category']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
@@ -175,13 +184,15 @@ class ChartStylerResource(ModelResource):
 
 
 class PointMarkerStylerResource(ModelResource):
+    category = fields.ForeignKey(Category, 'category')
+
     class Meta:
         queryset = PointMarkerStyler.objects.all()
         resource_name = 'point'
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
-        fields = ['name', 'description', 'keywords', 'timeout', 'styler_type', 'view_icon', 'render_mode']
+        fields = ['name', 'description', 'keywords', 'timeout', 'styler_type', 'view_icon', 'render_mode', 'category']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
@@ -201,6 +212,8 @@ class PointMarkerStylerResource(ModelResource):
 
 
 class TextStylerResource(ModelResource):
+    category = fields.ForeignKey(Category, 'category')
+
     class Meta:
         queryset = TextStyler.objects.all()
         resource_name = 'text'
@@ -208,7 +221,7 @@ class TextStylerResource(ModelResource):
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
         fields = ['name', 'description', 'keywords', 'color_mode', 'color_rgb', 'thresholds',
-                  'timeout', 'styler_type']
+                  'timeout', 'styler_type', 'category']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']
@@ -229,6 +242,7 @@ class TextStylerResource(ModelResource):
 
 class ViewResource(ModelResource):
     observations = fields.ForeignKey(ObservationResource, 'observations')
+    category = fields.ForeignKey(Category, 'category')
 
     class Meta:
         queryset = View.objects.all()
@@ -236,7 +250,7 @@ class ViewResource(ModelResource):
         # BlackList: These are fields to exclude from being exposed by the API
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
-        fields = ['observations']
+        fields = ['observations', 'category']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post']

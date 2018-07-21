@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 
 # Model Imports
 from geonode.contrib.opensensorhub.models import Hub, Observation, Layer, VideoStyler, \
-    ChartStyler, PointMarkerStyler, TextStyler, View, SweService
+    ChartStyler, PointMarkerStyler, TextStyler, View, SweService, Category
 
 import geonode.contrib.opensensorhub.models as models
 
@@ -36,14 +36,20 @@ class ViewSelectionField(forms.ModelMultipleChoiceField):
 # ----------------------------------------------------------------------------------------------------------------------
 class ObservationForm(forms.ModelForm):
     hubs = Hub.objects.all()
-
     hub = HubSelectionField(label='Hub', queryset=hubs)
+    categories = Category.objects.all()
+    initial = categories.get(name__contains='Observation')
+    print("\n")
+    print(initial.id)
+    print("\n")
+    category = forms.ModelChoiceField(label='Category', queryset=categories, initial=initial.id,
+                                      widget=forms.HiddenInput())
 
     class Meta:
         model = Observation
-        fields = ('name', 'description', 'source_type', 'endpoint', 'protocol', 'offering',
+        fields = ('name', 'description', 'keywords', 'source_type', 'endpoint', 'protocol', 'offering',
                   'observed_property', 'start_time', 'end_time', 'sync_master_time',
-                  'buffering_time', 'time_shift', 'replay_speed', 'hub',)
+                  'buffering_time', 'time_shift', 'replay_speed', 'hub', 'category')
         labels = {
             'observed_property': _('Observed Property:'),
             'source_type': _('Source Type:'),
@@ -61,6 +67,10 @@ class HubForm(forms.ModelForm):
     url = forms.URLField(label='URL')
     description = forms.CharField(max_length=500)
     keywords = forms.CharField(max_length=500)
+
+    # categories = Category.objects.all()
+    # initial = categories.get(name__exact='')
+    # category = forms.ModelChoiceField(label='Category', queryset=categories, initial=initial.id)
 
     class Meta:
         model = Hub
@@ -81,12 +91,17 @@ class ChartStylerForm(forms.ModelForm):
     color_mode = forms.ChoiceField(label='Color Mode:', widget=forms.Select, choices=COLOR_MODE_CHOICES)
     range_mode = forms.ChoiceField(label='Range Mode', widget=forms.Select, choices=RANGE_CHOICES)
     max_points = forms.IntegerField(label='Max Points', initial=30)
+    categories = Category.objects.all()
+    initial = categories.get(name__exact='Styler or Widget')
+    # print(initial)
+    category = forms.ModelChoiceField(label='Category', queryset=categories, initial=initial.id,
+                                      widget=forms.HiddenInput())
 
     # TODO: Add upper and lower range fields
     class Meta:
         model = ChartStyler
         fields = ('name', 'description', 'keywords', 'label_x', 'label_y',
-                  'range_mode', 'range_x', 'range_y', 'color_mode', 'color_rgb', 'max_points', 'view',)
+                  'range_mode', 'range_x', 'range_y', 'color_mode', 'color_rgb', 'max_points', 'view', 'category',)
         labels = {
             'range_x': _('Range X:'),
             'range_y': _('Range Y:'),
@@ -101,10 +116,14 @@ class LocationIndicatorForm(forms.ModelForm):
     # data_source_lat = ObservationSelectField(label='Data Source (Latitude):', queryset=observations)
     # data_source_lon = ObservationSelectField(label='Data Source (Longitude):', queryset=observations)
     # data_source_alt = ObservationSelectField(label='Data Source (Altitude):', queryset=observations)
+    categories = Category.objects.all()
+    initial = categories.get(name__exact='Styler or Widget')
+    category = forms.ModelChoiceField(label='Category', queryset=categories, initial=initial.id,
+                                      widget=forms.HiddenInput())
 
     class Meta:
         model = PointMarkerStyler
-        fields = ('name', 'description', 'keywords', 'view_icon', 'render_mode', 'view',)
+        fields = ('name', 'description', 'keywords', 'view_icon', 'render_mode', 'view', 'category',)
         labels = {
             'view_icon': _('Icon:'),
             'render_mode': _('Render Mode:'),
@@ -116,6 +135,10 @@ class TextStylerForm(forms.ModelForm):
     # data_source = ObservationSelectField(label='Data Source:', queryset=observations)
     # views = View.objects.all()
     # view = ViewSelectionField(label='View', queryset=views)
+    categories = Category.objects.all()
+    initial = categories.get(name__exact='Styler or Widget')
+    category = forms.ModelChoiceField(label='Category', queryset=categories, initial=initial.id,
+                                      widget=forms.HiddenInput())
 
     class Meta:
         model = TextStyler
@@ -131,6 +154,10 @@ class TextStylerForm(forms.ModelForm):
 class VideoStylerForm(forms.ModelForm):
     # observations = Observation.objects.all()
     # data_source = ObservationSelectField(label='Data Source:', queryset=observations)
+    categories = Category.objects.all()
+    initial = categories.get(name__exact='Styler or Widget')
+    category = forms.ModelChoiceField(label='Category', queryset=categories, initial=initial.id,
+                                      widget=forms.HiddenInput())
 
     class Meta:
         model = VideoStyler

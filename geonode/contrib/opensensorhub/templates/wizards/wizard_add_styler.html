@@ -5,10 +5,10 @@
 <form id="chart-form" class="wiz-form" method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <p>
-        <label for="category">Category:</label>
-        <input type="text" name="category"/>
-    <p>
+{#    <p>#}
+{#        <label for="category">Category:</label>#}
+{#        <input type="text" name="category"/>#}
+{#    <p>#}
 
         <input type="submit" value="Submit" style="width: 25%; grid-column: 2/3; text-align: center"/>
 </form>
