@@ -4,7 +4,7 @@ from django.views.generic import TemplateView, FormView
 
 # Form Imports
 from geonode.contrib.opensensorhub.components.wizards.wizard_forms import ObservationForm, HubForm, \
-    ChartStylerForm, TextStylerForm, VideoStylerForm, LocationIndicatorForm, MapTemplateForm, ViewForm
+    ChartStylerForm, TextStylerForm, VideoStylerForm, LocationIndicatorForm, MapTemplateForm, ViewForm, LayerForm
 
 # Resource Imports
 from geonode.contrib.opensensorhub.api import HubResource, ObservationResource, LayerResource, VideoStylerResource, \
@@ -214,6 +214,26 @@ class ViewToAView(FormView):
         if form.is_valid():
             form.save()
             form = ViewForm()
+            return redirect('/osh/view-selection')
+
+        args = {'form': form, 'html_body': self.html_path}
+        return render(request, self.template_name, args)
+
+
+class LayerFormView(FormView):
+    template_name = 'component_base.html'
+    html_path = 'wizards/wizard_add_layer.html'
+    form = LayerForm
+
+    def get(self, request):
+        form = self.form
+        return render(request, self.template_name, dict({'html_body': self.html_path, 'form': form}))
+
+    def post(self, request):
+        form = ViewForm(request.POST)
+        if form.is_valid():
+            form.save()
+            form = LayerForm()
             return redirect('/osh/view-selection')
 
         args = {'form': form, 'html_body': self.html_path}

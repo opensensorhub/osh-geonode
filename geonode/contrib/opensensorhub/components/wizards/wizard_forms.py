@@ -39,9 +39,6 @@ class ObservationForm(forms.ModelForm):
     hub = HubSelectionField(label='Hub', queryset=hubs)
     categories = Category.objects.all()
     initial = categories.get(name__contains='Observation')
-    print("\n")
-    print(initial.id)
-    print("\n")
     category = forms.ModelChoiceField(label='Category', queryset=categories, initial=initial.id,
                                       widget=forms.HiddenInput())
 
@@ -68,10 +65,6 @@ class HubForm(forms.ModelForm):
     description = forms.CharField(max_length=500)
     keywords = forms.CharField(max_length=500)
 
-    # categories = Category.objects.all()
-    # initial = categories.get(name__exact='')
-    # category = forms.ModelChoiceField(label='Category', queryset=categories, initial=initial.id)
-
     class Meta:
         model = Hub
         fields = ('name', 'url', 'protocol', 'description', 'keywords',)
@@ -84,16 +77,11 @@ class ChartStylerForm(forms.ModelForm):
     COLOR_MODE_CHOICES = models.COLOR_MODE_CHOICES
     RANGE_CHOICES = ChartStyler.RANGE_MODE_CHOICES
 
-    # TODO: Look into implementing a system-wide time observation
-    # observations = Observation.objects.all()
-    # data_source_x = ObservationSelectField(label='Data Source (X-Axis):', queryset=observations)
-    # data_source_y = ObservationSelectField(label='Data Source (Y-Axis):', queryset=observations)
     color_mode = forms.ChoiceField(label='Color Mode:', widget=forms.Select, choices=COLOR_MODE_CHOICES)
     range_mode = forms.ChoiceField(label='Range Mode', widget=forms.Select, choices=RANGE_CHOICES)
     max_points = forms.IntegerField(label='Max Points', initial=30)
     categories = Category.objects.all()
     initial = categories.get(name__exact='Styler or Widget')
-    # print(initial)
     category = forms.ModelChoiceField(label='Category', queryset=categories, initial=initial.id,
                                       widget=forms.HiddenInput())
 
@@ -112,10 +100,6 @@ class ChartStylerForm(forms.ModelForm):
 
 
 class LocationIndicatorForm(forms.ModelForm):
-    # observations = Observation.objects.all()
-    # data_source_lat = ObservationSelectField(label='Data Source (Latitude):', queryset=observations)
-    # data_source_lon = ObservationSelectField(label='Data Source (Longitude):', queryset=observations)
-    # data_source_alt = ObservationSelectField(label='Data Source (Altitude):', queryset=observations)
     categories = Category.objects.all()
     initial = categories.get(name__exact='Styler or Widget')
     category = forms.ModelChoiceField(label='Category', queryset=categories, initial=initial.id,
@@ -131,10 +115,6 @@ class LocationIndicatorForm(forms.ModelForm):
 
 
 class TextStylerForm(forms.ModelForm):
-    # observations = Observation.objects.all()
-    # data_source = ObservationSelectField(label='Data Source:', queryset=observations)
-    # views = View.objects.all()
-    # view = ViewSelectionField(label='View', queryset=views)
     categories = Category.objects.all()
     initial = categories.get(name__exact='Styler or Widget')
     category = forms.ModelChoiceField(label='Category', queryset=categories, initial=initial.id,
@@ -168,23 +148,6 @@ class VideoStylerForm(forms.ModelForm):
         }
 
 
-# class CompositeForm(forms.ModelForm):
-#     keyed_field = forms.ChoiceField(
-#         choices=(('A', 'Choice A'),
-#                  ('B', 'Choice B'),
-#                  ('C', 'Choice C')
-#                  ),
-#         label='Keyed Field'
-#     )
-#
-#     class Meta:
-#         model = View
-#         fields = ('name', 'description', 'keywords',)
-#
-#     def doStuff(self):
-#         pass
-
-
 class MapTemplateForm(forms.Form):
     name = forms.CharField()
     description = forms.CharField(max_length=500)
@@ -198,3 +161,18 @@ class ViewForm(forms.ModelForm):
     class Meta:
         model = View
         fields = ('name', 'description', 'keywords', 'observations')
+
+
+class LayerForm(forms.ModelForm):
+    # Do we want to have the ability to limit observations and view based on selections in this form?
+    view_list = View.objects.all()
+    views = MultiObsSelectField(label='Views', queryset=view_list)
+    categories = Category.objects.all()
+    initial = categories.get(name__exact='Styler or Widget')
+    category = forms.ModelChoiceField(label='Category', queryset=categories, initial=initial.id,
+                                      widget=forms.HiddenInput())
+
+    class Meta:
+        model = Layer
+        fields = ('name', 'description', 'keywords', 'views')
+
