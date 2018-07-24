@@ -34,6 +34,11 @@ from components.explorer.explorer_view import ExplorerView
 
 import components.wizards.wizard_views
 
+from django.views.generic import TemplateView
+
+from geonode.contrib.opensensorhub.utilities.hubutils import get_capabilities
+from geonode.contrib.opensensorhub.utilities.hubutils import get_result_template
+
 app_name = 'opensensorhub'
 
 core_resources = [HubResource(), ObservationResource(), LayerResource()]
@@ -59,6 +64,12 @@ for resource in all_resources:
     osh_api.register(resource)
 
 urlpatterns = [
+
+    # Hub operations - Testing purposes
+    url(r'^capabilities', TemplateView.as_view(template_name='test.html'), name='offerings'),
+    url(r'^result', TemplateView.as_view(template_name='test2.html'), name='offerings'),
+    url(r'^get_result_template', get_result_template, name='result'),
+    url(r'^get_capabilities', get_capabilities, name='offerings'),
 
     # Explorer URLS - Content Search Page
     url(r'^search', ExplorerView.as_view(), name='explore_sensors'),
