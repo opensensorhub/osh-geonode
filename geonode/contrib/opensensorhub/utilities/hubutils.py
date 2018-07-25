@@ -29,15 +29,41 @@ from django.http import HttpResponse, HttpResponseServerError
 
 from django.views.decorators.csrf import csrf_exempt
 
+
 @csrf_exempt
-def get_result_template(request):
-    response = "Malformed Request: Expecting URL of Open Sensor Hub - e.g. http://botts-geo.com:8181/sensorhub"
+def get_sensor_description(request):
+    response = "Malformed Request: "
     request_data = json.loads(request.body)
 
     try:
         get_result_template_req = \
             '{}/sos?service=SOS&version=2.0' \
-            '&request=GetResultTemplate&offering={}' \
+            '&request=DescribeSensor' \
+            '&procedure={}' \
+            '&procedureDescriptionFormat=http://www.opengis.net/sensorml-json/2.0'. \
+            format(request_data['hubAddress'], request_data['procedure'])
+
+        # Get capabilities from selected hub
+        response = urllib2.urlopen(get_result_template_req).read()
+
+    except:
+        # Error has occurred in reading request, send default response
+        HttpResponseServerError(response)
+
+    # Send
+    return HttpResponse(response)
+
+
+@csrf_exempt
+def get_result_template(request):
+    response = "Malformed Request: "
+    request_data = json.loads(request.body)
+
+    try:
+        get_result_template_req = \
+            '{}/sos?service=SOS&version=2.0' \
+            '&request=GetResultTemplate' \
+            '&offering={}' \
             '&observedProperty={}' \
             '&responseFormat=application/json'. \
             format(request_data['hubAddress'], request_data['offering'], request_data['observed_property'])
@@ -62,7 +88,8 @@ def get_capabilities(request):
     try:
         # Append "sos?service=SOS&version=2.0&request=GetCapabilities" to get capabilities from OSH hub
         get_capabilities_req = \
-            '{}/sos?service=SOS&version=2.0&request=GetCapabilities'. \
+            '{}/sos?service=SOS&version=2.0' \
+            '&request=GetCapabilities'. \
             format(request_data['hubAddress'])
 
         # Get capabilities from selected hub

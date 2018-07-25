@@ -55,14 +55,13 @@
                 });
             }
 
-            get_result_template = function () {
+            get_sensor_description = function () {
                 var data = {};
                 data['hubAddress'] = 'http://botts-geo.com:8181/sensorhub';
-                data['offering'] = 'urn:android:device:89845ed469b7edc7-sos';
-                data['observed_property'] = 'http://sensorml.com/ont/swe/property/Location';
+                data['procedure'] = 'urn:android:device:89845ed469b7edc7';
                 var xhr = new XMLHttpRequest();
 
-                xhr.open('POST', 'get_result_template', true);
+                xhr.open('POST', 'get_sensor_description', true);
                 xhr.setRequestHeader('Content-Type', 'application/json, charset=UTF-8');
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState == XMLHttpRequest.DONE) {
@@ -73,7 +72,7 @@
             };
 
 
-            get_result_template();
+            get_sensor_description();
         </script>
 
     {% endblock body %}
