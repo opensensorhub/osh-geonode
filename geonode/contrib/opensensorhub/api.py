@@ -74,7 +74,7 @@ class ObservationResource(ModelResource):
         # WhiteList: These are fields to include for being exposed by the API
         fields = ['name', 'description', 'source_type', 'endpoint', 'protocol', 'offering',
                   'observed_property', 'start_time', 'end_time', 'sync_master_time',
-                  'buffering_time', 'time_shift', 'replay_speed', 'hub', 'category']
+                  'buffering_time', 'time_shift', 'replay_speed', 'hub', 'category', 'get_result_json']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post', 'delete', 'update']
@@ -192,7 +192,7 @@ class ChartStylerResource(ModelResource):
             'name': ALL,
             'description': ALL,
             'keywords': ALL,
-            'category' : ALL,
+            'category': ALL,
         }
 
     def dehydrate(self, bundle):

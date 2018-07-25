@@ -46,7 +46,7 @@ class ObservationForm(forms.ModelForm):
         model = Observation
         fields = ('name', 'description', 'keywords', 'source_type', 'endpoint', 'protocol', 'offering',
                   'observed_property', 'start_time', 'end_time', 'sync_master_time',
-                  'buffering_time', 'time_shift', 'replay_speed', 'hub', 'category')
+                  'buffering_time', 'time_shift', 'replay_speed', 'hub', 'category', 'get_result_json')
         labels = {
             'observed_property': _('Observed Property:'),
             'source_type': _('Source Type:'),
@@ -56,6 +56,7 @@ class ObservationForm(forms.ModelForm):
             'buffering_time': _('Buffering Time:'),
             'time_shift': _('Time Shift:'),
             'replay_speed': _('Replay Speed:'),
+            'get_result_json': _('Get Result JSON:'),
         }
 
 

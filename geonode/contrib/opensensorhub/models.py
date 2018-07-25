@@ -122,7 +122,8 @@ class Observation(OshModel, SweService):
     )
 
     hub = models.ForeignKey(Hub, on_delete=models.CASCADE)
-
+    # TODO: If we upgrade to django 1.9 or newer we can use JSONFields
+    get_result_json = models.FileField(max_length=200, default="")
     endpoint = models.URLField(max_length=200)
     offering = models.CharField(max_length=200)
     observed_property = models.URLField(max_length=200)
