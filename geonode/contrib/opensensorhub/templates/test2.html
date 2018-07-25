@@ -1,0 +1,81 @@
+{% extends "geonode_base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="../static/css/style.css">
+    <style>
+        pre {
+            background-color: mintcream;
+            border: 1px solid silver;
+            padding: 10px 20px;
+        }
+
+        .json-key {
+            color: blue;
+        }
+
+        .json-value {
+            color: green;
+        }
+
+        .json-string {
+            color: olive;
+        }
+    </style>
+{% endblock %}
+
+{% block title %} {{ block.super }} {% endblock %}
+
+{% block body_outer %}
+    {% block body %}
+        <pre><code id=pretty-json></code></pre>
+        <script>
+            function output(inp) {
+                {#document.body.appendChild(document.createElement('pre')).innerHTML = inp;#}
+                document.getElementById("pretty-json").innerHTML = inp;
+            }
+
+            function syntaxHighlight(json) {
+                json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                    var cls = 'number';
+                    if (/^"/.test(match)) {
+                        if (/:$/.test(match)) {
+                            cls = 'key';
+                        } else {
+                            cls = 'string';
+                        }
+                    } else if (/true|false/.test(match)) {
+                        cls = 'boolean';
+                    } else if (/null/.test(match)) {
+                        cls = 'null';
+                    }
+                    return '<span class="json-' + cls + '">' + match + '</span>';
+                });
+            }
+
+            getHubOfferings = function () {
+                var data = {};
+                data['hubAddress'] = 'http://botts-geo.com:8181/sensorhub';
+                data['offering'] = 'urn:android:device:89845ed469b7edc7-sos';
+                data['observed_property'] = 'http://sensorml.com/ont/swe/property/Location';
+                var xhr = new XMLHttpRequest();
+
+                xhr.open('POST', 'get_result_template', true);
+                xhr.setRequestHeader('Content-Type', 'application/json, charset=UTF-8');
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == XMLHttpRequest.DONE) {
+                        output(syntaxHighlight(xhr.response));
+                    }
+                }
+                xhr.send(JSON.stringify(data));
+            };
+
+
+            getHubOfferings();
+        </script>
+
+    {% endblock body %}
+    {% block sidebar %}{% endblock sidebar %}
+{% endblock body_outer %}

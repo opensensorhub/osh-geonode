@@ -27,26 +27,51 @@ from datetime import datetime
 
 from django.http import HttpResponse, HttpResponseServerError
 
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
+def get_result_template(request):
+    response = "Malformed Request: Expecting URL of Open Sensor Hub - e.g. http://botts-geo.com:8181/sensorhub"
+    request_data = json.loads(request.body)
+
+    try:
+        get_result_template_req = \
+            '{}/sos?service=SOS&version=2.0' \
+            '&request=GetResultTemplate&offering={}' \
+            '&observedProperty={}' \
+            '&responseFormat=application/json'. \
+            format(request_data['hubAddress'], request_data['offering'], request_data['observed_property'])
+
+        # Get capabilities from selected hub
+        response = urllib2.urlopen(get_result_template_req).read()
+
+    except:
+        # Error has occurred in reading request, send default response
+        HttpResponseServerError(response)
+
+    # Send
+    return HttpResponse(response)
+
 
 # Processes request to retrieve capabilities from a Hub
+@csrf_exempt
 def get_capabilities(request):
-    get_capabilities_req = "/sos?service=SOS&version=2.0&request=GetCapabilities"
-
     response = "Malformed Request: Expecting URL of Open Sensor Hub - e.g. http://botts-geo.com:8181/sensorhub"
     request_data = json.loads(request.body)
 
     try:
         # Append "sos?service=SOS&version=2.0&request=GetCapabilities" to get capabilities from OSH hub
-        hub_url = request_data['hubAddress']
-        hub_url = hub_url + get_capabilities_req
+        get_capabilities_req = \
+            '{}/sos?service=SOS&version=2.0&request=GetCapabilities'. \
+            format(request_data['hubAddress'])
 
         # Get capabilities from selected hub
-        capabilities = urllib2.urlopen(hub_url).read()
+        capabilities = urllib2.urlopen(get_capabilities_req).read()
 
         # Parse the capabilities
-        response = parse_capabilities(hub_url, capabilities)
+        response = parse_capabilities(get_capabilities_req, capabilities)
 
-    except KeyError:
+    except:
         # Error has occurred in reading request, send default response
         HttpResponseServerError(response)
 
