@@ -36,7 +36,7 @@ def get_sensor_description(request):
     request_data = json.loads(request.body)
 
     try:
-        get_result_template_req = \
+        get_sensor_description_req = \
             '{}/sos?service=SOS&version=2.0' \
             '&request=DescribeSensor' \
             '&procedure={}' \
@@ -44,7 +44,7 @@ def get_sensor_description(request):
             format(request_data['hubAddress'], request_data['procedure'])
 
         # Get capabilities from selected hub
-        response = urllib2.urlopen(get_result_template_req).read()
+        response = urllib2.urlopen(get_sensor_description_req).read()
 
     except:
         # Error has occurred in reading request, send default response
