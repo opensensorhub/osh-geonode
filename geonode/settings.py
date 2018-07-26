@@ -395,6 +395,9 @@ INSTALLED_APPS = (
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+
+    # colorful
+    'colorful',
 ) + GEONODE_APPS
 
 MONITORING_ENABLED = False

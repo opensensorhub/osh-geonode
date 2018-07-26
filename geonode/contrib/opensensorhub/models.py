@@ -20,6 +20,8 @@
 from django.db import models
 from django.core import validators
 
+from colorful.fields import RGBColorField
+
 COLOR_MODE_CHOICES = (
     ('0', 'FIXED'),
     ('1', 'THRESHOLD'),
@@ -138,12 +140,44 @@ class Observation(OshModel, SweService):
 
 
 # ------------------------------------------------------------------------------
+# Offering
+#
+# Model representing an OSH Offering
+# ------------------------------------------------------------------------------
+class Offering(OshModel):
+
+    OFFERING_TYPE_CHOICES = (
+        ('0', 'Observation'),
+        ('1', 'Command')
+    )
+
+    # Hub - points to the hub/node of origin
+    hub = models.ForeignKey(Hub, on_delete=models.CASCADE)
+
+    # Endpoint describes the target for requesting the offering on the hub/node
+    endpoint = models.URLField(max_length=200)
+
+    # The unique id of the procedure
+    procedure = models.CharField(max_length=200)
+
+    # The type of offering, see above.
+    offering_type = models.CharField(max_length=1, choices=OFFERING_TYPE_CHOICES, default='0')
+
+
+# ------------------------------------------------------------------------------
 # View
 #
 # Model representing an OSH View
 # ------------------------------------------------------------------------------
 class View(OshModel):
     observations = models.ManyToManyField(Observation, blank=True)
+    draggable = models.BooleanField(default=False)
+    show = models.BooleanField(default=False)
+    dockable = models.BooleanField(default=False)
+    closeable = models.BooleanField(default=False)
+    can_disconnect = models.BooleanField(default=False)
+    swap_id = models.CharField(max_length=200, default='')
+    container_id = models.CharField(max_length=200, default='')
 
 
 # ------------------------------------------------------------------------------
@@ -170,6 +204,7 @@ class Styler(OshModel):
     )
 
     view = models.OneToOneField(View, on_delete=models.SET_NULL, null=True, blank=True)
+    binding = models.FileField(upload_to='opensensorhub', max_length=200, blank=True)
 
     class Meta:
         abstract = True
@@ -197,7 +232,7 @@ class TextStyler(Styler):
     color_mode = models.CharField(max_length=1, choices=COLOR_MODE_CHOICES, default='0')
     # Treat these strings as arrays of integers, will need to be converted to arrays when read
     # and strings when stored
-    color_rgb = models.CharField(max_length=200, blank=True, default="000000")
+    color_rgb = RGBColorField(colors=['#FF0000', '#00FF00', '#0000FF'], default='#000000')
     thresholds = models.CharField(max_length=200, blank=True)
     type = models.CharField(max_length=1, choices=Styler.STYLER_TYPE_CHOICES, default='1')
 
@@ -208,7 +243,7 @@ class TextStyler(Styler):
 # Model representing an OSH Location Indicator Styler
 # ------------------------------------------------------------------------------
 class PointMarkerStyler(Styler):
-    view_icon = models.FileField(max_length=200, blank=True, default="")
+    view_icon = models.FileField(upload_to='opensensorhub', max_length=200, blank=True, default="marker_icon.png")
     render_mode = models.CharField(max_length=200, blank=True)
     type = models.CharField(max_length=1, choices=Styler.STYLER_TYPE_CHOICES, default='2')
 
@@ -235,7 +270,7 @@ class ChartStyler(Styler):
     max_points = models.IntegerField()
     # Treat these strings as arrays of integers, will need to be converted to arrays when read
     # and strings when stored
-    color_rgb = models.CharField(max_length=200, blank=True, default="000000")
+    color_rgb = RGBColorField(colors=['#FF0000', '#00FF00', '#0000FF'], default='#000000')
     thresholds = models.CharField(max_length=200, blank=True)
     type = models.CharField(max_length=1, choices=Styler.STYLER_TYPE_CHOICES, default='3')
 
@@ -246,10 +281,6 @@ class ChartStyler(Styler):
 # Model representing an OSH Location Video View Styler
 # ------------------------------------------------------------------------------
 class VideoStyler(Styler):
-    draggable = models.BooleanField(default=False)
-    show = models.BooleanField(default=False)
-    dockable = models.BooleanField(default=False)
-    closeable = models.BooleanField(default=False)
     keep_ratio = models.BooleanField(default=False)
     type = models.CharField(max_length=1, choices=Styler.STYLER_TYPE_CHOICES, default='4')
 

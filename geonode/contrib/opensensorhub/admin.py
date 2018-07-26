@@ -29,13 +29,13 @@ from models import Hub, Observation, Layer
 
 
 class OshModelAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description', 'category')
+    list_display = ('name', 'description', 'category', 'keywords')
     fields = ('name', 'description', 'keywords', 'category')
 
 
 class StylerAdmin(OshModelAdmin):
-    readonly_fields = ('type', )
-    fields = OshModelAdmin.fields + ('view', 'type', )
+    readonly_fields = ('type',)
+    fields = OshModelAdmin.fields + ('view', 'type')
 
 
 class TextStylerAdmin(StylerAdmin):
@@ -58,12 +58,12 @@ class ChartStylerAdmin(StylerAdmin):
 
 class VideoStylerAdmin(StylerAdmin):
     fields = StylerAdmin.fields + \
-             ('draggable', 'show',
-              'dockable', 'closeable', 'keep_ratio')
+             ('keep_ratio',)
 
 
 class ViewAdmin(OshModelAdmin):
-    fields = OshModelAdmin.fields + ('observations', )
+    fields = OshModelAdmin.fields + ('observations', 'draggable', 'show',
+                                     'dockable', 'closeable')
 
 
 class HubAdmin(OshModelAdmin):
@@ -79,7 +79,7 @@ class ObservationAdmin(OshModelAdmin):
 
 
 class LayerAdmin(OshModelAdmin):
-    fields = OshModelAdmin.fields + ('views', )
+    fields = OshModelAdmin.fields + ('views',)
 
 
 admin.site.register(TextStyler, TextStylerAdmin)
