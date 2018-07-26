@@ -38,6 +38,7 @@ from django.views.generic import TemplateView
 
 from geonode.contrib.opensensorhub.utilities.hubutils import get_capabilities
 from geonode.contrib.opensensorhub.utilities.hubutils import get_result_template
+from geonode.contrib.opensensorhub.utilities.hubutils import get_sensor_description
 
 app_name = 'opensensorhub'
 
@@ -66,8 +67,10 @@ for resource in all_resources:
 urlpatterns = [
 
     # Hub operations - Testing purposes
+    url(r'^describe', TemplateView.as_view(template_name='test3.html'), name='offerings'),
     url(r'^capabilities', TemplateView.as_view(template_name='test.html'), name='offerings'),
     url(r'^result', TemplateView.as_view(template_name='test2.html'), name='offerings'),
+    url(r'^get_sensor_description', get_sensor_description, name='result'),
     url(r'^get_result_template', get_result_template, name='result'),
     url(r'^get_capabilities', get_capabilities, name='offerings'),
 
