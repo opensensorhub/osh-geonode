@@ -69,7 +69,7 @@ class ObservationResource(ModelResource):
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
         fields = ['name', 'description', 'keywords', 'category',
-                  'service', 'endpoint_url', 'offering',
+                  'service', 'endpoint', 'offering',
                   'observed_property', 'start_time', 'end_time',
                   'sync_master_time', 'buffering_time', 'time_shift',
                   'source_type', 'replay_speed', 'protocol']
@@ -88,7 +88,7 @@ class ObservationResource(ModelResource):
             'name': ALL,
             'description': ALL,
             'keywords': ALL,
-            'category' : ALL,
+            'category': ALL,
         }
 
     def dehydrate(self, bundle):
@@ -97,6 +97,8 @@ class ObservationResource(ModelResource):
 
 
 class ViewResource(ModelResource):
+    observations = fields.ToManyField(ObservationResource, 'observations', related_name='view')
+
     class Meta:
         queryset = View.objects.all()
         resource_name = 'view'
@@ -104,7 +106,8 @@ class ViewResource(ModelResource):
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
         fields = ['name', 'description', 'keywords', 'category',
-                  'observations']
+                  'observations', 'styler', 'draggable', 'show',
+                  'dockable', 'closeable']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post', 'delete', 'update']
@@ -120,7 +123,7 @@ class ViewResource(ModelResource):
             'name': ALL,
             'description': ALL,
             'keywords': ALL,
-            'category' : ALL,
+            'category': ALL,
         }
 
     def dehydrate(self, bundle):
@@ -129,6 +132,8 @@ class ViewResource(ModelResource):
 
 
 class LayerResource(ModelResource):
+    views = fields.ToManyField(ViewResource, 'views', related_name='layer')
+
     class Meta:
         queryset = Layer.objects.all()
         resource_name = 'layer'
@@ -152,7 +157,7 @@ class LayerResource(ModelResource):
             'name': ALL,
             'description': ALL,
             'keywords': ALL,
-            'category' : ALL,
+            'category': ALL,
         }
 
     def dehydrate(self, bundle):
@@ -160,7 +165,11 @@ class LayerResource(ModelResource):
         return bundle
 
 
-class TextStylerResource(ModelResource):
+class StylerResource(ModelResource):
+    view = fields.ToOneField(ViewResource, 'view', related_name='styler')
+
+
+class TextStylerResource(StylerResource):
 
     class Meta:
         queryset = TextStyler.objects.all()
@@ -170,7 +179,7 @@ class TextStylerResource(ModelResource):
         # WhiteList: These are fields to include for being exposed by the API
         fields = ['name', 'description', 'keywords', 'category',
                   'screen_position', 'color_mode',
-                  'color_rgb', 'thresholds', 'type']
+                  'color_rgb', 'thresholds', 'type', 'view']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post', 'delete', 'update']
@@ -186,7 +195,7 @@ class TextStylerResource(ModelResource):
             'name': ALL,
             'description': ALL,
             'keywords': ALL,
-            'category' : ALL,
+            'category': ALL,
         }
 
     def dehydrate(self, bundle):
@@ -194,7 +203,7 @@ class TextStylerResource(ModelResource):
         return bundle
 
 
-class PointMarkerStylerResource(ModelResource):
+class PointMarkerStylerResource(StylerResource):
 
     class Meta:
         queryset = PointMarkerStyler.objects.all()
@@ -203,7 +212,7 @@ class PointMarkerStylerResource(ModelResource):
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
         fields = ['name', 'description', 'keywords', 'category',
-                  'view_icon', 'render_mode', 'type']
+                  'view_icon', 'render_mode', 'type', 'view']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post', 'delete', 'update']
@@ -219,7 +228,7 @@ class PointMarkerStylerResource(ModelResource):
             'name': ALL,
             'description': ALL,
             'keywords': ALL,
-            'category' : ALL,
+            'category': ALL,
         }
 
     def dehydrate(self, bundle):
@@ -227,7 +236,7 @@ class PointMarkerStylerResource(ModelResource):
         return bundle
 
 
-class ChartStylerResource(ModelResource):
+class ChartStylerResource(StylerResource):
 
     class Meta:
         queryset = ChartStyler.objects.all()
@@ -239,7 +248,7 @@ class ChartStylerResource(ModelResource):
                   'label_x', 'label_y', 'color_mode',
                   'range_mode', 'range_x', 'range_y',
                   'max_points', 'color_rgb', 'thresholds',
-                  'type']
+                  'type', 'view']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post', 'delete', 'update']
@@ -255,7 +264,7 @@ class ChartStylerResource(ModelResource):
             'name': ALL,
             'description': ALL,
             'keywords': ALL,
-            'category' : ALL,
+            'category': ALL,
         }
 
     def dehydrate(self, bundle):
@@ -263,7 +272,7 @@ class ChartStylerResource(ModelResource):
         return bundle
 
 
-class VideoStylerResource(ModelResource):
+class VideoStylerResource(StylerResource):
 
     class Meta:
         queryset = VideoStyler.objects.all()
@@ -272,8 +281,7 @@ class VideoStylerResource(ModelResource):
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
         fields = ['name', 'description', 'keywords', 'category',
-                  'draggable', 'show', 'dockable',
-                  'closeable', 'keep_ratio', 'type']
+                  'keep_ratio', 'type', 'view']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post', 'delete', 'update']
@@ -289,7 +297,7 @@ class VideoStylerResource(ModelResource):
             'name': ALL,
             'description': ALL,
             'keywords': ALL,
-            'category' : ALL,
+            'category': ALL,
         }
 
     def dehydrate(self, bundle):

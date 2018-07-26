@@ -129,8 +129,7 @@ class VideoViewForm(forms.ModelForm):
 
     class Meta:
         model = VideoStyler
-        fields = ('name', 'description', 'keywords', 'data_source', 'show', 'draggable', 'dockable', 'keep_ratio',
-                  'closeable',)
+        fields = ('name', 'description', 'keywords', 'data_source', 'keep_ratio',)
         labels = {
             'keep_ratio': _('Keep Ratio:')
         }
@@ -138,6 +137,7 @@ class VideoViewForm(forms.ModelForm):
 
 class ViewFormset(forms.BaseModelFormSet):
     var = ''
+    # 'show', 'draggable', 'dockable', 'closeable',
 
 
 class CompositeForm(forms.ModelForm):

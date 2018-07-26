@@ -32,7 +32,8 @@ from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
 def get_sensor_description(request):
-    response = "Malformed Request: "
+    response = "Malformed Request: Expecting URL of Open Sensor Hub - " \
+               "e.g. http://botts-geo.com:8181/sensorhub and procedure id"
     request_data = json.loads(request.body)
 
     try:
@@ -56,7 +57,9 @@ def get_sensor_description(request):
 
 @csrf_exempt
 def get_result_template(request):
-    response = "Malformed Request: "
+    response = \
+        "Malformed Request: Expecting URL of Open Sensor Hub - " \
+        "e.g. http://botts-geo.com:8181/sensorhub, offering, and observed property"
     request_data = json.loads(request.body)
 
     try:
@@ -82,7 +85,8 @@ def get_result_template(request):
 # Processes request to retrieve capabilities from a Hub
 @csrf_exempt
 def get_capabilities(request):
-    response = "Malformed Request: Expecting URL of Open Sensor Hub - e.g. http://botts-geo.com:8181/sensorhub"
+    response = "Malformed Request: Expecting URL of Open Sensor Hub - " \
+               "e.g. http://botts-geo.com:8181/sensorhub"
     request_data = json.loads(request.body)
 
     try:
