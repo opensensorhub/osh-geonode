@@ -142,8 +142,7 @@ class VideoStylerForm(forms.ModelForm):
 
     class Meta:
         model = VideoStyler
-        fields = ('name', 'description', 'keywords', 'show', 'draggable', 'dockable', 'keep_ratio',
-                  'closeable', 'view',)
+        fields = ('name', 'description', 'keywords', 'keep_ratio', 'view',)
         labels = {
             'keep_ratio': _('Keep Ratio:')
         }
