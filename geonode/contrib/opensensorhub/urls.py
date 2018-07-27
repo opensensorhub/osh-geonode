@@ -21,6 +21,7 @@ from django.conf.urls import url, include
 
 from tastypie.api import Api
 
+from api import CategoryResource
 from api import HubResource
 from api import ObservationResource
 from api import LayerResource
@@ -42,7 +43,7 @@ from geonode.contrib.opensensorhub.utilities.hubutils import get_sensor_descript
 
 app_name = 'opensensorhub'
 
-core_resources = [HubResource(), ObservationResource(), LayerResource()]
+core_resources = [CategoryResource(), HubResource(), ObservationResource(), LayerResource()]
 view_resources = [ViewResource()]
 styler_resources = [ChartStylerResource(), TextStylerResource(), PointMarkerStylerResource(), VideoStylerResource()]
 
@@ -84,19 +85,21 @@ urlpatterns = [
 
     url(r'^add-hub', components.wizards.wizard_views.HubWizard.as_view(), name='hub-wiz'),
     url(r'^add-obs', components.wizards.wizard_views.ObservationWizard.as_view(), name='obs-wiz'),
+    url(r'^add-layer', components.wizards.wizard_views.LayerFormView.as_view(), name='layer-wiz'),
     # url(r'^test', views.create_user),
     # Test link to view all resources as cards
     url(r'^explore', ExplorerView.as_view(), name='explore'),
 
     # To allow for an easy to follow test link, delete when composite forms are working
-    url(r'^test', components.wizards.wizard_views.CompositeFormView.as_view(), name='test'),
+    # url(r'^test', components.wizards.wizard_views.CompositeFormView.as_view(), name='test'),
     # Test Template inclusion this way
     url(r'^wizards/test-1', components.wizards.wizard_views.TestTemplateFormView.as_view()),
-    url(r'^wizards/chart', components.wizards.wizard_views.ChartTemplateFormView.as_view()),
-    url(r'^wizards/video', components.wizards.wizard_views.VideoTemplateFormView.as_view()),
-    url(r'^wizards/text', components.wizards.wizard_views.TextTemplateFormView.as_view()),
-    url(r'^wizards/locationmarker', components.wizards.wizard_views.LocationMarkerTemplateFormView.as_view()),
+    url(r'^wizards/chart', components.wizards.wizard_views.ChartStylerFormView.as_view()),
+    url(r'^wizards/video', components.wizards.wizard_views.VideoStylerFormView.as_view()),
+    url(r'^wizards/text', components.wizards.wizard_views.TextStylerFormView.as_view()),
+    url(r'^wizards/locationmarker', components.wizards.wizard_views.LocationMarkerStylerFormView.as_view()),
     url(r'^wizards/map', components.wizards.wizard_views.MapTemplateFormView.as_view()),
     url(r'^osh-wizard/', components.wizards.wizard_views.WizardMainView.as_view()),
     url(r'^view-selection', components.wizards.wizard_views.ViewSelectionWidget.as_view()),
+    url(r'^add-view', components.wizards.wizard_views.ViewToAView.as_view()),
 ]
