@@ -30,7 +30,7 @@
 {% block body_outer %}
     {% block body %}
         <pre><code id=pretty-json></code></pre>
-        <script>
+        {% comment %}<script>
             function output(inp) {
                 {#document.body.appendChild(document.createElement('pre')).innerHTML = inp;#}
                 document.getElementById("pretty-json").innerHTML = inp;
@@ -74,7 +74,7 @@
 
 
             get_result_template();
-        </script>
+        </script>{% endcomment %}
 
     {% endblock body %}
     {% block sidebar %}{% endblock sidebar %}

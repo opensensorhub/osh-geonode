@@ -41,6 +41,8 @@ class ObservationForm(forms.ModelForm):
     initial = categories.get(name__contains='Observation')
     category = forms.ModelChoiceField(label='Category', queryset=categories, initial=initial.id,
                                       widget=forms.HiddenInput())
+    get_result_json = forms.FileField(widget=forms.HiddenInput())
+    json_content = forms.CharField(label="Content to JSON File", initial='''{"key": "value"}''')
 
     class Meta:
         model = Observation
@@ -142,8 +144,7 @@ class VideoStylerForm(forms.ModelForm):
 
     class Meta:
         model = VideoStyler
-        fields = ('name', 'description', 'keywords', 'show', 'draggable', 'dockable', 'keep_ratio',
-                  'closeable', 'view',)
+        fields = ('name', 'description', 'keywords', 'view',)
         labels = {
             'keep_ratio': _('Keep Ratio:')
         }

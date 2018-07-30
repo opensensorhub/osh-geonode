@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/osh-wizards.css">
+<script src="{{ STATIC_URL }}js/hub_utils.js" type="application/javascript"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h6>TEST PAGE</h6>
+<h6>TEST PAGE</h6>
+<h6>TEST PAGE</h6>
+<h2>For Testing the Hub HTTP Requests before adding them to the wizard(s)</h2>
+<form>
+    <p>
+        <label for="hub-selection">Hub Selection</label>
+        <select id="hubSelector" name="hub-selection">
+            <option value="http://botts-geo.com:8181/sensorhub">Botts Geo</option>
+        </select>
+    </p>
+    <p></p>
+    <p>
+        <button onclick="getCapabilities(getCapabiltiesWrapper())">Get Hub Capabilities</button>
+        <button>Get Sensor Description</button>
+        <button>Get Sensor Result Template</button>
+    </p>
+</form>
+<h6>TEST PAGE</h6>
+<h6>TEST PAGE</h6>
+<h6>TEST PAGE</h6>
+</body>
+</html>

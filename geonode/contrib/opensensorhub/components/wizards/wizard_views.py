@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.core.files.base import ContentFile
+
 from django.views.generic import TemplateView, FormView
 
 # Form Imports
@@ -33,8 +35,26 @@ class ObservationWizard(TemplateView):
 
     def post(self, request):
         form = ObservationForm(request.POST)
+        print('\n')
+        # Testing the ability to pick items from the POST request
+        print(form)
+        print(request.POST['json_content'])
+        print('\n')
+
+        # convert vlaue of json_content to a ContentField and insert into get_result_json
+        # TODO: sanitize this if it's ever user input
+        jsonFile = ContentFile(request.POST['json_content'])
+        print('------------------------------------------------------')
+        print(form.get_result_json)
+        form.get_result_json.save('test-file.json', jsonFile)
+
         if form.is_valid():
-            form.save()
+            # REMOVE AFTER TESTING
+            # Can we take some input then convert it to a file using ContentFile?
+            unsaved_form = form.save(commit=False)
+            print(unsaved_form)
+            # --------------------------
+            # form.save()
             # TODO: Determine if we need cleaned data for other forms
             form = ObservationForm()
             # return redirect('observations/')
@@ -238,3 +258,11 @@ class LayerFormView(FormView):
 
         args = {'form': form, 'html_body': self.html_path}
         return render(request, self.template_name, args)
+
+
+class TestView(TemplateView):
+    template_name = 'component_base.html'
+    html_path = 'test_http_reqs.html'
+
+    def get(self, request):
+        return render(request, self.template_name, dict({'html_body': self.html_path}))

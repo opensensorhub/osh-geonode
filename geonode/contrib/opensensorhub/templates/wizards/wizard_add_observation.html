@@ -38,6 +38,10 @@
         {% csrf_token %}
         <h1 style="grid-column: 1/4; text-align: left; padding-left: 5%">Add an Observation</h1>
             {{ form.as_p }}
+            {% comment %}<p>
+                <label>Content to JSON File Tester:</label>
+                <input id="json-content" type="text" value="Test Content">
+            </p>{% endcomment %}
         <input type="submit" value="Submit" style="width: 25%; grid-column: 2/3; text-align: center"/>
 {#        <input type="submit" value="Submit"/>#}
     </form>

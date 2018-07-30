@@ -85,12 +85,11 @@ urlpatterns = [
     url(r'^add-hub', components.wizards.wizard_views.HubWizard.as_view(), name='hub-wiz'),
     url(r'^add-obs', components.wizards.wizard_views.ObservationWizard.as_view(), name='obs-wiz'),
     url(r'^add-layer', components.wizards.wizard_views.LayerFormView.as_view(), name='layer-wiz'),
-    # url(r'^test', views.create_user),
     # Test link to view all resources as cards
     url(r'^explore', ExplorerView.as_view(), name='explore'),
 
     # To allow for an easy to follow test link, delete when composite forms are working
-    # url(r'^test', components.wizards.wizard_views.CompositeFormView.as_view(), name='test'),
+    url(r'^test', components.wizards.wizard_views.TestView.as_view(), name='test'),
     # Test Template inclusion this way
     url(r'^wizards/test-1', components.wizards.wizard_views.TestTemplateFormView.as_view()),
     url(r'^wizards/chart', components.wizards.wizard_views.ChartStylerFormView.as_view()),
