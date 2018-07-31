@@ -21,6 +21,7 @@ from django.conf.urls import url, include
 
 from tastypie.api import Api
 
+from api import CategoryResource
 from api import HubResource
 from api import ObservationResource
 from api import LayerResource
@@ -42,7 +43,7 @@ from geonode.contrib.opensensorhub.utilities.hubutils import get_sensor_descript
 
 app_name = 'opensensorhub'
 
-core_resources = [HubResource(), ObservationResource(), LayerResource()]
+core_resources = [CategoryResource(), HubResource(), ObservationResource(), LayerResource()]
 view_resources = [ViewResource()]
 styler_resources = [ChartStylerResource(), TextStylerResource(), PointMarkerStylerResource(), VideoStylerResource()]
 
