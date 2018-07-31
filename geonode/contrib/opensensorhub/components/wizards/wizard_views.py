@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.core.files.base import ContentFile
+from datetime import datetime
+import uuid
 
 from django.views.generic import TemplateView, FormView
 
@@ -33,34 +35,22 @@ class ObservationWizard(TemplateView):
         return render(request, self.template_name, dict({'html_body': 'wizards/wizard_add_observation.html',
                                                          'form': form}))
 
+    # TODO: Clean this function up to remove unused code
     def post(self, request):
-        form = ObservationForm(request.POST)
-        print('\n')
-        # Testing the ability to pick items from the POST request
-        print(form)
-        print(request.POST['json_content'])
-        print('\n')
-
-        # convert vlaue of json_content to a ContentField and insert into get_result_json
+        # convert value of json_content to a ContentField and insert into get_result_json
         # TODO: sanitize this if it's ever user input
-        jsonFile = ContentFile(request.POST['json_content'])
-        print('------------------------------------------------------')
-        print(form.get_result_json)
-        form.get_result_json.save('test-file.json', jsonFile)
+        newFile = ContentFile(request.POST['json_content'])
+        file_name = request.POST['name'].replace(" ", "") + str(uuid.uuid4()) + ".json"
+        newFile.name = file_name
+        data = request.POST.dict()
+        data['get_result_json'] = newFile
+        new_form = ObservationForm(data)
 
-        if form.is_valid():
-            # REMOVE AFTER TESTING
-            # Can we take some input then convert it to a file using ContentFile?
-            unsaved_form = form.save(commit=False)
-            print(unsaved_form)
-            # --------------------------
-            # form.save()
-            # TODO: Determine if we need cleaned data for other forms
-            form = ObservationForm()
-            # return redirect('observations/')
+        if new_form.is_valid():
+            new_form.save()
             return redirect('/osh/add-view/')
 
-        args = {'form': form, 'html_body': 'wizards/wizard_add_observation.html'}
+        args = {'form': new_form, 'html_body': 'wizards/wizard_add_observation.html'}
         return render(request, self.template_name, args)
 
 
