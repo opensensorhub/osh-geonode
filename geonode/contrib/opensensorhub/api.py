@@ -35,6 +35,7 @@ from models import ChartStyler
 from models import PointMarkerStyler
 from models import TextStyler
 from models import View
+from models import Offering
 
 
 class CategoryResource(ModelResource):
@@ -327,6 +328,40 @@ class VideoStylerResource(StylerResource):
         # WhiteList: These are fields to include for being exposed by the API
         fields = ['name', 'description', 'keywords', 'category',
                   'keep_ratio', 'type', 'view']
+        # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
+        #   Empty set denotes inability to access API through HTTP requests
+        allowed_methods = ['get', 'post', 'delete', 'update']
+        # Authentication
+        #        authentication = OAuthAuthentication()
+        # Authorization
+        # authorization = DjangoAuthorization()
+        authorization = Authorization()
+        # Serializer: Allow only JSON serialization
+        serializer = Serializer(formats=['json'])
+        # Filtering
+        filtering = {
+            'name': ALL,
+            'description': ALL,
+            'keywords': ALL,
+            'category': ALL,
+        }
+
+    def dehydrate(self, bundle):
+        bundle.data['type'] = self.Meta.resource_name
+        return bundle
+
+
+class OfferingResource(ModelResource):
+    hub = fields.ForeignKey(HubResource, 'hub')
+    category = fields.ForeignKey(CategoryResource, 'category')
+
+    class Meta:
+        queryset = Offering.objects.all()
+        resource_name = 'offering'
+        # BlackList: These are fields to exclude from being exposed by the API
+        excludes = []
+        # WhiteList: These are fields to include for being exposed by the API
+        fields = ['name', 'description', 'keywords', 'category', 'hub', 'endpoint', 'procedure', 'offering_type']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post', 'delete', 'update']

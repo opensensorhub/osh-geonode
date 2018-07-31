@@ -8,7 +8,8 @@ from django.views.generic import TemplateView, FormView
 
 # Form Imports
 from geonode.contrib.opensensorhub.components.wizards.wizard_forms import ObservationForm, HubForm, \
-    ChartStylerForm, TextStylerForm, VideoStylerForm, LocationIndicatorForm, MapTemplateForm, ViewForm, LayerForm
+    ChartStylerForm, TextStylerForm, VideoStylerForm, LocationIndicatorForm, MapTemplateForm, ViewForm, LayerForm, \
+    OfferingForm
 
 # Resource Imports
 from geonode.contrib.opensensorhub.api import HubResource, ObservationResource, LayerResource, VideoStylerResource, \
@@ -247,6 +248,29 @@ class LayerFormView(FormView):
             return redirect('/osh/view-selection')
 
         args = {'form': form, 'html_body': self.html_path}
+        return render(request, self.template_name, args)
+
+
+class OfferingFormView(FormView):
+    template_name = 'component_base.html'
+    html_path = 'wizards/wizard_add_offering.html'
+    form = OfferingForm()
+
+    # def get(self, request, *args, **kwargs):
+    def get(self, request):
+        form = self.form
+
+        return render(request, self.template_name, dict({'html_body': self.html_path, 'form': form}))
+
+    # TODO: Clean this function up to remove unused code
+    def post(self, request):
+        new_form = ObservationForm(request.POST)
+
+        if new_form.is_valid():
+            new_form.save()
+            return redirect('/osh/add-view/')
+
+        args = {'form': new_form, 'html_body': self.html_path}
         return render(request, self.template_name, args)
 
 

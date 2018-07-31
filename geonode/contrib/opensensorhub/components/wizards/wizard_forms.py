@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 
 # Model Imports
 from geonode.contrib.opensensorhub.models import Hub, Observation, Layer, VideoStyler, \
-    ChartStyler, PointMarkerStyler, TextStyler, View, SweService, Category
+    ChartStyler, PointMarkerStyler, TextStyler, View, SweService, Category, Offering
 
 import geonode.contrib.opensensorhub.models as models
 
@@ -178,3 +178,19 @@ class LayerForm(forms.ModelForm):
         model = Layer
         fields = ('name', 'description', 'keywords', 'views')
 
+
+class OfferingForm(forms.ModelForm):
+    hubs = Hub.objects.all()
+    hub = HubSelectionField(label='Hub', queryset=hubs)
+    categories = Category.objects.all()
+    initial = categories.get(name__exact='Data Content or Producers')
+    category = forms.ModelChoiceField(label='Category', queryset=categories, initial=initial.id,
+                                      widget=forms.HiddenInput())
+
+    class Meta:
+        model = Offering
+        fields = ('name', 'description', 'keywords', 'category', 'hub', 'endpoint', 'procedure', 'offering_type')
+        labels = {
+            'offering_type': _('Offering Type'),
+            'procedure': _('Offering ID')
+        }

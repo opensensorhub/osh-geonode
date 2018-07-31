@@ -86,7 +86,6 @@ class OshModel(models.Model):
 # Model representation for an OpenSensorHub Instance
 # ------------------------------------------------------------------------------
 class Hub(OshModel):
-
     url = models.URLField(max_length=200)
     protocol = models.CharField(max_length=1, choices=PROTOCOL_TYPE_CHOICES, default='2')
 
@@ -114,7 +113,6 @@ class SweService(models.Model):
 # Model representation for OSH Observations
 # ------------------------------------------------------------------------------
 class Observation(OshModel, SweService):
-
     REPLAY_SPEED_CHOICES = (
         ('0', 'QUARTER'),
         ('1', 'HALF'),
@@ -145,7 +143,6 @@ class Observation(OshModel, SweService):
 # Model representing an OSH Offering
 # ------------------------------------------------------------------------------
 class Offering(OshModel):
-
     OFFERING_TYPE_CHOICES = (
         ('0', 'Observation'),
         ('1', 'Command')
@@ -236,6 +233,10 @@ class TextStyler(Styler):
     thresholds = models.CharField(max_length=200, blank=True)
     type = models.CharField(max_length=1, choices=Styler.STYLER_TYPE_CHOICES, default='1')
 
+    class Meta:
+        verbose_name = 'Text Styler'
+        verbose_name_plural = 'Text Stylers'
+
 
 # ------------------------------------------------------------------------------
 # PointMarkerStyler
@@ -246,6 +247,10 @@ class PointMarkerStyler(Styler):
     view_icon = models.FileField(upload_to='opensensorhub', max_length=200, blank=True, default="marker_icon.png")
     render_mode = models.CharField(max_length=200, blank=True)
     type = models.CharField(max_length=1, choices=Styler.STYLER_TYPE_CHOICES, default='2')
+
+    class Meta:
+        verbose_name = 'Point Maker Styler'
+        verbose_name_plural = 'Point Maker Stylers'
 
 
 # ------------------------------------------------------------------------------
@@ -274,6 +279,10 @@ class ChartStyler(Styler):
     thresholds = models.CharField(max_length=200, blank=True)
     type = models.CharField(max_length=1, choices=Styler.STYLER_TYPE_CHOICES, default='3')
 
+    class Meta:
+        verbose_name = 'Chart Styler'
+        verbose_name_plural = 'Chart Stylers'
+
 
 # ------------------------------------------------------------------------------
 # VideoStyler
@@ -284,3 +293,6 @@ class VideoStyler(Styler):
     keep_ratio = models.BooleanField(default=False)
     type = models.CharField(max_length=1, choices=Styler.STYLER_TYPE_CHOICES, default='4')
 
+    class Meta:
+        verbose_name = 'Video Styler'
+        verbose_name_plural = 'Video Stylers'

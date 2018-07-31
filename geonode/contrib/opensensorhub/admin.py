@@ -17,6 +17,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 #########################################################################
+# TODO: Do we want to keep this licensing in here? ^^^^^^^^
 
 from django.contrib import admin
 
@@ -26,6 +27,7 @@ from models import Category
 from models import TextStyler, PointMarkerStyler, ChartStyler
 from models import View, VideoStyler
 from models import Hub, Observation, Layer
+from models import Offering
 
 
 class OshModelAdmin(admin.ModelAdmin):
@@ -75,7 +77,11 @@ class ObservationAdmin(OshModelAdmin):
              ('hub', 'endpoint', 'offering',
               'observed_property', 'start_time', 'end_time',
               'sync_master_time', 'buffering_time', 'time_shift',
-              'source_type', 'replay_speed', 'protocol')
+              'source_type', 'replay_speed', 'protocol', 'get_result_json')
+
+
+class OfferingAdmin(OshModelAdmin):
+    fields = OshModelAdmin.fields + ('hub', 'endpoint', 'procedure', 'offering_type')
 
 
 class LayerAdmin(OshModelAdmin):
@@ -91,3 +97,4 @@ admin.site.register(Hub, HubAdmin)
 admin.site.register(Observation, ObservationAdmin)
 admin.site.register(Layer, LayerAdmin)
 admin.site.register(Category)
+admin.site.register(Offering, OfferingAdmin)
