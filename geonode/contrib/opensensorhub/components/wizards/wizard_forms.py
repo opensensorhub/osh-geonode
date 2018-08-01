@@ -103,17 +103,20 @@ class ChartStylerForm(forms.ModelForm):
 
 
 class LocationIndicatorForm(forms.ModelForm):
+    json_raw = forms.CharField(label='Raw JSON Text', widget=forms.Textarea)
     categories = Category.objects.all()
     initial = categories.get(name__exact='Styler or Widget')
     category = forms.ModelChoiceField(label='Category', queryset=categories, initial=initial.id,
                                       widget=forms.HiddenInput())
-
+    view = forms.ModelChoiceField(label='View', queryset=View.objects.all())
     class Meta:
         model = PointMarkerStyler
-        fields = ('name', 'description', 'keywords', 'view_icon', 'render_mode', 'view', 'category',)
+        fields = ('name', 'description', 'keywords', 'view_icon', 'render_mode', 'view', 'category', 'json_raw',
+                  'binding',)
         labels = {
             'view_icon': _('Icon:'),
             'render_mode': _('Render Mode:'),
+            'binding': _('JSON Mapping/Binding'),
         }
 
 

@@ -36,7 +36,6 @@ class ObservationWizard(TemplateView):
         return render(request, self.template_name, dict({'html_body': 'wizards/wizard_add_observation.html',
                                                          'form': form}))
 
-    # TODO: Clean this function up to remove unused code
     def post(self, request):
         # convert value of json_content to a ContentField and insert into get_result_json
         # TODO: sanitize this if it's ever user input
@@ -172,13 +171,20 @@ class LocationMarkerStylerFormView(TemplateView):
                             'wizard_type': self.wizard_type}))
 
     def post(self, request):
-        form = LocationIndicatorForm(request.POST)
-        if form.is_valid():
-            form.save()
-            form = LocationIndicatorForm()
-            return redirect('/osh/view-selection/')
+        # convert value of json_content to a ContentField and insert into get_result_json
+        # TODO: sanitize this if it's ever user input
+        newFile = ContentFile(request.POST['json_content'])
+        file_name = request.POST['name'].replace(" ", "") + str(uuid.uuid4()) + ".json"
+        newFile.name = file_name
+        data = request.POST.dict()
+        data['get_result_json'] = newFile
+        new_form = ObservationForm(data)
 
-        args = {'form': form, 'html_body': 'wizards/wizard_add_styler.html', 'wizard_type': self.wizard_type}
+        if new_form.is_valid():
+            new_form.save()
+            return redirect('/osh/add-view/')
+
+        args = {'form': new_form, 'html_body': 'wizards/wizard_add_styler.html'}
         return render(request, self.template_name, args)
 
 

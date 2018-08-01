@@ -225,7 +225,7 @@ class TextStylerResource(StylerResource):
         # WhiteList: These are fields to include for being exposed by the API
         fields = ['name', 'description', 'keywords', 'category',
                   'screen_position', 'color_mode',
-                  'color_rgb', 'thresholds', 'type', 'view']
+                  'color_rgb', 'thresholds', 'type', 'view', 'binding']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post', 'delete', 'update']
@@ -258,7 +258,7 @@ class PointMarkerStylerResource(StylerResource):
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
         fields = ['name', 'description', 'keywords', 'category',
-                  'view_icon', 'render_mode', 'type', 'view']
+                  'view_icon', 'render_mode', 'type', 'view', 'binding']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post', 'delete', 'update']
@@ -294,7 +294,7 @@ class ChartStylerResource(StylerResource):
                   'label_x', 'label_y', 'color_mode',
                   'range_mode', 'range_x', 'range_y',
                   'max_points', 'color_rgb', 'thresholds',
-                  'type', 'view']
+                  'type', 'view', 'binding']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post', 'delete', 'update']
@@ -327,7 +327,7 @@ class VideoStylerResource(StylerResource):
         excludes = []
         # WhiteList: These are fields to include for being exposed by the API
         fields = ['name', 'description', 'keywords', 'category',
-                  'keep_ratio', 'type', 'view']
+                  'keep_ratio', 'type', 'view', 'binding']
         # Access: HTTP operations allowed on resource, options are - 'get', 'post', 'put', 'delete'
         #   Empty set denotes inability to access API through HTTP requests
         allowed_methods = ['get', 'post', 'delete', 'update']
