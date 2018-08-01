@@ -173,11 +173,11 @@ class LocationMarkerStylerFormView(TemplateView):
     def post(self, request):
         # convert value of json_content to a ContentField and insert into get_result_json
         # TODO: sanitize this if it's ever user input
-        newFile = ContentFile(request.POST['json_content'])
+        newFile = ContentFile(request.POST['json_raw'])
         file_name = request.POST['name'].replace(" ", "") + str(uuid.uuid4()) + ".json"
         newFile.name = file_name
         data = request.POST.dict()
-        data['get_result_json'] = newFile
+        data['binding'] = newFile
         new_form = ObservationForm(data)
 
         if new_form.is_valid():

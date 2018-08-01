@@ -1,3 +1,17 @@
+// For reuse
+const hostName = window.location.hostname;
+const portNum = window.location.port;
+
+
+
+window.onload = function () {
+    // add event listener to JSON-Raw field
+    // document.getElementById('id_view').addEventListener("change", generateJsonBinding);
+    // requestOfferingsofView(1);
+    getSensorDescription('http://botts-geo.com:8181/sensorhub', 'urn:android:device:89845ed469b7edc7');
+    // getCapabilities('http://botts-geo.com:8181/sensorhub');
+};
+
 function output(inp) {
     // document.body.appendChild(document.createElement('pre')).innerHTML = inp;#}
     document.getElementById("pretty-json").innerHTML = inp;
@@ -32,7 +46,8 @@ getCapabilities = function (hubAddress) {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             // output(syntaxHighlight(xhr.response));
-            return xhr.response;
+            // return xhr.response;
+            console.log(xhr.response)
         }
     };
     xhr.send(JSON.stringify(data));
@@ -48,6 +63,7 @@ getResultTemplate = function (hubAddress, offeringId, observedProperty) {
     data['observed_property'] = 'http://sensorml.com/ont/swe/property/Location';*/
     var xhr = new XMLHttpRequest();
 
+    // TODO: check on URL here
     xhr.open('POST', 'get_result_template', true);
     xhr.setRequestHeader('Content-Type', 'application/json, charset=UTF-8');
     xhr.onreadystatechange = function () {
@@ -60,20 +76,40 @@ getResultTemplate = function (hubAddress, offeringId, observedProperty) {
 
 getSensorDescription = function (hubAddress, procedure) {
     var data = {};
-    data['hubAddress'] = hubAddress;
-    data['procedure'] = procedure;
+    // data['hubAddress'] = hubAddress;
+    // data['procedure'] = procedure;
+    data['hubAddress'] = 'http://botts-geo.com:8181/sensorhub';
+    data['procedure'] = 'urn:android:device:89845ed469b7edc7';
     var xhr = new XMLHttpRequest();
 
-    xhr.open('POST', 'get_sensor_description', true);
+    // xhr.open('POST', 'get_sensor_description', true);
+    xhr.open('POST', 'http://localhost:8000/osh/get_result_template', true);
     xhr.setRequestHeader('Content-Type', 'application/json, charset=UTF-8');
     xhr.onreadystatechange = function () {
-        if (xhr.readyState == XMLHttpRequest.DONE) {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
             // output(syntaxHighlight(xhr.response));
             console.log(xhr.response);
         }
-    }
+    };
     xhr.send(JSON.stringify(data));
 };
+
+// get_sensor_description = function () {
+//     var data = {};
+//     data['hubAddress'] = 'http://botts-geo.com:8181/sensorhub';
+//     data['procedure'] = 'urn:android:device:89845ed469b7edc7';
+//     var xhr = new XMLHttpRequest();
+//
+//     xhr.open('POST', 'get_sensor_description', true);
+//     xhr.setRequestHeader('Content-Type', 'application/json, charset=UTF-8');
+//     xhr.onreadystatechange = function () {
+//         if (xhr.readyState == XMLHttpRequest.DONE) {
+//             // output(syntaxHighlight(xhr.response));
+//             console.log(xhr.response);
+//         }
+//     }
+//     xhr.send(JSON.stringify(data));
+// };
 
 function getCapabiltiesWrapper() {
     var hubSelector = document.getElementById('hubSelector');
@@ -87,7 +123,7 @@ function getCapabiltiesWrapper() {
 }
 
 // TODO: Definitely make sure this is the correct way to do this and Ask Josh for direction
-async function requestOfferingsofView(viewPK){
+function requestOfferingsofView(viewPK) {
     let offeringExts = [];
     let offerings = [];
     // TODO: There needs to be a more robust way of getting the port or not using it if it's not necessary
@@ -101,9 +137,8 @@ async function requestOfferingsofView(viewPK){
     console.log(url);
     console.log(otherParams);
 
-    let test = await fetch(url, otherParams)
+    fetch(url, otherParams)
         .then(data => {
-            // console.log(data);
             return data.json()
         })
         .then(res => {
@@ -112,22 +147,57 @@ async function requestOfferingsofView(viewPK){
             console.log("Getting Observations...");
             offeringExts = res.observations;
             console.log(offeringExts);
+            offerings = requestOfferingsbyPK(offeringExts);
+            return offerings;
         })
         .catch(error => console.log(error));
 
-    console.log(test);
-    offerings = requestOfferingsbyPK(offeringExts);
-    return offerings;
+
 }
 
 function requestOfferingsbyPK(offeringUrls) {
     let offerings = [];
-    for ( let offering of offeringUrls) {
-        console.log('https://' + window.location.hostname + ':8000' + offering);
+    for (let offering of offeringUrls) {
+        let endpoint = "";
+        let procedureId = "";
+        // TODO: How to best obtain the port number when a user is deploying?
+        let offeringUrl = 'http://' + window.location.hostname + ':8000' + offering;
+        console.log(offeringUrl);
+        let otherParams = {
+            headers: {'content-type': 'application/json; charset=UTF-8'},
+            method: 'GET'
+        };
+
+        console.log(otherParams);
+
+        fetch(offeringUrl, otherParams)
+            .then(data => {
+                return data.json()
+            })
+            .then(res => {
+                console.log(res);
+                // endpoint = res.endpoint;
+                // procedureId = res.procedure;
+                endpoint = 'http://botts-geo.com:8181/sensorhub';
+                procedureId = 'urn:android:device:89845ed469b7edc7';
+                // get the Sensor Description via OSH
+                getSensorDescription(endpoint, procedureId);
+            })
+            .catch(error => console.log(error));
     }
     return offerings;
 }
 
+function generateJsonBinding(event) {
+    let jsonRaw = document.getElementById('id_json_raw');
+    let viewSelect = document.getElementById("id_view");
+    let selectedView = viewSelect.options[viewSelect.selectedIndex].value;
+    // get offerings/observations
+    if (selectedView !== "") {
+        requestOfferingsofView(selectedView);
+    }
+
+}
 
 // Issues with Fetch CORS and lack of query string ease of use means sticking with XHR for now
 /*function fetchSensorDescription() {
@@ -164,7 +234,5 @@ function requestOfferingsbyPK(offeringUrls) {
 // getCapabilities();
 // getResultTemplate();
 // getSensorDescription();
-window.onload = function () {
-    requestOfferingsofView(1);
-    // getSensorDescription('http://botts-geo.com:8181/sensorhub', 'urn:android:device:89845ed469b7edc7')
-};
+// get_sensor_description();
+
