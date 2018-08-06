@@ -189,6 +189,7 @@ class OfferingForm(forms.ModelForm):
     initial = categories.get(name__exact='Data Content or Producers')
     category = forms.ModelChoiceField(label='Category', queryset=categories, initial=initial.id,
                                       widget=forms.HiddenInput())
+    procedure = forms.ChoiceField(label='Offering ID:')
 
     class Meta:
         model = Offering

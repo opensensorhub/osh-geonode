@@ -86,7 +86,7 @@ urlpatterns = [
     url(r'^add-hub', components.wizards.wizard_views.HubWizard.as_view(), name='hub-wiz'),
     url(r'^add-obs', components.wizards.wizard_views.ObservationWizard.as_view(), name='obs-wiz'),
     url(r'^add-layer', components.wizards.wizard_views.LayerFormView.as_view(), name='layer-wiz'),
-    url(r'^add-offering', components.wizards.wizard_views.OfferingFormView.as_view()),
+    url(r'^add-offering', components.wizards.wizard_views.OfferingFormView.as_view(), name='offering-wiz'),
     # Test link to view all resources as cards
     url(r'^explore', ExplorerView.as_view(), name='explore'),
 

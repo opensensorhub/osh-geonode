@@ -88,6 +88,7 @@ def get_capabilities(request):
     response = "Malformed Request: Expecting URL of Open Sensor Hub - " \
                "e.g. http://botts-geo.com:8181/sensorhub"
     request_data = json.loads(request.body)
+    print (request_data)
 
     try:
         # Append "sos?service=SOS&version=2.0&request=GetCapabilities" to get capabilities from OSH hub
