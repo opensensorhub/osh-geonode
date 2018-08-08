@@ -1,7 +1,14 @@
+<span>
+    <div class="card-deck">
  {% for card in cards %}
 
-
-
+ <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+ <script src="https://cdn.rawgit.com/nnattawat/flip/master/dist/jquery.flip.min.js"></script>
+ <script>
+     $(function($) {
+         $(".osh-card").flip({trigger: 'hover'});
+     });
+ </script>
      <div class="osh-card" id="card">
          <div class="front">
              <div class="osh-card-background" id="{{card.type}}" >
@@ -19,22 +26,23 @@
                  <p>{{card.keywords}}</p>
              </div>
          </div>
-         <div class="back">
+         <div class="back {{card.type}}">
 
              <div class="osh-card-back">
+                 <h3>{{card.name}}</h3>
+                 <h4>{{card.type}}</h4>
+                 <hr />
                  <p>{{card.description}}</p>
                  <p>{{card.keywords}}</p>
 
+                 <div class="btn-group" id="{{card.type}}Action">
+
+                 </div>
              </div>
          </div>
      </div>
- <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
- <script src="https://cdn.rawgit.com/nnattawat/flip/master/dist/jquery.flip.min.js"></script>
- <script>
-     $(function($) {
-         $(".osh-card").flip();
-     });
- </script>
+
 
     {% endfor %}
+    </div>
 </span>

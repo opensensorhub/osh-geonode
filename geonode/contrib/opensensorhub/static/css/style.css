@@ -41,9 +41,13 @@ position: relative;
 
 {# Filters ---------------------------- #}
 .osh-filters {
-margin-right: 30px;
-display: inline-block;
-vertical-align: top;
+    margin-right: 30px;
+    background-color: #fff;
+    display: inline-block;
+    vertical-align: top;
+    float: left;
+    position: fixed;
+    z-index: 1034;
 }
 
 .osh-filter-row {
@@ -117,6 +121,7 @@ vertical-align: top;
     display: inline-block;
     height: 375px;
     width: 240px;
+    float: left;
 
 
 }
@@ -154,7 +159,6 @@ vertical-align: top;
 }
 .osh-card-background {
     border-radius: 6px 6px 0 0;
-
     padding: 1px 0px 3px 0px;
     width: 100%;
     height: 40px;
@@ -165,18 +169,165 @@ vertical-align: top;
     border-color: #cc5c1e;
     width: 100%;
     height: 40px;
+    background-image: url("../images/HubIcon.png");
+    background-repeat: no-repeat;
 }
 
-.osh-card-background #layer {
+.hub .osh-card-back h3{
+    color: #f16c23;
+    margin-bottom: 0px;
+}
+
+.hub {
+    background-color: #f16c23;
+}
+
+
+#observation {
+    background-color: #f13e30;
+    border-color: #ac2c22;
+    width: 100%;
+    height: 40px;
+    background-image: url("../images/HubIcon.png");
+    background-repeat: no-repeat;
+}
+
+.observation .osh-card-back h3{
+    color: #f13e30;
+    margin-bottom: 0px;
+}
+
+.observation {
+    background-color: #f13e30;
+}
+
+#layer {
     background-color: #0B85C3;
     border-color: #07537b;
+    background-image: url("../images/LayerIcon.png");
+    background-repeat: no-repeat;
+}
+
+.layer .osh-card-back h3{
+    color: #0B85C3;
+    margin-bottom: 0px;
+}
+
+.layer {
+    background-color: #0B85C3;
+}
+
+#view {
+    background-color: #116331;
+    border-color: #0e4a16;
+    background-image: url("../images/ViewIcon.png");
+    background-repeat: no-repeat;
+}
+
+.view .osh-card-back h3{
+    color: #116331;
+    margin-bottom: 0px;
+}
+
+.view {
+    background-color: #116331;
+}
+
+/*------------------------STYLERS Card Color-------------------------------*/
+
+#video {
+    background-color: #2f1387;
+    border-color: #0a1d4b;
+    background-image: url("../images/VideoIcon.png");
+    background-repeat: no-repeat;
+}
+
+.video .osh-card-back h3{
+    color: #2f1387;
+    margin-bottom: 0px;
+}
+
+.video {
+    background-color: #2f1387;
+}
+
+#chart {
+    background-color: #d2ad06;
+    border-color: #615813;
+    background-image: url("../images/ChartIcon.png");
+    background-repeat: no-repeat;
+}
+
+.chart .osh-card-back h3{
+    color: #d2ad06;
+    margin-bottom: 0px;
+}
+
+.chart {
+    background-color: #d2ad06;
+}
+
+#point {
+    background-color: #6ba801;
+    border-color: #6ba801;
+    background-image: url("../images/PointIcon.png");
+    background-repeat: no-repeat;
+}
+
+.point .osh-card-back h3{
+    color: #6ba801;
+    margin-bottom: 0px;
+}
+
+.point {
+    background-color: #6ba801;
+}
+
+#text {background-color: #00b79d;
+    border-color: #00b79d;
+    background-image: url("../images/TextIcon.png");
+    background-repeat: no-repeat;}
+
+.text .osh-card-back h3{
+    color: #00b79d;
+    margin-bottom: 0px;
+}
+
+.text {
+    background-color: #00b79d;
 }
 
 .osh-card-background h3 {
-    margin-top: 10px;
+    margin: 10px auto 0 auto;
     font-size: 1.4em;
     letter-spacing: .1em;
     color: #ffffff;
+    width: 160px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.osh-card-back h3 {
+    margin-top: 10px;
+    font-size: 1.4em;
+    letter-spacing: .1em;
+}
+
+
+.layer .osh-card-back h3{
+    color: #5E66CC;
+}
+
+.view .osh-card-back h3{
+    color: #116331;
+}
+
+.osh-card-back h4 {
+    font-size: .9em;
+    margin-top: 5px;
+    margin-bottom: 0px;
+    text-transform: uppercase;
 }
 
 .osh-card-image-frame {
