@@ -3,7 +3,7 @@
     </head>
     <body>
         {% load staticfiles %}
-        {% load script_tags %}
+        {% load toolkit %}
         <div id="leafletViewerId">
             <!-- Vendor all-in-one was built with:
 
@@ -23,10 +23,11 @@
             </style>
             {% begin_script %}
             {% data_receiver replay_factor="3" data_source_name="androidPhoneGps" data_source_friendly_name="android-GPS" protocol="ws" service="sos" endpoint="sensiasoft.net:8181/sensorhub/sos" offering="urn:android:device:060693280a28e015-sos" observed_property="http://sensorml.com/ont/swe/property/Location" start_time="2015-02-16T07:58:00Z" end_time="2015-02-16T08:09:00Z" sync_master_time="true" buffering_time="1000" time_shift="-1600" %}
-            {% point_marker_styler styler_name="pointMarker" x_component="1.42376557" y_component="43.61758626" z_component="100" data_source_name="androidPhoneGps" location_handler="function (rec) { return { x: rec.location.lon, y: rec.location.lat, z: rec.location.alt }; }" image_name="/static/toolkit/images/cameralook.png" image_handler="function (rec, timeStamp, options) { if (options.selected) { return '/static/toolkit/images/cameralook.png'; } else { return '/static/toolkit/images/cameralook.png'; } }" %}
-{#            {% polyline_styler  styler_name="polyline" data_source_name="androidPhoneGps" location_handler="function (rec) { return { x: rec.location.lon, y: rec.location.lat, z: rec.location.alt }; }" color_rgba="0,0,255,0.5" weight="10" opacity=".5" smooth_factor="1" max_points="200" %}#}
-            {% leaflet_map_view view_name="leafletMap" stylers="[{\"styler\": \"pointMarker\", \"friendly_name\": \"Android Phone GPS\"}]" %}
-{#            {% leaflet_map_view view_name="leafletMap" stylers="[{\"styler\": \"pointMarker\", \"friendly_name\": \"Android Phone GPS\"},{\"styler\": \"polyline\", \"friendly_name\": \"Android Phone GPS Path\"}]" %}#}
+            {% point_marker_styler styler_name="pointMarker" x_component="1.42376557" y_component="43.61758626" z_component="100" location_data_sources="androidPhoneGps," location_handler="function (rec) { return { x: rec.location.lon, y: rec.location.lat, z: rec.location.alt }; }" image_name="/static/toolkit/images/cameralook.png" image_data_sources="androidPhoneGps," image_handler="function (rec, timeStamp, options) { if (options.selected) { return '/static/toolkit/images/cameralook.png'; } else { return '/static/toolkit/images/cameralook.png'; } }" %}
+            {% polyline_styler styler_name="polyline" data_sources="androidPhoneGps" location_handler="function (rec) { return { x: rec.location.lon, y: rec.location.lat, z: rec.location.alt }; }" color_rgba="0,0,255,0.5" weight="10" opacity=".5" smooth_factor="1" max_points="200" %}
+{#            {% leaflet_view view_name="leafletMap" elements="[{\"styler\": \"pointMarker\", \"friendly_name\": \"Android Phone GPS\"}]" %}#}
+            {% leaflet_view view_name="leafletMap" elements="[{\"styler\": \"pointMarker\", \"friendly_name\": \"Android Phone GPS\"},{\"styler\": \"polyline\", \"friendly_name\": \"Android Phone GPS Path\"}]" %}
+{#            {% cesium_view view_name="leafletMap" elements="[{\"styler\": \"pointMarker\", \"friendly_name\": \"Android Phone GPS\"},{\"styler\": \"polyline\", \"friendly_name\": \"Android Phone GPS Path\"}]" %}#}
             {% data_provider_controller replay_factor="replayFactor" data_source_name="androidPhoneGps" %}
             {% connect_controllers %}
             {% end_script %}
