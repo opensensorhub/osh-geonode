@@ -136,7 +136,7 @@ parse==1.8.2
 parse-type==0.4.1
 setuptools==39.0.1
 python-dateutil==2.6.1
-python-gnupg==0.4.1
+python-gnupg==0.4.4
 python-memcached==1.59
 python-mimeparse==1.6.0
 python-openid==2.2.5
