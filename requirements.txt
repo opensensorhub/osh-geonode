@@ -112,7 +112,7 @@ OWSLib==0.15.0
 Paver==1.2.4
 pbr==3.1.1
 pep8==1.7.1
-Pillow==3.3.1
+Pillow==8.1.1
 Pinax==0.9a2
 # pinax-comments==0.1.1
 pinax-notifications==4.1.0
